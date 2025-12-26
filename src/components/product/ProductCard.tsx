@@ -21,9 +21,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link to={`/product/${product.id}`} className="group">
-      <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
+      <div className="bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 overflow-hidden border border-gray-700">
         {/* Image Container */}
-        <div className="relative aspect-square overflow-hidden bg-gray-100">
+        <div className="relative aspect-square overflow-hidden bg-gray-900">
           <img
             src={product.image}
             alt={product.name}
@@ -47,9 +47,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Wishlist Button */}
           <button 
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-            className="absolute top-3 right-3 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-gray-50"
+            className="absolute top-3 right-3 w-9 h-9 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-gray-700"
           >
-            <Heart className="w-4 h-4 text-gray-600" />
+            <Heart className="w-4 h-4 text-gray-300" />
           </button>
 
           {/* Quick Add Button */}
@@ -64,12 +64,12 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Content */}
         <div className="p-4">
           {/* Category */}
-          <p className="text-xs text-indigo-600 font-medium uppercase tracking-wide mb-1">
+          <p className="text-xs text-indigo-400 font-medium uppercase tracking-wide mb-1">
             {product.subcategory || product.category}
           </p>
 
           {/* Title */}
-          <h3 className="font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors line-clamp-2 min-h-[2.5rem]">
+          <h3 className="font-semibold text-white group-hover:text-indigo-400 transition-colors line-clamp-2 min-h-[2.5rem]">
             {product.name}
           </h3>
 
@@ -95,14 +95,9 @@ export default function ProductCard({ product }: ProductCardProps) {
            */}
           {/* Price */}
           <div className="flex items-center gap-2 mt-3">
-            <span className="text-lg font-bold text-gray-900">
-              {product.puntosFit} Puntos Fit {/*/ ${product.price.toFixed(2)} */}
+            <span className="text-lg font-bold text-white">
+              {product.puntosFit} Puntos Fit
             </span>
-            {/*product.originalPrice && (
-              <span className="text-sm text-gray-400 line-through">
-                ${product.originalPrice.toFixed(2)}
-              </span>
-            )*/}
           </div>
 
           {/* Colors/Sizes Preview */}
@@ -111,7 +106,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               {product.colors.slice(0, 4).map((color, index) => (
                 <div
                   key={index}
-                  className="w-4 h-4 rounded-full border border-gray-200"
+                  className="w-4 h-4 rounded-full border border-gray-600"
                   style={{ 
                     backgroundColor: color === 'Negro' ? '#000' : 
                                     color === 'Blanco' ? '#fff' : 

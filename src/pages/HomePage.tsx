@@ -59,25 +59,25 @@ export default function HomePage() {
                 />
               </div>
               {/* Floating Cards */}
-              <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-xl p-4 animate-pulse">
+              <div className="absolute -bottom-6 -left-6 bg-gray-800 rounded-xl shadow-xl p-4 border border-gray-700">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-green-900/50 rounded-full flex items-center justify-center">
                     <span className="text-2xl">💪</span>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Clientes activos</p>
-                    <p className="text-xl font-bold text-gray-900">10,000+</p>
+                    <p className="text-sm text-gray-400">Clientes activos</p>
+                    <p className="text-xl font-bold text-white">10,000+</p>
                   </div>
                 </div>
               </div>
-              <div className="absolute -top-6 -right-6 bg-white rounded-xl shadow-xl p-4">
+              <div className="absolute -top-6 -right-6 bg-gray-800 rounded-xl shadow-xl p-4 border border-gray-700">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-yellow-900/50 rounded-full flex items-center justify-center">
                     <span className="text-2xl">⭐</span>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Valoración</p>
-                    <p className="text-xl font-bold text-gray-900">4.9/5</p>
+                    <p className="text-sm text-gray-400">Valoración</p>
+                    <p className="text-xl font-bold text-white">4.9/5</p>
                   </div>
                 </div>
               </div>
@@ -87,43 +87,43 @@ export default function HomePage() {
       </section>
 
       {/* Features Bar */}
-      <section className="bg-white border-b">
+      <section className="bg-gray-800 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
-                <Truck className="w-6 h-6 text-indigo-600" />
+              <div className="w-12 h-12 bg-indigo-900/50 rounded-xl flex items-center justify-center">
+                <Truck className="w-6 h-6 text-indigo-400" />
               </div>
               <div>
-                <p className="font-semibold text-gray-900">Envío Gratis</p>
-                <p className="text-sm text-gray-500">En pedidos +$50</p>
+                <p className="font-semibold text-white">Envío Gratis</p>
+                <p className="text-sm text-gray-400">En pedidos +$50</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <Shield className="w-6 h-6 text-green-600" />
+              <div className="w-12 h-12 bg-green-900/50 rounded-xl flex items-center justify-center">
+                <Shield className="w-6 h-6 text-green-400" />
               </div>
               <div>
-                <p className="font-semibold text-gray-900">Pago Seguro</p>
-                <p className="text-sm text-gray-500">100% protegido</p>
+                <p className="font-semibold text-white">Pago Seguro</p>
+                <p className="text-sm text-gray-400">100% protegido</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
-                <RefreshCw className="w-6 h-6 text-orange-600" />
+              <div className="w-12 h-12 bg-orange-900/50 rounded-xl flex items-center justify-center">
+                <RefreshCw className="w-6 h-6 text-orange-400" />
               </div>
               <div>
-                <p className="font-semibold text-gray-900">Devoluciones</p>
-                <p className="text-sm text-gray-500">30 días garantía</p>
+                <p className="font-semibold text-white">Devoluciones</p>
+                <p className="text-sm text-gray-400">30 días garantía</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                <Headphones className="w-6 h-6 text-purple-600" />
+              <div className="w-12 h-12 bg-purple-900/50 rounded-xl flex items-center justify-center">
+                <Headphones className="w-6 h-6 text-purple-400" />
               </div>
               <div>
-                <p className="font-semibold text-gray-900">Soporte 24/7</p>
-                <p className="text-sm text-gray-500">Ayuda siempre</p>
+                <p className="font-semibold text-white">Soporte 24/7</p>
+                <p className="text-sm text-gray-400">Ayuda siempre</p>
               </div>
             </div>
           </div>
@@ -131,11 +131,11 @@ export default function HomePage() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">Explora por Categoría</h2>
-            <p className="text-gray-600">Encuentra exactamente lo que necesitas</p>
+            <h2 className="text-3xl font-bold text-white mb-3">Explora por Categoría</h2>
+            <p className="text-gray-400">Encuentra exactamente lo que necesitas</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {categories.map((category) => (
@@ -165,16 +165,16 @@ export default function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Productos Destacados</h2>
-              <p className="text-gray-600">Los más vendidos de nuestra tienda</p>
+              <h2 className="text-3xl font-bold text-white mb-2">Productos Destacados</h2>
+              <p className="text-gray-400">Los más vendidos de nuestra tienda</p>
             </div>
             <Link
               to="/products"
-              className="hidden sm:inline-flex items-center text-indigo-600 font-medium hover:text-indigo-700"
+              className="hidden sm:inline-flex items-center text-indigo-400 font-medium hover:text-indigo-300"
             >
               Ver todos
               <ChevronRight className="w-5 h-5 ml-1" />
@@ -184,7 +184,7 @@ export default function HomePage() {
           <div className="text-center mt-8 sm:hidden">
             <Link
               to="/products"
-              className="inline-flex items-center text-indigo-600 font-medium"
+              className="inline-flex items-center text-indigo-400 font-medium"
             >
               Ver todos los productos
               <ChevronRight className="w-5 h-5 ml-1" />
@@ -228,16 +228,16 @@ export default function HomePage() {
       </section>
 
       {/* New Arrivals */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Nuevos Productos</h2>
-              <p className="text-gray-600">Las últimas novedades en nuestra tienda</p>
+              <h2 className="text-3xl font-bold text-white mb-2">Nuevos Productos</h2>
+              <p className="text-gray-400">Las últimas novedades en nuestra tienda</p>
             </div>
             <Link
               to="/products"
-              className="hidden sm:inline-flex items-center text-indigo-600 font-medium hover:text-indigo-700"
+              className="hidden sm:inline-flex items-center text-indigo-400 font-medium hover:text-indigo-300"
             >
               Ver todos
               <ChevronRight className="w-5 h-5 ml-1" />
@@ -248,11 +248,11 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">Lo que dicen nuestros clientes</h2>
-            <p className="text-gray-600">Miles de atletas confían en nosotros</p>
+            <h2 className="text-3xl font-bold text-white mb-3">Lo que dicen nuestros clientes</h2>
+            <p className="text-gray-400">Miles de atletas confían en nosotros</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
@@ -278,13 +278,13 @@ export default function HomePage() {
                 rating: 5
               }
             ].map((testimonial, index) => (
-              <div key={index} className="bg-gray-50 rounded-2xl p-6">
+              <div key={index} className="bg-gray-900 rounded-2xl p-6 border border-gray-700">
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <span key={i} className="text-yellow-400">★</span>
                   ))}
                 </div>
-                <p className="text-gray-700 mb-6">"{testimonial.text}"</p>
+                <p className="text-gray-300 mb-6">"{testimonial.text}"</p>
                 <div className="flex items-center gap-3">
                   <img
                     src={testimonial.image}
@@ -292,7 +292,7 @@ export default function HomePage() {
                     className="w-12 h-12 rounded-full object-cover"
                   />
                   <div>
-                    <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                    <p className="font-semibold text-white">{testimonial.name}</p>
                     <p className="text-sm text-gray-500">{testimonial.role}</p>
                   </div>
                 </div>

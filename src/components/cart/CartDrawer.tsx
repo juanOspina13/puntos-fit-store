@@ -16,19 +16,19 @@ export default function CartDrawer() {
       />
 
       {/* Drawer */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col">
+      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-gray-900 shadow-2xl z-50 flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center justify-between p-4 border-b border-gray-800">
           <div className="flex items-center space-x-2">
-            <ShoppingBag className="w-6 h-6 text-indigo-600" />
-            <h2 className="text-lg font-semibold text-gray-900">Tu Carrito</h2>
-            <span className="bg-indigo-100 text-indigo-600 text-sm px-2 py-0.5 rounded-full">
+            <ShoppingBag className="w-6 h-6 text-indigo-400" />
+            <h2 className="text-lg font-semibold text-white">Tu Carrito</h2>
+            <span className="bg-indigo-900/50 text-indigo-400 text-sm px-2 py-0.5 rounded-full">
               {items.length} {items.length === 1 ? 'item' : 'items'}
             </span>
           </div>
           <button 
             onClick={() => setIsCartOpen(false)}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-500 hover:text-gray-300 transition-colors"
           >
             <X className="w-6 h-6" />
           </button>
@@ -38,8 +38,8 @@ export default function CartDrawer() {
         <div className="flex-1 overflow-y-auto p-4">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
-              <ShoppingBag className="w-16 h-16 text-gray-300 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Tu carrito está vacío</h3>
+              <ShoppingBag className="w-16 h-16 text-gray-700 mb-4" />
+              <h3 className="text-lg font-medium text-white mb-2">Tu carrito está vacío</h3>
               <p className="text-gray-500 mb-6">¡Agrega algunos productos increíbles!</p>
               <button
                 onClick={() => setIsCartOpen(false)}
@@ -51,14 +51,14 @@ export default function CartDrawer() {
           ) : (
             <div className="space-y-4">
               {items.map((item) => (
-                <div key={`${item.product.id}-${item.selectedSize}-${item.selectedColor}`} className="flex gap-4 bg-gray-50 p-3 rounded-lg">
+                <div key={`${item.product.id}-${item.selectedSize}-${item.selectedColor}`} className="flex gap-4 bg-gray-800 p-3 rounded-lg">
                   <img
                     src={item.product.image}
                     alt={item.product.name}
                     className="w-20 h-20 object-cover rounded-lg"
                   />
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-medium text-gray-900 truncate">
+                    <h4 className="text-sm font-medium text-white truncate">
                       {item.product.name}
                     </h4>
                     {(item.selectedSize || item.selectedColor) && (
@@ -68,28 +68,28 @@ export default function CartDrawer() {
                         {item.selectedColor && `Color: ${item.selectedColor}`}
                       </p>
                     )}
-                    <p className="text-indigo-600 font-semibold mt-1">
+                    <p className="text-indigo-400 font-semibold mt-1">
                       ${item.product.price.toFixed(2)}
                     </p>
                     <div className="flex items-center justify-between mt-2">
                       <div className="flex items-center space-x-2">
                         <button
                           onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                          className="w-7 h-7 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                          className="w-7 h-7 flex items-center justify-center rounded-full bg-gray-700 hover:bg-gray-600 transition-colors text-white"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="text-sm font-medium w-8 text-center">{item.quantity}</span>
+                        <span className="text-sm font-medium w-8 text-center text-white">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                          className="w-7 h-7 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"
+                          className="w-7 h-7 flex items-center justify-center rounded-full bg-gray-700 hover:bg-gray-600 transition-colors text-white"
                         >
                           <Plus className="w-3 h-3" />
                         </button>
                       </div>
                       <button
                         onClick={() => removeFromCart(item.product.id)}
-                        className="text-red-500 hover:text-red-600 transition-colors"
+                        className="text-red-500 hover:text-red-400 transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -103,7 +103,7 @@ export default function CartDrawer() {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="border-t p-4 space-y-4">
+          <div className="border-t border-gray-800 p-4 space-y-4">
             <div className="flex items-center justify-between">
               <button
                 onClick={clearCart}
@@ -113,7 +113,7 @@ export default function CartDrawer() {
               </button>
               <div className="text-right">
                 <p className="text-sm text-gray-500">Subtotal</p>
-                <p className="text-xl font-bold text-gray-900">${totalPrice.toFixed(2)}</p>
+                <p className="text-xl font-bold text-white">${totalPrice.toFixed(2)}</p>
               </div>
             </div>
             <Link
@@ -125,7 +125,7 @@ export default function CartDrawer() {
             </Link>
             <button
               onClick={() => setIsCartOpen(false)}
-              className="block w-full text-center text-gray-600 hover:text-gray-900 transition-colors"
+              className="block w-full text-center text-gray-400 hover:text-white transition-colors"
             >
               Continuar Comprando
             </button>

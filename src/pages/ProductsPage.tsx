@@ -69,7 +69,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-900">
       {/* Header */}
       <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,7 +85,7 @@ export default function ProductsPage() {
           {/* Mobile Filter Button */}
           <button
             onClick={() => setIsFilterOpen(true)}
-            className="lg:hidden flex items-center justify-center gap-2 bg-white border border-gray-200 rounded-lg px-4 py-3 font-medium text-gray-700"
+            className="lg:hidden flex items-center justify-center gap-2 bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 font-medium text-gray-300"
           >
             <SlidersHorizontal className="w-5 h-5" />
             Filtros
@@ -96,14 +96,14 @@ export default function ProductsPage() {
             ${isFilterOpen ? 'fixed inset-0 z-50 bg-black/50' : 'hidden'} lg:block lg:relative lg:bg-transparent
           `}>
             <div className={`
-              ${isFilterOpen ? 'fixed right-0 top-0 h-full w-80 bg-white shadow-xl overflow-y-auto' : ''}
+              ${isFilterOpen ? 'fixed right-0 top-0 h-full w-80 bg-gray-900 shadow-xl overflow-y-auto' : ''}
               lg:relative lg:w-64 lg:flex-shrink-0
             `}>
               {/* Mobile Filter Header */}
               {isFilterOpen && (
-                <div className="flex items-center justify-between p-4 border-b lg:hidden">
-                  <h3 className="font-semibold text-lg">Filtros</h3>
-                  <button onClick={() => setIsFilterOpen(false)}>
+                <div className="flex items-center justify-between p-4 border-b border-gray-800 lg:hidden">
+                  <h3 className="font-semibold text-lg text-white">Filtros</h3>
+                  <button onClick={() => setIsFilterOpen(false)} className="text-gray-400">
                     <X className="w-6 h-6" />
                   </button>
                 </div>
@@ -111,8 +111,8 @@ export default function ProductsPage() {
 
               <div className="p-4 lg:p-0 space-y-6">
                 {/* Categories */}
-                <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-                  <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <div className="bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-700">
+                  <h3 className="font-semibold text-white mb-4 flex items-center gap-2">
                     <Filter className="w-5 h-5" />
                     Categorías
                   </h3>
@@ -121,8 +121,8 @@ export default function ProductsPage() {
                       onClick={() => handleCategoryChange('all')}
                       className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                         selectedCategory === 'all' 
-                          ? 'bg-indigo-100 text-indigo-700 font-medium' 
-                          : 'text-gray-600 hover:bg-gray-100'
+                          ? 'bg-indigo-900/50 text-indigo-400 font-medium' 
+                          : 'text-gray-400 hover:bg-gray-700'
                       }`}
                     >
                       Todos los productos
@@ -133,8 +133,8 @@ export default function ProductsPage() {
                         onClick={() => handleCategoryChange(category.slug)}
                         className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                           selectedCategory === category.slug 
-                            ? 'bg-indigo-100 text-indigo-700 font-medium' 
-                            : 'text-gray-600 hover:bg-gray-100'
+                            ? 'bg-indigo-900/50 text-indigo-400 font-medium' 
+                            : 'text-gray-400 hover:bg-gray-700'
                         }`}
                       >
                         {category.name}
@@ -144,8 +144,8 @@ export default function ProductsPage() {
                 </div>
 
                 {/* Price Range */}
-                <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-                  <h3 className="font-semibold text-gray-900 mb-4">Precio</h3>
+                <div className="bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-700">
+                  <h3 className="font-semibold text-white mb-4">Precio</h3>
                   <div className="space-y-4">
                     <input
                       type="range"
@@ -153,11 +153,11 @@ export default function ProductsPage() {
                       max="100"
                       value={priceRange[1]}
                       onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
-                      className="w-full accent-indigo-600"
+                      className="w-full accent-indigo-500"
                     />
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">${priceRange[0]}</span>
-                      <span className="text-gray-600">${priceRange[1]}</span>
+                      <span className="text-gray-400">${priceRange[0]}</span>
+                      <span className="text-gray-400">${priceRange[1]}</span>
                     </div>
                   </div>
                 </div>
@@ -178,21 +178,21 @@ export default function ProductsPage() {
           {/* Main Content */}
           <div className="flex-1">
             {/* Sort Bar */}
-            <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-gray-100 flex items-center justify-between">
+            <div className="bg-gray-800 rounded-xl p-4 mb-6 shadow-sm border border-gray-700 flex items-center justify-between">
               <div className="hidden sm:flex items-center gap-2">
-                <button className="p-2 rounded-lg bg-indigo-100 text-indigo-600">
+                <button className="p-2 rounded-lg bg-indigo-900/50 text-indigo-400">
                   <Grid className="w-5 h-5" />
                 </button>
-                <button className="p-2 rounded-lg text-gray-400 hover:bg-gray-100">
+                <button className="p-2 rounded-lg text-gray-500 hover:bg-gray-700">
                   <List className="w-5 h-5" />
                 </button>
               </div>
               <div className="flex items-center gap-2">
-                <label className="text-sm text-gray-600">Ordenar por:</label>
+                <label className="text-sm text-gray-400">Ordenar por:</label>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="bg-gray-700 border border-gray-600 text-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value="featured">Destacados</option>
                   <option value="newest">Más nuevos</option>
@@ -207,12 +207,12 @@ export default function ProductsPage() {
             {filteredProducts.length > 0 ? (
               <ProductGrid products={filteredProducts} />
             ) : (
-              <div className="text-center py-16 bg-white rounded-xl">
+              <div className="text-center py-16 bg-gray-800 rounded-xl border border-gray-700">
                 <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-semibold text-white mb-2">
                   No se encontraron productos
                 </h3>
-                <p className="text-gray-500">
+                <p className="text-gray-400">
                   Intenta ajustar los filtros o busca algo diferente
                 </p>
               </div>
