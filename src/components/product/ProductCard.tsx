@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import { Star, ShoppingCart, Heart } from 'lucide-react';
-import { useCart } from '../../context/CartContext';
-import type { Product } from '../../types';
+import { Link } from "react-router-dom";
+import { ShoppingCart, Heart } from "lucide-react";
+import { useCart } from "../../context/CartContext";
+import type { Product } from "../../types";
 
 interface ProductCardProps {
   product: Product;
@@ -9,8 +9,10 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
-  const discount = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+  const discount = product.originalPrice
+    ? Math.round(
+        ((product.originalPrice - product.price) / product.originalPrice) * 100
+      )
     : 0;
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -29,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
-          
+
           {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-2">
             {product.isNew && (
@@ -45,8 +47,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Wishlist Button */}
-          <button 
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
             className="absolute top-3 right-3 w-9 h-9 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-gray-700"
           >
             <Heart className="w-4 h-4 text-gray-300" />
@@ -107,23 +112,37 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <div
                   key={index}
                   className="w-4 h-4 rounded-full border border-gray-600"
-                  style={{ 
-                    backgroundColor: color === 'Negro' ? '#000' : 
-                                    color === 'Blanco' ? '#fff' : 
-                                    color === 'Azul' ? '#3B82F6' :
-                                    color === 'Rojo' ? '#EF4444' :
-                                    color === 'Gris' ? '#9CA3AF' :
-                                    color === 'Morado' ? '#8B5CF6' :
-                                    color === 'Verde' ? '#10B981' :
-                                    color === 'Rosa' ? '#EC4899' :
-                                    color === 'Azul Marino' ? '#1E3A8A' :
-                                    color === 'Marrón' ? '#92400E' : '#ccc'
+                  style={{
+                    backgroundColor:
+                      color === "Negro"
+                        ? "#000"
+                        : color === "Blanco"
+                        ? "#fff"
+                        : color === "Azul"
+                        ? "#3B82F6"
+                        : color === "Rojo"
+                        ? "#EF4444"
+                        : color === "Gris"
+                        ? "#9CA3AF"
+                        : color === "Morado"
+                        ? "#8B5CF6"
+                        : color === "Verde"
+                        ? "#10B981"
+                        : color === "Rosa"
+                        ? "#EC4899"
+                        : color === "Azul Marino"
+                        ? "#1E3A8A"
+                        : color === "Marrón"
+                        ? "#92400E"
+                        : "#ccc",
                   }}
                   title={color}
                 />
               ))}
               {product.colors.length > 4 && (
-                <span className="text-xs text-gray-500">+{product.colors.length - 4}</span>
+                <span className="text-xs text-gray-500">
+                  +{product.colors.length - 4}
+                </span>
               )}
             </div>
           )}
