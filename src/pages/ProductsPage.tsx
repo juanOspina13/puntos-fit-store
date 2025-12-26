@@ -145,19 +145,19 @@ export default function ProductsPage() {
 
                 {/* Price Range */}
                 <div className="bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-700">
-                  <h3 className="font-semibold text-white mb-4">Precio</h3>
+                  <h3 className="font-semibold text-white mb-4">Puntos</h3>
                   <div className="space-y-4">
                     <input
                       type="range"
                       min="0"
-                      max="100"
+                      max="500"
                       value={priceRange[1]}
                       onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
                       className="w-full accent-[#cee741]"
                     />
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-400">${priceRange[0]}</span>
-                      <span className="text-gray-400">${priceRange[1]}</span>
+                      <span className="text-gray-400">{priceRange[0]}</span>
+                      <span className="text-gray-400">{priceRange[1]}</span>
                     </div>
                   </div>
                 </div>

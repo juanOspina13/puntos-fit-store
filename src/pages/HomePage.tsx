@@ -30,13 +30,13 @@ export default function HomePage() {
                 <span className="text-[#cee741]"> Puntos Fit</span>
                 <br />
                 para transformar tu
-                <span className="text-[#cee741]"> cuerpo</span>
+                <span className="text-[#cee741]"> vida</span>
                 <br />y superar tus
                 <span className="text-[#cee741]"> límites</span>
               </h1>
               <p className="text-lg text-gray-300 mb-8 max-w-lg">
                 Canjea tus puntos por suplementos de alta calidad y ropa
-                deportiva premium. Tu esfuerzo tiene recompensa, cada
+                deportiva. Tu esfuerzo tiene recompensa, cada
                 entrenamiento cuenta.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
