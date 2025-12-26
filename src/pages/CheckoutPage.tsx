@@ -38,7 +38,7 @@ export default function CheckoutPage() {
           </p>
           <Link
             to="/"
-            className="block w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
+            className="block w-full bg-[#cee741] text-gray-900 py-3 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-colors"
           >
             Volver al Inicio
           </Link>
@@ -52,7 +52,7 @@ export default function CheckoutPage() {
       <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-white mb-4">Tu carrito está vacío</h2>
-          <Link to="/products" className="text-indigo-400 hover:underline">
+          <Link to="/products" className="text-[#cee741] hover:underline">
             Explorar productos
           </Link>
         </div>
@@ -67,8 +67,8 @@ export default function CheckoutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">PF</span>
+              <div className="w-10 h-10 bg-[#cee741] rounded-lg flex items-center justify-center">
+                <span className="text-gray-900 font-bold text-xl">PF</span>
               </div>
               <span className="text-xl font-bold text-white">PuntosFit</span>
             </Link>
@@ -87,7 +87,7 @@ export default function CheckoutPage() {
             <div key={label} className="flex items-center">
               <div className={`flex items-center justify-center w-8 h-8 rounded-full font-semibold text-sm ${
                 step > index + 1 ? 'bg-green-500 text-white' :
-                step === index + 1 ? 'bg-indigo-600 text-white' : 'bg-gray-700 text-gray-400'
+                step === index + 1 ? 'bg-[#cee741] text-gray-900' : 'bg-gray-700 text-gray-400'
               }`}>
                 {step > index + 1 ? <Check className="w-4 h-4" /> : index + 1}
               </div>
@@ -114,7 +114,7 @@ export default function CheckoutPage() {
                       <input
                         type="text"
                         required
-                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                         placeholder="Tu nombre"
                       />
                     </div>
@@ -123,7 +123,7 @@ export default function CheckoutPage() {
                       <input
                         type="text"
                         required
-                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                         placeholder="Tu apellido"
                       />
                     </div>
@@ -133,7 +133,7 @@ export default function CheckoutPage() {
                     <input
                       type="email"
                       required
-                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                       placeholder="tu@email.com"
                     />
                   </div>
@@ -142,7 +142,7 @@ export default function CheckoutPage() {
                     <input
                       type="tel"
                       required
-                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                       placeholder="+1 234 567 890"
                     />
                   </div>
@@ -157,7 +157,7 @@ export default function CheckoutPage() {
                     <input
                       type="text"
                       required
-                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                       placeholder="Calle y número"
                     />
                   </div>
@@ -167,7 +167,7 @@ export default function CheckoutPage() {
                       <input
                         type="text"
                         required
-                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                         placeholder="Tu ciudad"
                       />
                     </div>
@@ -176,22 +176,22 @@ export default function CheckoutPage() {
                       <input
                         type="text"
                         required
-                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                         placeholder="12345"
                       />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">País</label>
-                    <select className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <select className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741]">
                       <option>México</option>
                       <option>Colombia</option>
                       <option>Argentina</option>
                       <option>España</option>
                     </select>
                   </div>
-                  <div className="flex items-center gap-4 p-4 bg-indigo-900/30 rounded-xl border border-indigo-800">
-                    <Truck className="w-6 h-6 text-indigo-400" />
+                  <div className="flex items-center gap-4 p-4 bg-[#cee741]/20 rounded-xl border border-[#cee741]/30">
+                    <Truck className="w-6 h-6 text-[#cee741]" />
                     <div>
                       <p className="font-medium text-white">Envío estándar (5-7 días)</p>
                       <p className="text-sm text-gray-400">
@@ -214,7 +214,7 @@ export default function CheckoutPage() {
                     <input
                       type="text"
                       required
-                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                       placeholder="1234 5678 9012 3456"
                     />
                   </div>
@@ -224,7 +224,7 @@ export default function CheckoutPage() {
                       <input
                         type="text"
                         required
-                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                         placeholder="MM/YY"
                       />
                     </div>
@@ -233,7 +233,7 @@ export default function CheckoutPage() {
                       <input
                         type="text"
                         required
-                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                         placeholder="123"
                       />
                     </div>
@@ -243,7 +243,7 @@ export default function CheckoutPage() {
                     <input
                       type="text"
                       required
-                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                       placeholder="NOMBRE APELLIDO"
                     />
                   </div>
@@ -262,7 +262,7 @@ export default function CheckoutPage() {
                 )}
                 <button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all"
+                  className="flex-1 bg-[#cee741] text-gray-900 py-3 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-all"
                 >
                   {step === 3 ? 'Completar Pedido' : 'Continuar'}
                 </button>
@@ -286,7 +286,7 @@ export default function CheckoutPage() {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white truncate">{item.product.name}</p>
                       <p className="text-sm text-gray-400">Cant: {item.quantity}</p>
-                      <p className="text-sm font-semibold text-indigo-400">
+                      <p className="text-sm font-semibold text-[#cee741]">
                         ${(item.product.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
@@ -311,7 +311,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between text-lg font-bold border-t border-gray-700 pt-3">
                   <span className="text-white">Total</span>
-                  <span className="text-indigo-400">${total.toFixed(2)}</span>
+                  <span className="text-[#cee741]">${total.toFixed(2)}</span>
                 </div>
               </div>
             </div>

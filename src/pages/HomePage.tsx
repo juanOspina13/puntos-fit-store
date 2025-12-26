@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
@@ -21,14 +21,14 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 relative">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="text-center md:text-left">
-              <span className="inline-block bg-indigo-500/20 text-indigo-300 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+              <span className="inline-block bg-[#cee741]/20 text-[#cee741] text-sm font-medium px-4 py-1.5 rounded-full mb-6">
                 🎉 Nuevos productos disponibles
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
                 Transforma tu
-                <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"> cuerpo</span>,
+                <span className="text-[#cee741]"> cuerpo</span>,
                 supera tus
-                <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"> límites</span>
+                <span className="text-[#cee741]"> límites</span>
               </h1>
               <p className="text-lg text-gray-300 mb-8 max-w-lg">
                 Descubre nuestra colección premium de suplementos deportivos y ropa de entrenamiento. 
@@ -37,7 +37,7 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Link
                   to="/products"
-                  className="inline-flex items-center justify-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50"
+                  className="inline-flex items-center justify-center bg-[#cee741] text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-all shadow-lg shadow-[#cee741]/30 hover:shadow-[#cee741]/50"
                 >
                   Explorar Productos
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -91,8 +91,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-indigo-900/50 rounded-xl flex items-center justify-center">
-                <Truck className="w-6 h-6 text-indigo-400" />
+              <div className="w-12 h-12 bg-[#cee741]/20 rounded-xl flex items-center justify-center">
+                <Truck className="w-6 h-6 text-[#cee741]" />
               </div>
               <div>
                 <p className="font-semibold text-white">Envío Gratis</p>
@@ -174,7 +174,7 @@ export default function HomePage() {
             </div>
             <Link
               to="/products"
-              className="hidden sm:inline-flex items-center text-indigo-400 font-medium hover:text-indigo-300"
+              className="hidden sm:inline-flex items-center text-[#cee741] font-medium hover:text-[#b5cc1a]"
             >
               Ver todos
               <ChevronRight className="w-5 h-5 ml-1" />
@@ -184,7 +184,7 @@ export default function HomePage() {
           <div className="text-center mt-8 sm:hidden">
             <Link
               to="/products"
-              className="inline-flex items-center text-indigo-400 font-medium"
+              className="inline-flex items-center text-[#cee741] font-medium"
             >
               Ver todos los productos
               <ChevronRight className="w-5 h-5 ml-1" />
@@ -194,23 +194,23 @@ export default function HomePage() {
       </section>
 
       {/* Banner Section */}
-      <section className="py-16 bg-gradient-to-r from-indigo-600 to-purple-600">
+      <section className="py-16 bg-[#cee741]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="text-white">
-              <span className="inline-block bg-white/20 text-sm font-medium px-4 py-1.5 rounded-full mb-4">
+            <div className="text-gray-900">
+              <span className="inline-block bg-gray-900/20 text-sm font-medium px-4 py-1.5 rounded-full mb-4">
                 ⚡ Oferta Especial
               </span>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 Obtén 20% de descuento en toda la ropa deportiva
               </h2>
-              <p className="text-indigo-100 mb-6">
-                Usa el código <span className="font-bold text-white">FIT20</span> al finalizar tu compra. 
+              <p className="text-gray-800 mb-6">
+                Usa el código <span className="font-bold text-gray-900">FIT20</span> al finalizar tu compra. 
                 Oferta válida hasta agotar existencias.
               </p>
               <Link
                 to="/products?category=clothing"
-                className="inline-flex items-center bg-white text-indigo-600 px-8 py-4 rounded-xl font-semibold hover:bg-indigo-50 transition-colors"
+                className="inline-flex items-center bg-gray-900 text-[#cee741] px-8 py-4 rounded-xl font-semibold hover:bg-gray-800 transition-colors"
               >
                 Comprar Ahora
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -237,7 +237,7 @@ export default function HomePage() {
             </div>
             <Link
               to="/products"
-              className="hidden sm:inline-flex items-center text-indigo-400 font-medium hover:text-indigo-300"
+              className="hidden sm:inline-flex items-center text-[#cee741] font-medium hover:text-[#b5cc1a]"
             >
               Ver todos
               <ChevronRight className="w-5 h-5 ml-1" />
@@ -314,7 +314,7 @@ export default function HomePage() {
           </p>
           <Link
             to="/products"
-            className="inline-flex items-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all"
+            className="inline-flex items-center bg-[#cee741] text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-all"
           >
             Explorar Tienda
             <ArrowRight className="ml-2 w-5 h-5" />

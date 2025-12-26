@@ -20,9 +20,9 @@ export default function CartDrawer() {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-800">
           <div className="flex items-center space-x-2">
-            <ShoppingBag className="w-6 h-6 text-indigo-400" />
+            <ShoppingBag className="w-6 h-6 text-[#cee741]" />
             <h2 className="text-lg font-semibold text-white">Tu Carrito</h2>
-            <span className="bg-indigo-900/50 text-indigo-400 text-sm px-2 py-0.5 rounded-full">
+            <span className="bg-[#cee741]/20 text-[#cee741] text-sm px-2 py-0.5 rounded-full">
               {items.length} {items.length === 1 ? 'item' : 'items'}
             </span>
           </div>
@@ -43,7 +43,7 @@ export default function CartDrawer() {
               <p className="text-gray-500 mb-6">¡Agrega algunos productos increíbles!</p>
               <button
                 onClick={() => setIsCartOpen(false)}
-                className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
+                className="bg-[#cee741] text-gray-900 px-6 py-2 rounded-lg font-medium hover:bg-[#b5cc1a] transition-colors"
               >
                 Explorar Productos
               </button>
@@ -68,7 +68,7 @@ export default function CartDrawer() {
                         {item.selectedColor && `Color: ${item.selectedColor}`}
                       </p>
                     )}
-                    <p className="text-indigo-400 font-semibold mt-1">
+                    <p className="text-[#cee741] font-semibold mt-1">
                       ${item.product.price.toFixed(2)}
                     </p>
                     <div className="flex items-center justify-between mt-2">
@@ -119,7 +119,7 @@ export default function CartDrawer() {
             <Link
               to="/checkout"
               onClick={() => setIsCartOpen(false)}
-              className="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center py-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all"
+              className="block w-full bg-[#cee741] text-gray-900 text-center py-3 rounded-lg font-semibold hover:bg-[#b5cc1a] transition-all"
             >
               Proceder al Pago
             </Link>

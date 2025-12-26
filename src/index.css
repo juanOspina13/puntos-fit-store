@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Primary color custom property */
+:root {
+  --color-primary: #cee741;
+  --color-primary-hover: #b5cc1a;
+  --color-primary-dark: #9ab212;
+}
+
 /* Dark theme base */
 html {
   scroll-behavior: smooth;

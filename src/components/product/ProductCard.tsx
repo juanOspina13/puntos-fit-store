@@ -21,7 +21,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link to={`/product/${product.id}`} className="group">
-      <div className="bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 overflow-hidden border border-gray-700">
+      <div className="bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-[#cee741]/10 transition-all duration-300 overflow-hidden border border-gray-700">
         {/* Image Container */}
         <div className="relative aspect-square overflow-hidden bg-gray-900">
           <img
@@ -55,7 +55,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Quick Add Button */}
           <button
             onClick={handleAddToCart}
-            className="absolute bottom-3 right-3 bg-indigo-600 text-white p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 hover:bg-indigo-700"
+            className="absolute bottom-3 right-3 bg-[#cee741] text-gray-900 p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 hover:bg-[#b5cc1a]"
           >
             <ShoppingCart className="w-5 h-5" />
           </button>
@@ -64,12 +64,12 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Content */}
         <div className="p-4">
           {/* Category */}
-          <p className="text-xs text-indigo-400 font-medium uppercase tracking-wide mb-1">
+          <p className="text-xs text-[#cee741] font-medium uppercase tracking-wide mb-1">
             {product.subcategory || product.category}
           </p>
 
           {/* Title */}
-          <h3 className="font-semibold text-white group-hover:text-indigo-400 transition-colors line-clamp-2 min-h-[2.5rem]">
+          <h3 className="font-semibold text-white group-hover:text-[#cee741] transition-colors line-clamp-2 min-h-[2.5rem]">
             {product.name}
           </h3>
 

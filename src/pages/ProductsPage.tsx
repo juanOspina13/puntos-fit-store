@@ -71,10 +71,10 @@ export default function ProductsPage() {
   return (
     <div className="min-h-screen bg-gray-900">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12">
+      <div className="bg-[#cee741] text-gray-900 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-2">{getCategoryTitle()}</h1>
-          <p className="text-indigo-100">
+          <p className="text-gray-800">
             {filteredProducts.length} productos encontrados
           </p>
         </div>
@@ -121,7 +121,7 @@ export default function ProductsPage() {
                       onClick={() => handleCategoryChange('all')}
                       className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                         selectedCategory === 'all' 
-                          ? 'bg-indigo-900/50 text-indigo-400 font-medium' 
+                          ? 'bg-[#cee741]/20 text-[#cee741] font-medium' 
                           : 'text-gray-400 hover:bg-gray-700'
                       }`}
                     >
@@ -133,7 +133,7 @@ export default function ProductsPage() {
                         onClick={() => handleCategoryChange(category.slug)}
                         className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                           selectedCategory === category.slug 
-                            ? 'bg-indigo-900/50 text-indigo-400 font-medium' 
+                            ? 'bg-[#cee741]/20 text-[#cee741] font-medium' 
                             : 'text-gray-400 hover:bg-gray-700'
                         }`}
                       >
@@ -153,7 +153,7 @@ export default function ProductsPage() {
                       max="100"
                       value={priceRange[1]}
                       onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
-                      className="w-full accent-indigo-500"
+                      className="w-full accent-[#cee741]"
                     />
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-gray-400">${priceRange[0]}</span>
@@ -166,7 +166,7 @@ export default function ProductsPage() {
                 {isFilterOpen && (
                   <button
                     onClick={() => setIsFilterOpen(false)}
-                    className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold lg:hidden"
+                    className="w-full bg-[#cee741] text-gray-900 py-3 rounded-lg font-semibold lg:hidden"
                   >
                     Aplicar Filtros
                   </button>
@@ -180,7 +180,7 @@ export default function ProductsPage() {
             {/* Sort Bar */}
             <div className="bg-gray-800 rounded-xl p-4 mb-6 shadow-sm border border-gray-700 flex items-center justify-between">
               <div className="hidden sm:flex items-center gap-2">
-                <button className="p-2 rounded-lg bg-indigo-900/50 text-indigo-400">
+                <button className="p-2 rounded-lg bg-[#cee741]/20 text-[#cee741]">
                   <Grid className="w-5 h-5" />
                 </button>
                 <button className="p-2 rounded-lg text-gray-500 hover:bg-gray-700">
@@ -192,7 +192,7 @@ export default function ProductsPage() {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-gray-700 border border-gray-600 text-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="bg-gray-700 border border-gray-600 text-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#cee741]"
                 >
                   <option value="featured">Destacados</option>
                   <option value="newest">Más nuevos</option>
