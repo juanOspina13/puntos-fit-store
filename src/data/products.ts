@@ -37,7 +37,7 @@ export const products: Product[] = [
  
   {
     id: '4',
-    name: 'Creatina Monohidrato Pura',
+    name: 'Monohidrato Creatina Platinum Muscletech',
     description: '100% creatina monohidrato micronizada. Aumenta la fuerza, potencia y masa muscular magra.',
     price: 29.99,
     image: "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/platinumCreatineMuscletech.jpg",
@@ -134,6 +134,7 @@ export const products: Product[] = [
     puntosFit: 85,
 
   },*/
+  /*
   {
     id: '8',
     name: 'Shorts Nike mujer',
@@ -151,7 +152,7 @@ export const products: Product[] = [
     colors: ['Negro', 'Gris'],
     tags: ['compresión', 'rendimiento'],
     puntosFit: 150
-  },
+  },*/
   /*
   {
     id: '8',
