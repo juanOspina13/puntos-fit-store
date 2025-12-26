@@ -40,7 +40,7 @@ export const products: Product[] = [
     name: 'Creatina Monohidrato Pura',
     description: '100% creatina monohidrato micronizada. Aumenta la fuerza, potencia y masa muscular magra.',
     price: 29.99,
-    image: 'https://images.unsplash.com/photo-1619118884592-11b151f1ae11?w=500',
+    image: "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/platinumCreatineMuscletech.jpg",
     category: 'supplements',
     subcategory: 'Creatina',
     rating: 4.9,
@@ -49,6 +49,7 @@ export const products: Product[] = [
     tags: ['creatina', 'fuerza', 'bestseller'],
     puntosFit: 110,
   },
+  /*
    {
     puntosFit: 242,
     id: "1",
@@ -57,9 +58,9 @@ export const products: Product[] = [
       "Proteína de suero de alta calidad con 24g de proteína por porción. Ideal para la recuperación muscular post-entrenamiento. Sabor delicioso y fácil digestión.",
     price: 295000,
     originalPrice: 295000,
-    image: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=500",
+    image:  "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/basic5lb.jpg",
     images: [
-      "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=500",
+       "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/basic5lb.jpg",
       "https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?w=500",
     ],
     category: "supplements",
@@ -70,12 +71,13 @@ export const products: Product[] = [
     tags: ["bestseller", "proteína", "whey"],
     featured: true,
   },
+  */
    {
     id: '5',
     name: 'Multi vitamínico platinum Muscletech',
     description: 'Complejo vitamínico completo diseñado especialmente para atletas. Con vitaminas, minerales y antioxidantes.',
     price: 24.99,
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500',
+    image:  "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/multivitaminPlatinumMuscletech.jpg",
     category: 'supplements',
     subcategory: 'Vitaminas',
     rating: 4.5,
@@ -89,7 +91,7 @@ export const products: Product[] = [
     name: 'Omega de Now',
     description: 'Aceite de pescado con EPA y DHA de alta concentración. Apoya la salud cardiovascular, cerebral y articular.',
     price: 19.99,
-    image: 'https://images.unsplash.com/photo-1577174881658-0f30ed549adc?w=500',
+     image:  "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/omega3Now.jpg",
     category: 'supplements',
     subcategory: 'Vitaminas',
     rating: 4.7,
@@ -97,7 +99,7 @@ export const products: Product[] = [
     inStock: true,
     tags: ['omega 3', 'salud', 'ácidos grasos'],
     puntosFit: 76,
-  },
+  },/*
 {
     id: '7',
     name: 'Vitamina D3 Simply',
@@ -112,7 +114,7 @@ export const products: Product[] = [
     tags: ['vitamina d3', 'salud', 'inmunidad'],
     puntosFit: 85,
   }, 
- 
+  */
   // Ropa Deportiva
   /*{
     id: '6',
@@ -133,12 +135,13 @@ export const products: Product[] = [
 
   },*/
   {
-    id: '7',
-    name: 'Shorts Compression Pro',
+    id: '8',
+    name: 'Shorts Nike mujer',
     description: 'Shorts de compresión de alto rendimiento. Reduce la fatiga muscular y mejora la circulación durante el ejercicio.',
     price: 42.99,
     originalPrice: 52.99,
-    image: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=500',
+      image:  "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/shortNike.jpg",
+
     category: 'clothing',
     subcategory: 'Shorts',
     rating: 4.7,
@@ -147,7 +150,7 @@ export const products: Product[] = [
     sizes: ['S', 'M', 'L', 'XL'],
     colors: ['Negro', 'Gris'],
     tags: ['compresión', 'rendimiento'],
-    puntosFit: 100
+    puntosFit: 150
   },
   /*
   {

@@ -4,7 +4,7 @@ import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'luci
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300">
-      {/* Newsletter Section */}
+      {/* Newsletter Section 
       <div className="bg-[#cee741]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -32,7 +32,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-
+*/}
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -45,7 +45,7 @@ export default function Footer() {
               <span className="text-xl font-bold text-white">PuntosFit</span>
             </Link>
             <p className="text-gray-400 mb-6">
-              Tu tienda de confianza para suplementos deportivos y ropa de entrenamiento de alta calidad.
+              Suplementos, ropa y accesorios para cada etapa de tu camino.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">

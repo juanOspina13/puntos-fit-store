@@ -25,14 +25,18 @@ export default function HomePage() {
                 🎉 Nuevos productos disponibles
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
-                Transforma tu
-                <span className="text-[#cee741]"> cuerpo</span>,
-                supera tus
+                Usa tus
+                <span className="text-[#cee741]"> Puntos Fit</span>
+                <br />
+                para transformar tu
+                <span className="text-[#cee741]"> cuerpo</span>
+                <br />
+                y superar tus
                 <span className="text-[#cee741]"> límites</span>
               </h1>
               <p className="text-lg text-gray-300 mb-8 max-w-lg">
-                Descubre nuestra colección premium de suplementos deportivos y ropa de entrenamiento. 
-                Calidad garantizada para alcanzar tus metas fitness.
+                Canjea tus puntos por suplementos de alta calidad y ropa deportiva premium. 
+                Tu esfuerzo tiene recompensa, cada entrenamiento cuenta.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Link
@@ -86,7 +90,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Features Bar */}
+      {/* Features Bar 
       <section className="bg-gray-800 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -129,7 +133,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
+*/}
       {/* Categories Section */}
       <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -202,10 +206,10 @@ export default function HomePage() {
                 ⚡ Oferta Especial
               </span>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Obtén 20% de descuento en toda la ropa deportiva
+                Obtén 10% de descuento en toda la ropa deportiva
               </h2>
               <p className="text-gray-800 mb-6">
-                Usa el código <span className="font-bold text-gray-900">FIT20</span> al finalizar tu compra. 
+                Usa el código <span className="font-bold text-gray-900">FITSTORE_GYMCO</span> al finalizar tu compra. 
                 Oferta válida hasta agotar existencias.
               </p>
               <Link
@@ -227,7 +231,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* New Arrivals */}
+      {/* New Arrivals 
       <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
