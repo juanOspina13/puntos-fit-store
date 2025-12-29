@@ -38,7 +38,7 @@ export const products: Product[] = [
   {
     id: '4',
     name: 'Monohidrato Creatina Platinum Muscletech',
-    description: '100% creatina monohidrato micronizada. Aumenta la fuerza, potencia y masa muscular magra.',
+    description: '100% monohidrato de creatina. Aumenta la fuerza, potencia y masa muscular magra.',
     price: 29.99,
     image: "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/platinumCreatineMuscletech.jpg",
     category: 'supplements',

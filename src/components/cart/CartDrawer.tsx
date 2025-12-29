@@ -69,7 +69,7 @@ export default function CartDrawer() {
                       </p>
                     )}
                     <p className="text-[#cee741] font-semibold mt-1">
-                      ${item.product.price.toFixed(2)}
+                      {item.product.puntosFit} Puntos Fit
                     </p>
                     <div className="flex items-center justify-between mt-2">
                       <div className="flex items-center space-x-2">
@@ -113,7 +113,7 @@ export default function CartDrawer() {
               </button>
               <div className="text-right">
                 <p className="text-sm text-gray-500">Subtotal</p>
-                <p className="text-xl font-bold text-white">${totalPrice.toFixed(2)}</p>
+                <p className="text-xl font-bold text-white">{totalPrice} Puntos Fit</p>
               </div>
             </div>
             <Link
@@ -121,13 +121,13 @@ export default function CartDrawer() {
               onClick={() => setIsCartOpen(false)}
               className="block w-full bg-[#cee741] text-gray-900 text-center py-3 rounded-lg font-semibold hover:bg-[#b5cc1a] transition-all"
             >
-              Proceder al Pago
+              Proceder al Pedido
             </Link>
             <button
               onClick={() => setIsCartOpen(false)}
               className="block w-full text-center text-gray-400 hover:text-white transition-colors"
             >
-              Continuar Comprando
+              Continuar añadiendo
             </button>
           </div>
         )}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Star, ShoppingCart, Heart, Truck, Shield, RefreshCw, Minus, Plus, ChevronRight } from 'lucide-react';
+import { ShoppingCart, Heart, Minus, Plus, ChevronRight } from 'lucide-react';
 import { getProductById, products } from '../data/products';
 import { useCart } from '../context/CartContext';
 import ProductGrid from '../components/product/ProductGrid';
@@ -130,7 +130,7 @@ export default function ProductDetailPage() {
               <h1 className="text-3xl font-bold text-white">{product.name}</h1>
             </div>
 
-            {/* Rating */}
+            {/* Rating 
             <div className="flex items-center gap-3">
               <div className="flex items-center">
                 {[...Array(5)].map((_, i) => (
@@ -148,17 +148,13 @@ export default function ProductDetailPage() {
               <span className="text-gray-600">|</span>
               <span className="text-gray-400">{product.reviews} reseñas</span>
             </div>
-
+*/} 
             {/* Price */}
             <div className="flex items-baseline gap-3">
               <span className="text-3xl font-bold text-white">
-                ${product.price.toFixed(2)}
+                {product.puntosFit} Puntos Fit
               </span>
-              {product.originalPrice && (
-                <span className="text-xl text-gray-500 line-through">
-                  ${product.originalPrice.toFixed(2)}
-                </span>
-              )}
+               
             </div>
 
             {/* Description */}
@@ -251,7 +247,7 @@ export default function ProductDetailPage() {
               </button>
             </div>
 
-            {/* Features */}
+            {/* Features 
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-700">
               <div className="text-center">
                 <Truck className="w-6 h-6 text-[#cee741] mx-auto mb-2" />
@@ -266,6 +262,7 @@ export default function ProductDetailPage() {
                 <p className="text-sm text-gray-400">30 días devolución</p>
               </div>
             </div>
+            */}
           </div>
         </div>
 

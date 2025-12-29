@@ -1,23 +1,65 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { CreditCard, Truck, Lock, ChevronRight, Check } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Lock, ChevronRight, Check } from "lucide-react";
+import { useCart } from "../context/CartContext";
 
 export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCart();
   const [step, setStep] = useState(1);
   const [orderComplete, setOrderComplete] = useState(false);
+  const [formData, setFormData] = useState({
+    nombre: "",
+    apellido: "",
+    email: "",
+    telefono: "",
+    direccion: "",
+    ciudad: "",
+    codigoPostal: "",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const shipping = totalPrice >= 50 ? 0 : 9.99;
-  const tax = totalPrice * 0.08;
+  const tax = totalPrice * 0;
   const total = totalPrice + shipping + tax;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (step < 3) {
+    if (step < 2) {
       setStep(step + 1);
     } else {
       setOrderComplete(true);
+      const encodedFormData = {
+        nombre: encodeURIComponent(formData.nombre),
+        apellido: encodeURIComponent(formData.apellido),
+        email: encodeURIComponent(formData.email),
+        telefono: encodeURIComponent(formData.telefono),
+        direccion: encodeURIComponent(formData.direccion),
+        ciudad: encodeURIComponent(formData.ciudad),
+        codigoPostal: encodeURIComponent(formData.codigoPostal),
+      };
+      console.log(encodedFormData);
+      const orderDetails = `*Datos del cliente:*%0ANombre: ${encodedFormData.nombre} ${
+        encodedFormData.apellido
+      }%0ATeléfono: ${encodedFormData.telefono}%0A%0A*Dirección de envío:*%0A${
+        encodedFormData.direccion
+      }, ${encodedFormData.ciudad}, ${
+        encodedFormData.codigoPostal
+      }%0A%0A*Productos:*%0A${items
+        .map(
+          (item) =>
+            `• ${item.product.name} x${item.quantity} - ${
+              item.product.puntosFit * item.quantity
+            } Puntos Fit`
+        )
+        .join("%0A")}`;
+
+      const message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0ATotal: ${total} Puntos Fit%0A%0A¡Gracias!`;
+
+      window.open(`https://wa.me/573169847703?text=${message}`, "_blank");
       clearCart();
     }
   };
@@ -29,13 +71,17 @@ export default function CheckoutPage() {
           <div className="w-20 h-20 bg-green-900/50 rounded-full flex items-center justify-center mx-auto mb-6">
             <Check className="w-10 h-10 text-green-400" />
           </div>
-          <h1 className="text-2xl font-bold text-white mb-2">¡Pedido Completado!</h1>
+          <h1 className="text-2xl font-bold text-white mb-2">
+            ¡Pedido Completado!
+          </h1>
           <p className="text-gray-400 mb-6">
-            Gracias por tu compra. Recibirás un correo con los detalles de tu pedido.
+            Gracias por tu pedido. Pronto recibirás un mensaje de WhatsApp con
+            todos los detalles para confirmar tu compra.
           </p>
-          <p className="text-sm text-gray-500 mb-6">
+          {/*<p className="text-sm text-gray-500 mb-6">
             Número de pedido: <span className="font-semibold text-white">#PF-{Date.now()}</span>
           </p>
+          */}
           <Link
             to="/"
             className="block w-full bg-[#cee741] text-gray-900 py-3 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-colors"
@@ -51,7 +97,9 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">Tu carrito está vacío</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Tu carrito está vacío
+          </h2>
           <Link to="/products" className="text-[#cee741] hover:underline">
             Explorar productos
           </Link>
@@ -83,17 +131,26 @@ export default function CheckoutPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Steps */}
         <div className="flex items-center justify-center mb-12">
-          {['Información', 'Envío', 'Pago'].map((label, index) => (
+          {["Información", "Envío", "Pago"].map((label, index) => (
             <div key={label} className="flex items-center">
-              <div className={`flex items-center justify-center w-8 h-8 rounded-full font-semibold text-sm ${
-                step > index + 1 ? 'bg-green-500 text-white' :
-                step === index + 1 ? 'bg-[#cee741] text-gray-900' : 'bg-gray-700 text-gray-400'
-              }`}>
+              <div
+                className={`flex items-center justify-center w-8 h-8 rounded-full font-semibold text-sm ${
+                  step > index + 1
+                    ? "bg-green-500 text-white"
+                    : step === index + 1
+                    ? "bg-[#cee741] text-gray-900"
+                    : "bg-gray-700 text-gray-400"
+                }`}
+              >
                 {step > index + 1 ? <Check className="w-4 h-4" /> : index + 1}
               </div>
-              <span className={`ml-2 text-sm font-medium ${
-                step >= index + 1 ? 'text-white' : 'text-gray-500'
-              }`}>{label}</span>
+              <span
+                className={`ml-2 text-sm font-medium ${
+                  step >= index + 1 ? "text-white" : "text-gray-500"
+                }`}
+              >
+                {label}
+              </span>
               {index < 2 && (
                 <ChevronRight className="w-5 h-5 text-gray-600 mx-4" />
               )}
@@ -104,24 +161,39 @@ export default function CheckoutPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Form */}
           <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit} className="bg-gray-800 rounded-2xl shadow-sm p-6 space-y-6 border border-gray-700">
+            <form
+              onSubmit={handleSubmit}
+              className="bg-gray-800 rounded-2xl shadow-sm p-6 space-y-6 border border-gray-700"
+            >
               {step === 1 && (
                 <>
-                  <h2 className="text-xl font-semibold text-white mb-4">Información de Contacto</h2>
+                  <h2 className="text-xl font-semibold text-white mb-4">
+                    Información de Contacto
+                  </h2>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">Nombre</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        Nombre
+                      </label>
                       <input
                         type="text"
+                        name="nombre"
+                        value={formData.nombre}
+                        onChange={handleInputChange}
                         required
                         className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                         placeholder="Tu nombre"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">Apellido</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        Apellido
+                      </label>
                       <input
                         type="text"
+                        name="apellido"
+                        value={formData.apellido}
+                        onChange={handleInputChange}
                         required
                         className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                         placeholder="Tu apellido"
@@ -129,21 +201,31 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Email
+                    </label>
                     <input
                       type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                       placeholder="tu@email.com"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Teléfono</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Teléfono
+                    </label>
                     <input
                       type="tel"
+                      name="telefono"
+                      value={formData.telefono}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
-                      placeholder="+1 234 567 890"
+                      placeholder="3122038196"
                     />
                   </div>
                 </>
@@ -151,11 +233,18 @@ export default function CheckoutPage() {
 
               {step === 2 && (
                 <>
-                  <h2 className="text-xl font-semibold text-white mb-4">Dirección de Envío</h2>
+                  <h2 className="text-xl font-semibold text-white mb-4">
+                    Dirección de Envío
+                  </h2>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Dirección</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Dirección
+                    </label>
                     <input
                       type="text"
+                      name="direccion"
+                      value={formData.direccion}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                       placeholder="Calle y número"
@@ -163,18 +252,28 @@ export default function CheckoutPage() {
                   </div>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">Ciudad</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        Ciudad
+                      </label>
                       <input
                         type="text"
+                        name="ciudad"
+                        value={formData.ciudad}
+                        onChange={handleInputChange}
                         required
                         className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                         placeholder="Tu ciudad"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">Código Postal</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        Código Postal
+                      </label>
                       <input
                         type="text"
+                        name="codigoPostal"
+                        value={formData.codigoPostal}
+                        onChange={handleInputChange}
                         required
                         className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
                         placeholder="12345"
@@ -182,15 +281,14 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">País</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      País
+                    </label>
                     <select className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741]">
-                      <option>México</option>
                       <option>Colombia</option>
-                      <option>Argentina</option>
-                      <option>España</option>
                     </select>
                   </div>
-                  <div className="flex items-center gap-4 p-4 bg-[#cee741]/20 rounded-xl border border-[#cee741]/30">
+                  {/* Shipping Method <div className="flex items-center gap-4 p-4 bg-[#cee741]/20 rounded-xl border border-[#cee741]/30">
                     <Truck className="w-6 h-6 text-[#cee741]" />
                     <div>
                       <p className="font-medium text-white">Envío estándar (5-7 días)</p>
@@ -199,54 +297,7 @@ export default function CheckoutPage() {
                       </p>
                     </div>
                   </div>
-                </>
-              )}
-
-              {step === 3 && (
-                <>
-                  <h2 className="text-xl font-semibold text-white mb-4">Información de Pago</h2>
-                  <div className="flex items-center gap-4 p-4 bg-gray-700 rounded-xl mb-4">
-                    <CreditCard className="w-6 h-6 text-gray-300" />
-                    <span className="font-medium text-white">Tarjeta de Crédito/Débito</span>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Número de Tarjeta</label>
-                    <input
-                      type="text"
-                      required
-                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
-                      placeholder="1234 5678 9012 3456"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">Fecha de Expiración</label>
-                      <input
-                        type="text"
-                        required
-                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
-                        placeholder="MM/YY"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">CVV</label>
-                      <input
-                        type="text"
-                        required
-                        className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
-                        placeholder="123"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">Nombre en la Tarjeta</label>
-                    <input
-                      type="text"
-                      required
-                      className="w-full px-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-400"
-                      placeholder="NOMBRE APELLIDO"
-                    />
-                  </div>
+                  */}
                 </>
               )}
 
@@ -264,7 +315,7 @@ export default function CheckoutPage() {
                   type="submit"
                   className="flex-1 bg-[#cee741] text-gray-900 py-3 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-all"
                 >
-                  {step === 3 ? 'Completar Pedido' : 'Continuar'}
+                  {step === 2 ? "Completar Pedido" : "Continuar"}
                 </button>
               </div>
             </form>
@@ -273,8 +324,10 @@ export default function CheckoutPage() {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-gray-800 rounded-2xl shadow-sm p-6 sticky top-24 border border-gray-700">
-              <h2 className="text-lg font-semibold text-white mb-4">Resumen del Pedido</h2>
-              
+              <h2 className="text-lg font-semibold text-white mb-4">
+                Resumen del Pedido
+              </h2>
+
               <div className="space-y-4 mb-6">
                 {items.map((item) => (
                   <div key={item.product.id} className="flex gap-4">
@@ -284,10 +337,14 @@ export default function CheckoutPage() {
                       className="w-16 h-16 object-cover rounded-lg"
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{item.product.name}</p>
-                      <p className="text-sm text-gray-400">Cant: {item.quantity}</p>
+                      <p className="text-sm font-medium text-white truncate">
+                        {item.product.name}
+                      </p>
+                      <p className="text-sm text-gray-400">
+                        Cant: {item.quantity}
+                      </p>
                       <p className="text-sm font-semibold text-[#cee741]">
-                        ${(item.product.price * item.quantity).toFixed(2)}
+                        {item.product.puntosFit * item.quantity} Puntos Fit
                       </p>
                     </div>
                   </div>
@@ -297,21 +354,20 @@ export default function CheckoutPage() {
               <div className="border-t border-gray-700 pt-4 space-y-3">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Subtotal</span>
-                  <span className="font-medium text-white">${totalPrice.toFixed(2)}</span>
+                  <span className="font-medium text-white">
+                    ${totalPrice.toFixed(2)}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Envío</span>
                   <span className="font-medium text-white">
-                    {shipping === 0 ? 'Gratis' : `$${shipping.toFixed(2)}`}
+                    {shipping === 0 ? "Gratis" : `$${shipping.toFixed(2)}`}
                   </span>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Impuestos</span>
-                  <span className="font-medium text-white">${tax.toFixed(2)}</span>
-                </div>
+
                 <div className="flex justify-between text-lg font-bold border-t border-gray-700 pt-3">
                   <span className="text-white">Total</span>
-                  <span className="text-[#cee741]">${total.toFixed(2)}</span>
+                  <span className="text-[#cee741]">{total} Puntos Fit</span>
                 </div>
               </div>
             </div>
