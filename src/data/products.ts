@@ -34,7 +34,7 @@ export const categories: Category[] = [
 
 export const products: Product[] = [
   // Suplementos
- 
+
   {
     id: '4',
     name: 'Monohidrato Creatina Platinum Muscletech',
@@ -49,8 +49,8 @@ export const products: Product[] = [
     tags: ['creatina', 'fuerza', 'bestseller'],
     puntosFit: 110,
   },
-  /*
-   {
+
+  {
     puntosFit: 242,
     id: "1",
     name: "Whey Protein Basic 5 lbs",
@@ -71,8 +71,7 @@ export const products: Product[] = [
     tags: ["bestseller", "proteína", "whey"],
     featured: true,
   },
-  */
-   {
+  {
     id: '5',
     name: 'Multi vitamínico platinum Muscletech',
     description: 'Complejo vitamínico completo diseñado especialmente para atletas. Con vitaminas, minerales y antioxidantes.',
@@ -86,12 +85,12 @@ export const products: Product[] = [
     tags: ['vitaminas', 'salud'],
     puntosFit: 58
   },
-{
+  {
     id: '6',
     name: 'Omega de Now',
     description: 'Aceite de pescado con EPA y DHA de alta concentración. Apoya la salud cardiovascular, cerebral y articular.',
     price: 19.99,
-     image:  "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/omega3Now.jpg",
+    image:  "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/omega3Now.jpg",
     category: 'supplements',
     subcategory: 'Vitaminas',
     rating: 4.7,
@@ -99,13 +98,42 @@ export const products: Product[] = [
     inStock: true,
     tags: ['omega 3', 'salud', 'ácidos grasos'],
     puntosFit: 76,
-  },/*
-{
+  },
+  {
     id: '7',
-    name: 'Vitamina D3 Simply',
+    name: 'Vitamina D3 Simpli',
     description: 'Vitamina D3 de alta potencia para apoyar la salud ósea, inmunológica y muscular. Fácil absorción.',
     price: 15.99,
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500',
+    image:  "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/simpli.jpg",
+    category: 'supplements',
+    subcategory: 'Vitaminas',
+    rating: 4.6,
+    reviews: 328,
+    inStock: true,
+    tags: ['vitamina d3', 'salud', 'inmunidad'],
+    puntosFit: 85,
+  },
+  {
+    id: '8',
+    name: 'Lipodrene Quemador de Grasa',
+    description: 'Potente quemador de grasa con ingredientes termogénicos para apoyar la pérdida de peso y energía durante el entrenamiento.',
+    price: 39.99,
+    image: 'https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/lipodrene1.jpg',
+    category: 'supplements',
+    subcategory: 'Quemadores',
+    rating: 4.7,
+    reviews: 512,
+    inStock: true,
+    tags: ['quemador', 'lipodrene', 'termogénico', 'energía'],
+    puntosFit: 115,
+  },
+  /*
+{
+    id: '7',
+    name: 'Vitamina D3 Simpli',
+    description: 'Vitamina D3 de alta potencia para apoyar la salud ósea, inmunológica y muscular. Fácil absorción.',
+    price: 15.99,
+     image:  "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/simpli.jpg",
     category: 'supplements',
     subcategory: 'Vitaminas',
     rating: 4.6,
