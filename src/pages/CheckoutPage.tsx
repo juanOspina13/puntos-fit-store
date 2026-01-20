@@ -13,7 +13,7 @@ export default function CheckoutPage() {
     setPaymentMethod,
     tokensToUse,
     setTokensToUse,
-    partialPriceCash
+    partialPriceCash,
   } = useCart();
   const [step, setStep] = useState(1);
 
@@ -67,9 +67,12 @@ export default function CheckoutPage() {
       }%0A%0A*Productos:*%0A${items
         .map(
           (item) =>
-            `• ${item.product.name} x${item.quantity} - ${
-              (item.product.price * item.quantity).toLocaleString("es-CO", { style: "currency", currency: "COP" })
-            } `,
+            `• ${item.product.name} x${item.quantity} - ${(
+              item.product.price * item.quantity
+            ).toLocaleString("es-CO", {
+              style: "currency",
+              currency: "COP",
+            })} `,
         )
         .join("%0A")}`;
 
@@ -83,17 +86,17 @@ export default function CheckoutPage() {
       }
 
       let message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0APagará: ${tokensToUse} Puntos Fit y $${splitAmount.dinero.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} en Dinero.%0A%0A¡Gracias!`;
-      let mensajePago = "";
+      // let mensajePago = "";
       if (paymentMethod === "puntos") {
         message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0A¡Gracias!`;
 
-        mensajePago = "Pagará el total usando únicamente Puntos Fit.";
+        // mensajePago = "Pagará el total usando únicamente Puntos Fit.";
       } else if (paymentMethod === "dinero") {
         message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0A¡Gracias!`;
 
-        mensajePago = "Pagará el total usando únicamente Dinero.";
+        // mensajePago = "Pagará el total usando únicamente Dinero.";
       } else {
-        mensajePago = `Pagará usando ${tokensToUse} Puntos Fit y $${splitAmount.dinero.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} en Dinero.`;
+        //        mensajePago = `Pagará usando ${tokensToUse} Puntos Fit y $${splitAmount.dinero.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} en Dinero.`;
       }
 
       window.open(`https://wa.me/573169847703?text=${message}`, "_blank");
@@ -400,14 +403,26 @@ export default function CheckoutPage() {
                           setTokensToUse(puntos);
                           setSplitAmount({
                             puntos,
-                            dinero: +(totalPriceCash - (puntos * 1300)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                            dinero: +(
+                              totalPriceCash -
+                              puntos * 1300
+                            ).toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }),
                           });
                         }}
                         className="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741]"
                       />
                       <div className="flex justify-between text-sm text-gray-400">
                         <span>Puntos Fit: {splitAmount.puntos}</span>
-                        <span>Dinero: ${partialPriceCash.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span>
+                          Dinero: $
+                          {partialPriceCash.toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </span>
                       </div>
                     </div>
                   )}
