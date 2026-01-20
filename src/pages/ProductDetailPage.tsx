@@ -152,7 +152,7 @@ export default function ProductDetailPage() {
             {/* Price */}
             <div className="flex items-baseline gap-3">
               <span className="text-3xl font-bold text-white">
-                {product.puntosFit} Puntos Fit
+                {product.puntosFit} Puntos Fit / {product.price.toLocaleString("es-CO", { style: "currency", currency: "COP" })}
               </span>
                
             </div>

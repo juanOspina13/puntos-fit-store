@@ -4,8 +4,19 @@ import { Lock, ChevronRight, Check } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 export default function CheckoutPage() {
-  const { items, totalPrice, clearCart } = useCart();
+  const {
+    items,
+    totalPrice,
+    clearCart,
+    totalPriceCash,
+    paymentMethod,
+    setPaymentMethod,
+    tokensToUse,
+    setTokensToUse,
+    partialPriceCash
+  } = useCart();
   const [step, setStep] = useState(1);
+
   const [orderComplete, setOrderComplete] = useState(false);
   const [formData, setFormData] = useState({
     nombre: "",
@@ -15,6 +26,12 @@ export default function CheckoutPage() {
     direccion: "",
     ciudad: "",
     codigoPostal: "",
+  });
+
+  // Si es mixto, cuánto en puntos y cuánto en dinero
+  const [splitAmount, setSplitAmount] = useState({
+    puntos: tokensToUse,
+    dinero: partialPriceCash,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +58,6 @@ export default function CheckoutPage() {
         ciudad: encodeURIComponent(formData.ciudad),
         codigoPostal: encodeURIComponent(formData.codigoPostal),
       };
-      console.log(encodedFormData);
       const orderDetails = `*Datos del cliente:*%0ANombre: ${encodedFormData.nombre} ${
         encodedFormData.apellido
       }%0ATeléfono: ${encodedFormData.telefono}%0A%0A*Dirección de envío:*%0A${
@@ -52,12 +68,33 @@ export default function CheckoutPage() {
         .map(
           (item) =>
             `• ${item.product.name} x${item.quantity} - ${
-              item.product.puntosFit * item.quantity
-            } Puntos Fit`
+              (item.product.price * item.quantity).toLocaleString("es-CO", { style: "currency", currency: "COP" })
+            } `,
         )
         .join("%0A")}`;
 
-      const message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0ATotal: ${total} Puntos Fit%0A%0A¡Gracias!`;
+      let pagoDetalle = "";
+      if (paymentMethod === "puntos") {
+        pagoDetalle = `*Pago:*%0A100% en Puntos Fit (${total} Puntos Fit)`;
+      } else if (paymentMethod === "dinero") {
+        pagoDetalle = `*Pago:*%0A100% en Dinero ($${totalPriceCash.toFixed(2)})`;
+      } else {
+        pagoDetalle = `*Pago:*%0A${splitAmount.puntos} Puntos Fit y $${splitAmount.dinero.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} en Dinero`;
+      }
+
+      let message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0APagará: ${tokensToUse} Puntos Fit y $${splitAmount.dinero.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} en Dinero.%0A%0A¡Gracias!`;
+      let mensajePago = "";
+      if (paymentMethod === "puntos") {
+        message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0A¡Gracias!`;
+
+        mensajePago = "Pagará el total usando únicamente Puntos Fit.";
+      } else if (paymentMethod === "dinero") {
+        message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0A¡Gracias!`;
+
+        mensajePago = "Pagará el total usando únicamente Dinero.";
+      } else {
+        mensajePago = `Pagará usando ${tokensToUse} Puntos Fit y $${splitAmount.dinero.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} en Dinero.`;
+      }
 
       window.open(`https://wa.me/573169847703?text=${message}`, "_blank");
       clearCart();
@@ -138,8 +175,8 @@ export default function CheckoutPage() {
                   step > index + 1
                     ? "bg-green-500 text-white"
                     : step === index + 1
-                    ? "bg-[#cee741] text-gray-900"
-                    : "bg-gray-700 text-gray-400"
+                      ? "bg-[#cee741] text-gray-900"
+                      : "bg-gray-700 text-gray-400"
                 }`}
               >
                 {step > index + 1 ? <Check className="w-4 h-4" /> : index + 1}
@@ -301,6 +338,81 @@ export default function CheckoutPage() {
                 </>
               )}
 
+              {/* Selección de método de pago */}
+              {step === 2 && (
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-white mb-2">
+                    Método de pago
+                  </label>
+                  <div className="flex flex-col gap-2">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="puntos"
+                        checked={paymentMethod === "puntos"}
+                        onChange={() => setPaymentMethod("puntos")}
+                        className="accent-[#cee741]"
+                      />
+                      <span>100% Puntos Fit</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="dinero"
+                        checked={paymentMethod === "dinero"}
+                        onChange={() => setPaymentMethod("dinero")}
+                        className="accent-[#cee741]"
+                      />
+                      <span>100% Dinero</span>
+                    </label>
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="mixto"
+                        checked={paymentMethod === "mixto"}
+                        onChange={() => {
+                          setPaymentMethod("mixto");
+                          setSplitAmount({
+                            puntos: Math.round(total / 2),
+                            dinero: +(total / 2).toFixed(2),
+                          });
+                        }}
+                        className="accent-[#cee741]"
+                      />
+                      <span>Parte en Puntos y parte en Dinero</span>
+                    </label>
+                  </div>
+                  {paymentMethod === "mixto" && (
+                    <div className="mt-3 flex flex-col gap-2">
+                      <label className="text-sm text-gray-300">
+                        ¿Cuántos Puntos Fit quieres usar?
+                      </label>
+                      <input
+                        type="number"
+                        min={0}
+                        max={total}
+                        value={tokensToUse}
+                        onChange={(e) => {
+                          const puntos = Number(e.target.value);
+                          setTokensToUse(puntos);
+                          setSplitAmount({
+                            puntos,
+                            dinero: +(totalPriceCash - (puntos * 1300)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                          });
+                        }}
+                        className="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741]"
+                      />
+                      <div className="flex justify-between text-sm text-gray-400">
+                        <span>Puntos Fit: {splitAmount.puntos}</span>
+                        <span>Dinero: ${partialPriceCash.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
               <div className="flex gap-4 pt-4">
                 {step > 1 && (
                   <button
@@ -343,9 +455,28 @@ export default function CheckoutPage() {
                       <p className="text-sm text-gray-400">
                         Cant: {item.quantity}
                       </p>
-                      <p className="text-sm font-semibold text-[#cee741]">
-                        {item.product.puntosFit * item.quantity} Puntos Fit
-                      </p>
+                      {paymentMethod == "puntos" && (
+                        <p className="text-sm font-semibold text-[#cee741]">
+                          {item.product.puntosFit * item.quantity} Puntos Fit
+                        </p>
+                      )}
+                      {paymentMethod == "dinero" && (
+                        <p className="text-sm font-semibold text-[#cee741]">
+                          {(item.product.price * item.quantity).toLocaleString(
+                            "es-CO",
+                            { style: "currency", currency: "COP" },
+                          )}
+                        </p>
+                      )}
+
+                      {paymentMethod == "mixto" && (
+                        <p className="text-sm font-semibold text-[#cee741]">
+                          {(item.product.price * item.quantity).toLocaleString(
+                            "es-CO",
+                            { style: "currency", currency: "COP" },
+                          )}
+                        </p>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -354,22 +485,63 @@ export default function CheckoutPage() {
               <div className="border-t border-gray-700 pt-4 space-y-3">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Subtotal</span>
-                  <span className="font-medium text-white">
-                    ${totalPrice.toFixed(2)}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Envío</span>
-                  <span className="font-medium text-white">
-                    {shipping === 0 ? "Gratis" : `$${shipping.toFixed(2)}`}
-                  </span>
+                  {paymentMethod === "puntos" && (
+                    <span className="font-medium text-white">
+                      {totalPrice} Puntos Fit
+                    </span>
+                  )}
+                  {paymentMethod === "dinero" && (
+                    <span className="font-medium text-white">
+                      {totalPriceCash.toLocaleString("es-CO", {
+                        style: "currency",
+                        currency: "COP",
+                      })}
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex justify-between text-lg font-bold border-t border-gray-700 pt-3">
                   <span className="text-white">Total</span>
-                  <span className="text-[#cee741]">{total} Puntos Fit</span>
+
+                  {paymentMethod === "puntos" && (
+                    <span className="text-[#cee741]">{total} Puntos Fit</span>
+                  )}
+                  {paymentMethod === "dinero" && (
+                    <span className="text-[#cee741]">
+                      {totalPriceCash.toLocaleString("es-CO", {
+                        style: "currency",
+                        currency: "COP",
+                      })}{" "}
+                    </span>
+                  )}
                 </div>
               </div>
+              {paymentMethod === "puntos" && (
+                <div className="mt-4 text-sm text-gray-300">
+                  <span className="font-semibold">Pago:</span> 100% en{" "}
+                  <span className="text-[#cee741]">Puntos Fit</span> ({total}{" "}
+                  Puntos Fit)
+                </div>
+              )}
+              {paymentMethod === "dinero" && (
+                <div className="mt-4 text-sm text-gray-300">
+                  <span className="font-semibold">Pago:</span> 100% en{" "}
+                  <span className="text-[#cee741]">Dinero</span> (
+                  {totalPriceCash.toLocaleString("es-CO", {
+                    style: "currency",
+                    currency: "COP",
+                  })}
+                  )
+                </div>
+              )}
+              {paymentMethod === "mixto" && (
+                <div className="mt-4 text-sm text-gray-300">
+                  <span className="font-semibold">Pago:</span> {tokensToUse}{" "}
+                  <span className="text-[#cee741]">Puntos Fit</span> y $
+                  {splitAmount.dinero.toFixed(2)}{" "}
+                  <span className="text-[#cee741]">Dinero</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
