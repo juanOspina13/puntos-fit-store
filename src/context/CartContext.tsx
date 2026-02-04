@@ -1,3 +1,5 @@
+"use client";
+
 import {
   createContext,
   useContext,
@@ -5,7 +7,7 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
-import type { CartItem, Product } from "../types";
+import type { CartItem, Product } from "@/types";
 
 interface CartContextType {
   items: CartItem[];
@@ -22,7 +24,7 @@ interface CartContextType {
   totalPrice: number;
   totalPriceCash: number;
   partialPriceCash: number;
-  paymentMethod: "puntos" | "dinero" | "mixto"; 
+  paymentMethod: "puntos" | "dinero" | "mixto";
   setPaymentMethod: (method: "puntos" | "dinero" | "mixto") => void;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
@@ -33,16 +35,27 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(() => {
-    const saved = localStorage.getItem("cart");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [items, setItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [tokensToUse, setTokensToUse] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState<"puntos" | "dinero" | "mixto">("puntos");
+  const [isHydrated, setIsHydrated] = useState(false);
 
+  // Hidratación del carrito desde localStorage
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(items));
-  }, [items]);
+    const saved = localStorage.getItem("cart");
+    if (saved) {
+      setItems(JSON.parse(saved));
+    }
+    setIsHydrated(true);
+  }, []);
+
+  // Guardar el carrito en localStorage
+  useEffect(() => {
+    if (isHydrated) {
+      localStorage.setItem("cart", JSON.stringify(items));
+    }
+  }, [items, isHydrated]);
 
   const addToCart = (
     product: Product,
@@ -112,9 +125,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     items.reduce((sum, item) => sum + item.product.price * item.quantity, 0) -
     tokensToUse * 1300;
 
-  const [paymentMethod, setPaymentMethod] = useState<
-    "puntos" | "dinero" | "mixto"
-  >("puntos");
   return (
     <CartContext.Provider
       value={{
@@ -131,9 +141,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         isCartOpen,
         setIsCartOpen,
         paymentMethod,
-         setPaymentMethod,
-         tokensToUse
-
+        setPaymentMethod,
+        tokensToUse,
       }}
     >
       {children}

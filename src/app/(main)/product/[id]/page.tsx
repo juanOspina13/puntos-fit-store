@@ -1,26 +1,39 @@
-import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ShoppingCart, Heart, Minus, Plus, ChevronRight } from 'lucide-react';
-import { getProductById, products } from '../data/products';
-import { useCart } from '../context/CartContext';
-import ProductGrid from '../components/product/ProductGrid';
+"use client";
 
-export default function ProductDetailPage() {
-  const { id } = useParams<{ id: string }>();
-  const product = getProductById(id || '');
+import { useState, use } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { ShoppingCart, Heart, Minus, Plus, ChevronRight } from "lucide-react";
+import { getProductById, products } from "@/data/products";
+import { useCart } from "@/context/CartContext";
+import ProductGrid from "@/components/product/ProductGrid";
+
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default function ProductDetailPage({ params }: PageProps) {
+  const { id } = use(params);
+  const product = getProductById(id);
   const { addToCart } = useCart();
-  
+
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedSize, setSelectedSize] = useState<string | undefined>(product?.sizes?.[0]);
-  const [selectedColor, setSelectedColor] = useState<string | undefined>(product?.colors?.[0]);
+  const [selectedSize, setSelectedSize] = useState<string | undefined>(
+    product?.sizes?.[0]
+  );
+  const [selectedColor, setSelectedColor] = useState<string | undefined>(
+    product?.colors?.[0]
+  );
   const [quantity, setQuantity] = useState(1);
 
   if (!product) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">Producto no encontrado</h2>
-          <Link to="/products" className="text-[#cee741] hover:underline">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            Producto no encontrado
+          </h2>
+          <Link href="/products" className="text-[#cee741] hover:underline">
             Volver a productos
           </Link>
         </div>
@@ -30,11 +43,13 @@ export default function ProductDetailPage() {
 
   const images = product.images || [product.image];
   const relatedProducts = products
-    .filter(p => p.category === product.category && p.id !== product.id)
+    .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4);
 
-  const discount = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+  const discount = product.originalPrice
+    ? Math.round(
+        ((product.originalPrice - product.price) / product.originalPrice) * 100
+      )
     : 0;
 
   const handleAddToCart = () => {
@@ -43,19 +58,19 @@ export default function ProductDetailPage() {
 
   const getColorStyle = (color: string) => {
     const colorMap: { [key: string]: string } = {
-      'Negro': '#000',
-      'Blanco': '#fff',
-      'Azul': '#3B82F6',
-      'Rojo': '#EF4444',
-      'Gris': '#9CA3AF',
-      'Morado': '#8B5CF6',
-      'Verde': '#10B981',
-      'Rosa': '#EC4899',
-      'Azul Marino': '#1E3A8A',
-      'Marrón': '#92400E',
-      'Negro/Rojo': 'linear-gradient(135deg, #000 50%, #EF4444 50%)'
+      Negro: "#000",
+      Blanco: "#fff",
+      Azul: "#3B82F6",
+      Rojo: "#EF4444",
+      Gris: "#9CA3AF",
+      Morado: "#8B5CF6",
+      Verde: "#10B981",
+      Rosa: "#EC4899",
+      "Azul Marino": "#1E3A8A",
+      Marrón: "#92400E",
+      "Negro/Rojo": "linear-gradient(135deg, #000 50%, #EF4444 50%)",
     };
-    return colorMap[color] || '#ccc';
+    return colorMap[color] || "#ccc";
   };
 
   return (
@@ -64,16 +79,28 @@ export default function ProductDetailPage() {
       <div className="bg-gray-800 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <nav className="flex items-center text-sm text-gray-400">
-            <Link to="/" className="hover:text-[#cee741]">Inicio</Link>
-            <ChevronRight className="w-4 h-4 mx-2" />
-            <Link to="/products" className="hover:text-[#cee741]">Productos</Link>
-            <ChevronRight className="w-4 h-4 mx-2" />
-            <Link to={`/products?category=${product.category}`} className="hover:text-[#cee741] capitalize">
-              {product.category === 'supplements' ? 'Suplementos' : 
-               product.category === 'clothing' ? 'Ropa' : 'Accesorios'}
+            <Link href="/" className="hover:text-[#cee741]">
+              Inicio
             </Link>
             <ChevronRight className="w-4 h-4 mx-2" />
-            <span className="text-white font-medium truncate">{product.name}</span>
+            <Link href="/products" className="hover:text-[#cee741]">
+              Productos
+            </Link>
+            <ChevronRight className="w-4 h-4 mx-2" />
+            <Link
+              href={`/products?category=${product.category}`}
+              className="hover:text-[#cee741] capitalize"
+            >
+              {product.category === "supplements"
+                ? "Suplementos"
+                : product.category === "clothing"
+                  ? "Ropa"
+                  : "Accesorios"}
+            </Link>
+            <ChevronRight className="w-4 h-4 mx-2" />
+            <span className="text-white font-medium truncate">
+              {product.name}
+            </span>
           </nav>
         </div>
       </div>
@@ -82,11 +109,12 @@ export default function ProductDetailPage() {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Images */}
           <div className="space-y-4">
-            <div className="aspect-square bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-700">
-              <img
+            <div className="relative aspect-square bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-700">
+              <Image
                 src={images[selectedImage]}
                 alt={product.name}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
             </div>
             {images.length > 1 && (
@@ -95,11 +123,18 @@ export default function ProductDetailPage() {
                   <button
                     key={index}
                     onClick={() => setSelectedImage(index)}
-                    className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
-                      selectedImage === index ? 'border-[#cee741]' : 'border-gray-700'
+                    className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
+                      selectedImage === index
+                        ? "border-[#cee741]"
+                        : "border-gray-700"
                     }`}
                   >
-                    <img src={image} alt="" className="w-full h-full object-cover" />
+                    <Image
+                      src={image}
+                      alt=""
+                      fill
+                      className="object-cover"
+                    />
                   </button>
                 ))}
               </div>
@@ -130,35 +165,21 @@ export default function ProductDetailPage() {
               <h1 className="text-3xl font-bold text-white">{product.name}</h1>
             </div>
 
-            {/* Rating 
-            <div className="flex items-center gap-3">
-              <div className="flex items-center">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-5 h-5 ${
-                      i < Math.floor(product.rating)
-                        ? 'text-yellow-400 fill-yellow-400'
-                        : 'text-gray-600'
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-gray-400">{product.rating}</span>
-              <span className="text-gray-600">|</span>
-              <span className="text-gray-400">{product.reviews} reseñas</span>
-            </div>
-*/} 
             {/* Price */}
             <div className="flex items-baseline gap-3">
               <span className="text-3xl font-bold text-white">
-                {product.puntosFit} Puntos Fit / {product.price.toLocaleString("es-CO", { style: "currency", currency: "COP" })}
+                {product.puntosFit} Puntos Fit /{" "}
+                {product.price.toLocaleString("es-CO", {
+                  style: "currency",
+                  currency: "COP",
+                })}
               </span>
-               
             </div>
 
             {/* Description */}
-            <p className="text-gray-400 leading-relaxed">{product.description}</p>
+            <p className="text-gray-400 leading-relaxed">
+              {product.description}
+            </p>
 
             {/* Size Selector */}
             {product.sizes && product.sizes.length > 0 && (
@@ -173,8 +194,8 @@ export default function ProductDetailPage() {
                       onClick={() => setSelectedSize(size)}
                       className={`px-4 py-2 rounded-lg border-2 font-medium transition-colors ${
                         selectedSize === size
-                          ? 'border-[#cee741] bg-[#cee741]/20 text-[#cee741]'
-                          : 'border-gray-700 text-gray-300 hover:border-gray-600'
+                          ? "border-[#cee741] bg-[#cee741]/20 text-[#cee741]"
+                          : "border-gray-700 text-gray-300 hover:border-gray-600"
                       }`}
                     >
                       {size}
@@ -188,7 +209,8 @@ export default function ProductDetailPage() {
             {product.colors && product.colors.length > 0 && (
               <div>
                 <label className="block text-sm font-medium text-white mb-3">
-                  Color: <span className="text-[#cee741]">{selectedColor}</span>
+                  Color:{" "}
+                  <span className="text-[#cee741]">{selectedColor}</span>
                 </label>
                 <div className="flex flex-wrap gap-3">
                   {product.colors.map((color) => (
@@ -197,12 +219,15 @@ export default function ProductDetailPage() {
                       onClick={() => setSelectedColor(color)}
                       className={`w-10 h-10 rounded-full border-2 transition-all ${
                         selectedColor === color
-                          ? 'border-[#cee741] ring-2 ring-[#cee741]/50'
-                          : 'border-gray-600 hover:border-gray-500'
+                          ? "border-[#cee741] ring-2 ring-[#cee741]/50"
+                          : "border-gray-600 hover:border-gray-500"
                       }`}
-                      style={{ 
+                      style={{
                         background: getColorStyle(color),
-                        boxShadow: color === 'Blanco' ? 'inset 0 0 0 1px #374151' : undefined
+                        boxShadow:
+                          color === "Blanco"
+                            ? "inset 0 0 0 1px #374151"
+                            : undefined,
                       }}
                       title={color}
                     />
@@ -223,7 +248,9 @@ export default function ProductDetailPage() {
                 >
                   <Minus className="w-4 h-4" />
                 </button>
-                <span className="w-12 text-center font-semibold text-lg text-white">{quantity}</span>
+                <span className="w-12 text-center font-semibold text-lg text-white">
+                  {quantity}
+                </span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
                   className="w-10 h-10 rounded-lg border border-gray-700 flex items-center justify-center hover:bg-gray-800 text-white"
@@ -246,30 +273,15 @@ export default function ProductDetailPage() {
                 <Heart className="w-6 h-6 text-gray-400" />
               </button>
             </div>
-
-            {/* Features 
-            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-700">
-              <div className="text-center">
-                <Truck className="w-6 h-6 text-[#cee741] mx-auto mb-2" />
-                <p className="text-sm text-gray-400">Envío gratis +$50</p>
-              </div>
-              <div className="text-center">
-                <Shield className="w-6 h-6 text-[#cee741] mx-auto mb-2" />
-                <p className="text-sm text-gray-400">Pago seguro</p>
-              </div>
-              <div className="text-center">
-                <RefreshCw className="w-6 h-6 text-[#cee741] mx-auto mb-2" />
-                <p className="text-sm text-gray-400">30 días devolución</p>
-              </div>
-            </div>
-            */}
           </div>
         </div>
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
           <section className="mt-16">
-            <h2 className="text-2xl font-bold text-white mb-8">Productos Relacionados</h2>
+            <h2 className="text-2xl font-bold text-white mb-8">
+              Productos Relacionados
+            </h2>
             <ProductGrid products={relatedProducts} />
           </section>
         )}

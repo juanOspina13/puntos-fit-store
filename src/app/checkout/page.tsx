@@ -1,7 +1,10 @@
+"use client";
+
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+import Image from "next/image";
 import { Lock, ChevronRight, Check } from "lucide-react";
-import { useCart } from "../context/CartContext";
+import { useCart } from "@/context/CartContext";
 
 export default function CheckoutPage() {
   const {
@@ -28,7 +31,6 @@ export default function CheckoutPage() {
     codigoPostal: "",
   });
 
-  // Si es mixto, cuánto en puntos y cuánto en dinero
   const [splitAmount, setSplitAmount] = useState({
     puntos: tokensToUse,
     dinero: partialPriceCash,
@@ -72,7 +74,7 @@ export default function CheckoutPage() {
             ).toLocaleString("es-CO", {
               style: "currency",
               currency: "COP",
-            })} `,
+            })} `
         )
         .join("%0A")}`;
 
@@ -86,17 +88,11 @@ export default function CheckoutPage() {
       }
 
       let message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0APagará: ${tokensToUse} Puntos Fit y $${splitAmount.dinero.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} en Dinero.%0A%0A¡Gracias!`;
-      // let mensajePago = "";
+
       if (paymentMethod === "puntos") {
         message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0A¡Gracias!`;
-
-        // mensajePago = "Pagará el total usando únicamente Puntos Fit.";
       } else if (paymentMethod === "dinero") {
         message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0A¡Gracias!`;
-
-        // mensajePago = "Pagará el total usando únicamente Dinero.";
-      } else {
-        //        mensajePago = `Pagará usando ${tokensToUse} Puntos Fit y $${splitAmount.dinero.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} en Dinero.`;
       }
 
       window.open(`https://wa.me/573169847703?text=${message}`, "_blank");
@@ -118,12 +114,8 @@ export default function CheckoutPage() {
             Gracias por tu pedido. Pronto recibirás un mensaje de WhatsApp con
             todos los detalles para confirmar tu compra.
           </p>
-          {/*<p className="text-sm text-gray-500 mb-6">
-            Número de pedido: <span className="font-semibold text-white">#PF-{Date.now()}</span>
-          </p>
-          */}
           <Link
-            to="/"
+            href="/"
             className="block w-full bg-[#cee741] text-gray-900 py-3 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-colors"
           >
             Volver al Inicio
@@ -140,7 +132,7 @@ export default function CheckoutPage() {
           <h2 className="text-2xl font-bold text-white mb-4">
             Tu carrito está vacío
           </h2>
-          <Link to="/products" className="text-[#cee741] hover:underline">
+          <Link href="/products" className="text-[#cee741] hover:underline">
             Explorar productos
           </Link>
         </div>
@@ -154,7 +146,7 @@ export default function CheckoutPage() {
       <div className="bg-gray-800 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-[#cee741] rounded-lg flex items-center justify-center">
                 <span className="text-gray-900 font-bold text-xl">PF</span>
               </div>
@@ -328,16 +320,6 @@ export default function CheckoutPage() {
                       <option>Colombia</option>
                     </select>
                   </div>
-                  {/* Shipping Method <div className="flex items-center gap-4 p-4 bg-[#cee741]/20 rounded-xl border border-[#cee741]/30">
-                    <Truck className="w-6 h-6 text-[#cee741]" />
-                    <div>
-                      <p className="font-medium text-white">Envío estándar (5-7 días)</p>
-                      <p className="text-sm text-gray-400">
-                        {shipping === 0 ? '¡Gratis!' : `$${shipping.toFixed(2)}`}
-                      </p>
-                    </div>
-                  </div>
-                  */}
                 </>
               )}
 
@@ -403,13 +385,7 @@ export default function CheckoutPage() {
                           setTokensToUse(puntos);
                           setSplitAmount({
                             puntos,
-                            dinero: +(
-                              totalPriceCash -
-                              puntos * 1300
-                            ).toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2,
-                            }),
+                            dinero: +(totalPriceCash - puntos * 1300).toFixed(2),
                           });
                         }}
                         className="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741]"
@@ -428,6 +404,7 @@ export default function CheckoutPage() {
                   )}
                 </div>
               )}
+
               <div className="flex gap-4 pt-4">
                 {step > 1 && (
                   <button
@@ -458,11 +435,14 @@ export default function CheckoutPage() {
               <div className="space-y-4 mb-6">
                 {items.map((item) => (
                   <div key={item.product.id} className="flex gap-4">
-                    <img
-                      src={item.product.image}
-                      alt={item.product.name}
-                      className="w-16 h-16 object-cover rounded-lg"
-                    />
+                    <div className="relative w-16 h-16 flex-shrink-0">
+                      <Image
+                        src={item.product.image}
+                        alt={item.product.name}
+                        fill
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white truncate">
                         {item.product.name}
@@ -470,25 +450,24 @@ export default function CheckoutPage() {
                       <p className="text-sm text-gray-400">
                         Cant: {item.quantity}
                       </p>
-                      {paymentMethod == "puntos" && (
+                      {paymentMethod === "puntos" && (
                         <p className="text-sm font-semibold text-[#cee741]">
                           {item.product.puntosFit * item.quantity} Puntos Fit
                         </p>
                       )}
-                      {paymentMethod == "dinero" && (
+                      {paymentMethod === "dinero" && (
                         <p className="text-sm font-semibold text-[#cee741]">
                           {(item.product.price * item.quantity).toLocaleString(
                             "es-CO",
-                            { style: "currency", currency: "COP" },
+                            { style: "currency", currency: "COP" }
                           )}
                         </p>
                       )}
-
-                      {paymentMethod == "mixto" && (
+                      {paymentMethod === "mixto" && (
                         <p className="text-sm font-semibold text-[#cee741]">
                           {(item.product.price * item.quantity).toLocaleString(
                             "es-CO",
-                            { style: "currency", currency: "COP" },
+                            { style: "currency", currency: "COP" }
                           )}
                         </p>
                       )}
@@ -517,7 +496,6 @@ export default function CheckoutPage() {
 
                 <div className="flex justify-between text-lg font-bold border-t border-gray-700 pt-3">
                   <span className="text-white">Total</span>
-
                   {paymentMethod === "puntos" && (
                     <span className="text-[#cee741]">{total} Puntos Fit</span>
                   )}
@@ -526,11 +504,12 @@ export default function CheckoutPage() {
                       {totalPriceCash.toLocaleString("es-CO", {
                         style: "currency",
                         currency: "COP",
-                      })}{" "}
+                      })}
                     </span>
                   )}
                 </div>
               </div>
+
               {paymentMethod === "puntos" && (
                 <div className="mt-4 text-sm text-gray-300">
                   <span className="font-semibold">Pago:</span> 100% en{" "}

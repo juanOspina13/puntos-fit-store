@@ -1,18 +1,20 @@
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Filter, Grid, List, SlidersHorizontal, X } from 'lucide-react';
-import ProductGrid from '../components/product/ProductGrid';
-import { products, categories, searchProducts, getProductsByCategory } from '../data/products';
-import type { Product } from '../types';
+"use client";
 
-export default function ProductsPage() {
-  const [searchParams] = useSearchParams();
-  const categoryParam = searchParams.get('category');
-  const searchQuery = searchParams.get('search');
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { Filter, Grid, List, SlidersHorizontal, X } from "lucide-react";
+import ProductGrid from "@/components/product/ProductGrid";
+import { products, categories, searchProducts, getProductsByCategory } from "@/data/products";
+import type { Product } from "@/types";
+
+function ProductsContent() {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("category");
+  const searchQuery = searchParams.get("search");
 
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
-  const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam || 'all');
-  const [sortBy, setSortBy] = useState<string>('featured');
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam || "all");
+  const [sortBy, setSortBy] = useState<string>("featured");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -25,32 +27,38 @@ export default function ProductsPage() {
     }
 
     // Apply category filter
-    if (categoryParam && categoryParam !== 'all') {
-      result = result.filter(p => p.category === categoryParam);
+    if (categoryParam && categoryParam !== "all") {
+      result = result.filter((p) => p.category === categoryParam);
       setSelectedCategory(categoryParam);
-    } else if (selectedCategory && selectedCategory !== 'all') {
+    } else if (selectedCategory && selectedCategory !== "all") {
       result = getProductsByCategory(selectedCategory);
     }
 
     // Apply price filter
-    result = result.filter(p => p.puntosFit >= priceRange[0] && p.puntosFit <= priceRange[1]);
-    console.log('Filtered by price:', result.length);
+    result = result.filter(
+      (p) => p.puntosFit >= priceRange[0] && p.puntosFit <= priceRange[1]
+    );
+
     // Apply sorting
     switch (sortBy) {
-      case 'price-low':
+      case "price-low":
         result = [...result].sort((a, b) => a.puntosFit - b.puntosFit);
         break;
-      case 'price-high':
+      case "price-high":
         result = [...result].sort((a, b) => b.puntosFit - a.puntosFit);
         break;
-      case 'rating':
+      case "rating":
         result = [...result].sort((a, b) => b.rating - a.rating);
         break;
-      case 'newest':
-        result = [...result].sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+      case "newest":
+        result = [...result].sort(
+          (a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)
+        );
         break;
       default:
-        result = [...result].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+        result = [...result].sort(
+          (a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0)
+        );
     }
 
     setFilteredProducts(result);
@@ -62,10 +70,10 @@ export default function ProductsPage() {
 
   const getCategoryTitle = () => {
     if (searchQuery) return `Resultados para "${searchQuery}"`;
-    if (selectedCategory === 'supplements') return 'Suplementos';
-    if (selectedCategory === 'clothing') return 'Ropa Deportiva';
-    if (selectedCategory === 'accessories') return 'Accesorios';
-    return 'Todos los Productos';
+    if (selectedCategory === "supplements") return "Suplementos";
+    if (selectedCategory === "clothing") return "Ropa Deportiva";
+    if (selectedCategory === "accessories") return "Accesorios";
+    return "Todos los Productos";
   };
 
   return (
@@ -73,7 +81,9 @@ export default function ProductsPage() {
       {/* Header */}
       <div className="bg-[#cee741] text-gray-900 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">{getCategoryTitle()}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">
+            {getCategoryTitle()}
+          </h1>
           <p className="text-gray-800">
             {filteredProducts.length} productos encontrados
           </p>
@@ -92,18 +102,25 @@ export default function ProductsPage() {
           </button>
 
           {/* Sidebar Filters */}
-          <aside className={`
-            ${isFilterOpen ? 'fixed inset-0 z-50 bg-black/50' : 'hidden'} lg:block lg:relative lg:bg-transparent
-          `}>
-            <div className={`
-              ${isFilterOpen ? 'fixed right-0 top-0 h-full w-80 bg-gray-900 shadow-xl overflow-y-auto' : ''}
+          <aside
+            className={`
+            ${isFilterOpen ? "fixed inset-0 z-50 bg-black/50" : "hidden"} lg:block lg:relative lg:bg-transparent
+          `}
+          >
+            <div
+              className={`
+              ${isFilterOpen ? "fixed right-0 top-0 h-full w-80 bg-gray-900 shadow-xl overflow-y-auto" : ""}
               lg:relative lg:w-64 lg:flex-shrink-0
-            `}>
+            `}
+            >
               {/* Mobile Filter Header */}
               {isFilterOpen && (
                 <div className="flex items-center justify-between p-4 border-b border-gray-800 lg:hidden">
                   <h3 className="font-semibold text-lg text-white">Filtros</h3>
-                  <button onClick={() => setIsFilterOpen(false)} className="text-gray-400">
+                  <button
+                    onClick={() => setIsFilterOpen(false)}
+                    className="text-gray-400"
+                  >
                     <X className="w-6 h-6" />
                   </button>
                 </div>
@@ -118,11 +135,11 @@ export default function ProductsPage() {
                   </h3>
                   <div className="space-y-2">
                     <button
-                      onClick={() => handleCategoryChange('all')}
+                      onClick={() => handleCategoryChange("all")}
                       className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
-                        selectedCategory === 'all' 
-                          ? 'bg-[#cee741]/20 text-[#cee741] font-medium' 
-                          : 'text-gray-400 hover:bg-gray-700'
+                        selectedCategory === "all"
+                          ? "bg-[#cee741]/20 text-[#cee741] font-medium"
+                          : "text-gray-400 hover:bg-gray-700"
                       }`}
                     >
                       Todos los productos
@@ -132,9 +149,9 @@ export default function ProductsPage() {
                         key={category.id}
                         onClick={() => handleCategoryChange(category.slug)}
                         className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
-                          selectedCategory === category.slug 
-                            ? 'bg-[#cee741]/20 text-[#cee741] font-medium' 
-                            : 'text-gray-400 hover:bg-gray-700'
+                          selectedCategory === category.slug
+                            ? "bg-[#cee741]/20 text-[#cee741] font-medium"
+                            : "text-gray-400 hover:bg-gray-700"
                         }`}
                       >
                         {category.name}
@@ -152,7 +169,9 @@ export default function ProductsPage() {
                       min="0"
                       max="500"
                       value={priceRange[1]}
-                      onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
+                      onChange={(e) =>
+                        setPriceRange([priceRange[0], parseInt(e.target.value)])
+                      }
                       className="w-full accent-[#cee741]"
                     />
                     <div className="flex items-center justify-between text-sm">
@@ -221,5 +240,19 @@ export default function ProductsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+          <div className="text-white">Cargando...</div>
+        </div>
+      }
+    >
+      <ProductsContent />
+    </Suspense>
   );
 }

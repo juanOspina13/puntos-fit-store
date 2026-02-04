@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
 import { ShoppingCart, Heart } from "lucide-react";
-import { useCart } from "../../context/CartContext";
-import type { Product } from "../../types";
+import { useCart } from "@/context/CartContext";
+import type { Product } from "@/types";
 
 interface ProductCardProps {
   product: Product;
@@ -22,14 +25,16 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <Link to={`/product/${product.id}`} className="group">
+    <Link href={`/product/${product.id}`} className="group">
       <div className="bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-[#cee741]/10 transition-all duration-300 overflow-hidden border border-gray-700">
         {/* Image Container */}
         <div className="relative aspect-square overflow-hidden bg-gray-900">
-          <img
+          <Image
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            fill
+            className="object-cover group-hover:scale-110 transition-transform duration-500"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           />
 
           {/* Badges */}
@@ -78,34 +83,14 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h3>
 
-          {/* Rating
-
-
-          <div className="flex items-center gap-1 mt-2">
-            <div className="flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`w-3.5 h-3.5 ${
-                    i < Math.floor(product.rating)
-                      ? 'text-yellow-400 fill-yellow-400'
-                      : 'text-gray-300'
-                  }`}
-                />
-              ))}
-                
-            </div>
-            <span className="text-xs text-gray-500">({product.reviews})</span>
-          </div>
-           */}
           {/* Price */}
           <div className="flex items-center gap-2 mt-3">
             <span className="text-lg font-bold text-white">
-              {product.puntosFit} Puntos Fit / {product.price .toLocaleString("es-CO", { style: "currency", currency: "COP" })}
+              {product.puntosFit} Puntos Fit / {product.price.toLocaleString("es-CO", { style: "currency", currency: "COP" })}
             </span>
           </div>
 
-          {/* Colors/Sizes Preview */}
+          {/* Colors Preview */}
           {product.colors && product.colors.length > 0 && (
             <div className="flex items-center gap-1 mt-3">
               {product.colors.slice(0, 4).map((color, index) => (

@@ -1,8 +1,10 @@
-import { X, Plus, Minus, ShoppingBag, Trash2 } from "lucide-react";
-import { useCart } from "../../context/CartContext";
-import { Link } from "react-router-dom";
+"use client";
 
-import React, { useState } from "react";
+import { X, Plus, Minus, ShoppingBag, Trash2 } from "lucide-react";
+import { useCart } from "@/context/CartContext";
+import Link from "next/link";
+import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export default function CartDrawer() {
   const {
@@ -17,17 +19,13 @@ export default function CartDrawer() {
     paymentMethod,
     setPaymentMethod,
     clearCart,
-    setTokensToUse
+    setTokensToUse,
   } = useCart();
-
-  // Estado para método de pago y puntos a usar
 
   const [fitPointsToUse, setFitPointsToUse] = useState(totalPrice);
   const [cashToUse, setCashToUse] = useState(totalPriceCash);
 
-  // Actualiza fitPointsToUse si cambia el totalPrice y el método es mixto
-  // (para evitar valores fuera de rango)
-  React.useEffect(() => {
+  useEffect(() => {
     if (paymentMethod === "mixto") {
       setFitPointsToUse(Math.min(fitPointsToUse, totalPrice));
     } else if (paymentMethod === "puntos") {
@@ -36,7 +34,7 @@ export default function CartDrawer() {
       setCashToUse(totalPriceCash);
       setFitPointsToUse(0);
     }
-  }, [totalPrice, paymentMethod]);
+  }, [totalPrice, paymentMethod, fitPointsToUse, totalPriceCash]);
 
   if (!isCartOpen) return null;
 
@@ -92,11 +90,14 @@ export default function CartDrawer() {
                   key={`${item.product.id}-${item.selectedSize}-${item.selectedColor}`}
                   className="flex gap-4 bg-gray-800 p-3 rounded-lg"
                 >
-                  <img
-                    src={item.product.image}
-                    alt={item.product.name}
-                    className="w-20 h-20 object-cover rounded-lg"
-                  />
+                  <div className="relative w-20 h-20 flex-shrink-0">
+                    <Image
+                      src={item.product.image}
+                      alt={item.product.name}
+                      fill
+                      className="object-cover rounded-lg"
+                    />
+                  </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="text-sm font-medium text-white truncate">
                       {item.product.name}
@@ -220,7 +221,6 @@ export default function CartDrawer() {
                           Math.min(Number(e.target.value), totalPrice),
                         ),
                       );
-
                       setTokensToUse(Number(e.target.value));
                     }}
                   />
@@ -238,7 +238,7 @@ export default function CartDrawer() {
               )}
             </div>
             <Link
-              to="/checkout"
+              href="/checkout"
               onClick={() => setIsCartOpen(false)}
               className="block w-full bg-[#cee741] text-gray-900 text-center py-3 rounded-lg font-semibold hover:bg-[#b5cc1a] transition-all"
             >

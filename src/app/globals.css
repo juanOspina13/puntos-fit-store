@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Primary color custom property */
 :root {
@@ -57,6 +59,6 @@ body {
   }
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-out;
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
 }

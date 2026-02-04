@@ -1,53 +1,51 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Search, ShoppingCart, Menu, X, User, Heart } from 'lucide-react';
-import { useCart } from '../../context/CartContext';
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Search, ShoppingCart, Menu, X, User, Heart } from "lucide-react";
+import { useCart } from "@/context/CartContext";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const { totalItems, setIsCartOpen } = useCart();
+  const router = useRouter();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
+      router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
     }
   };
 
   return (
     <header className="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
-      {/* Top Banner
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2 text-center text-sm">
-        <p>🔥 Envío gratis en pedidos mayores a $50 | Usa código <strong>FIT20</strong> para 20% de descuento</p>
-      </div>
- */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2">
             <div className="w-10 h-10 bg-[#cee741] rounded-lg flex items-center justify-center">
               <span className="text-gray-900 font-bold text-xl">PF</span>
-              
             </div>
-            <span className="text-xl font-bold text-white hidden sm:block">PuntosFit</span>
+            <span className="text-xl font-bold text-white hidden sm:block">Tienda de Puntos Fit</span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
+            <Link href="/" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors ml-8">
               Inicio
             </Link>
-            <Link to="/products" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
+            <Link href="/products" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
               Todos los Productos
             </Link>
-            <Link to="/products?category=supplements" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
+            <Link href="/products?category=supplements" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
               Suplementos
             </Link>
-            <Link to="/products?category=clothing" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
+            <Link href="/products?category=clothing" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
               Ropa
             </Link>
-            <Link to="/products?category=accessories" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
+            <Link href="/products?category=accessories" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
               Accesorios
             </Link>
           </nav>
@@ -74,7 +72,7 @@ export default function Header() {
             <button className="hidden md:flex text-gray-400 hover:text-[#cee741] transition-colors">
               <User className="w-6 h-6" />
             </button>
-            <button 
+            <button
               onClick={() => setIsCartOpen(true)}
               className="relative text-gray-400 hover:text-[#cee741] transition-colors"
             >
@@ -112,36 +110,36 @@ export default function Header() {
               </div>
             </form>
             <nav className="flex flex-col space-y-3">
-              <Link 
-                to="/" 
+              <Link
+                href="/"
                 className="text-gray-300 hover:text-[#cee741] font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Inicio
               </Link>
-              <Link 
-                to="/products" 
+              <Link
+                href="/products"
                 className="text-gray-300 hover:text-[#cee741] font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Todos los Productos
               </Link>
-              <Link 
-                to="/products?category=supplements" 
+              <Link
+                href="/products?category=supplements"
                 className="text-gray-300 hover:text-[#cee741] font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Suplementos
               </Link>
-              <Link 
-                to="/products?category=clothing" 
+              <Link
+                href="/products?category=clothing"
                 className="text-gray-300 hover:text-[#cee741] font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Ropa
               </Link>
-              <Link 
-                to="/products?category=accessories" 
+              <Link
+                href="/products?category=accessories"
                 className="text-gray-300 hover:text-[#cee741] font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
