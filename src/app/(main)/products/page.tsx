@@ -4,65 +4,85 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Filter, Grid, List, SlidersHorizontal, X } from "lucide-react";
 import ProductGrid from "@/components/product/ProductGrid";
-import { products, categories, searchProducts, getProductsByCategory } from "@/data/products";
-import type { Product } from "@/types";
+import { getProducts, getCategories, searchProducts, getProductsByCategory } from "@/data/products";
+import type { Product, Category } from "@/types";
 
 function ProductsContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
   const searchQuery = searchParams.get("search");
 
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam || "all");
   const [sortBy, setSortBy] = useState<string>("featured");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Load initial data
   useEffect(() => {
-    let result = products;
-
-    // Apply search
-    if (searchQuery) {
-      result = searchProducts(searchQuery);
+    async function loadData() {
+      const [prods, cats] = await Promise.all([getProducts(), getCategories()]);
+      setAllProducts(prods);
+      setCategories(cats);
+      setIsLoading(false);
     }
+    loadData();
+  }, []);
 
-    // Apply category filter
-    if (categoryParam && categoryParam !== "all") {
-      result = result.filter((p) => p.category === categoryParam);
-      setSelectedCategory(categoryParam);
-    } else if (selectedCategory && selectedCategory !== "all") {
-      result = getProductsByCategory(selectedCategory);
+  // Apply filters
+  useEffect(() => {
+    if (allProducts.length === 0) return;
+
+    async function applyFilters() {
+      let result = allProducts;
+
+      // Apply search
+      if (searchQuery) {
+        result = await searchProducts(searchQuery);
+      }
+
+      // Apply category filter
+      if (categoryParam && categoryParam !== "all") {
+        result = result.filter((p: Product) => p.category === categoryParam);
+        setSelectedCategory(categoryParam);
+      } else if (selectedCategory && selectedCategory !== "all") {
+        result = await getProductsByCategory(selectedCategory);
+      }
+
+      // Apply price filter
+      result = result.filter(
+        (p: Product) => p.puntosFit >= priceRange[0] && p.puntosFit <= priceRange[1]
+      );
+
+      // Apply sorting
+      switch (sortBy) {
+        case "price-low":
+          result = [...result].sort((a, b) => a.puntosFit - b.puntosFit);
+          break;
+        case "price-high":
+          result = [...result].sort((a, b) => b.puntosFit - a.puntosFit);
+          break;
+        case "rating":
+          result = [...result].sort((a, b) => b.rating - a.rating);
+          break;
+        case "newest":
+          result = [...result].sort(
+            (a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)
+          );
+          break;
+        default:
+          result = [...result].sort(
+            (a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0)
+          );
+      }
+
+      setFilteredProducts(result);
     }
-
-    // Apply price filter
-    result = result.filter(
-      (p) => p.puntosFit >= priceRange[0] && p.puntosFit <= priceRange[1]
-    );
-
-    // Apply sorting
-    switch (sortBy) {
-      case "price-low":
-        result = [...result].sort((a, b) => a.puntosFit - b.puntosFit);
-        break;
-      case "price-high":
-        result = [...result].sort((a, b) => b.puntosFit - a.puntosFit);
-        break;
-      case "rating":
-        result = [...result].sort((a, b) => b.rating - a.rating);
-        break;
-      case "newest":
-        result = [...result].sort(
-          (a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)
-        );
-        break;
-      default:
-        result = [...result].sort(
-          (a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0)
-        );
-    }
-
-    setFilteredProducts(result);
-  }, [searchQuery, categoryParam, selectedCategory, sortBy, priceRange]);
+    applyFilters();
+  }, [allProducts, searchQuery, categoryParam, selectedCategory, sortBy, priceRange]);
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
@@ -75,6 +95,14 @@ function ProductsContent() {
     if (selectedCategory === "accessories") return "Accesorios";
     return "Todos los Productos";
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-white">Cargando...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -144,7 +172,7 @@ function ProductsContent() {
                     >
                       Todos los productos
                     </button>
-                    {categories.map((category) => (
+                    {categories.map((category: Category) => (
                       <button
                         key={category.id}
                         onClick={() => handleCategoryChange(category.slug)}

@@ -2,10 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import ProductGrid from "@/components/product/ProductGrid";
-import { getFeaturedProducts, categories } from "@/data/products";
+import { getFeaturedProducts, getCategories } from "@/data/products";
 
-export default function HomePage() {
-  const featuredProducts = getFeaturedProducts();
+export default async function HomePage() {
+  const [featuredProducts, categories] = await Promise.all([
+    getFeaturedProducts(),
+    getCategories(),
+  ]);
 
   return (
     <div>
@@ -138,7 +141,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            {categories.map((category) => (
+            {categories.map((category: any) => (
               <Link
                 key={category.id}
                 href={`/products?category=${category.slug}`}
