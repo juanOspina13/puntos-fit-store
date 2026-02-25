@@ -3,13 +3,15 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Search, ShoppingCart, Menu, X, User, Heart } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, User, Heart, LogOut, Zap } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { totalItems, setIsCartOpen } = useCart();
+  const { user, isAuthenticated, logout } = useAuth();
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -69,9 +71,34 @@ export default function Header() {
             <button className="hidden md:flex text-gray-400 hover:text-[#cee741] transition-colors">
               <Heart className="w-6 h-6" />
             </button>
-            <button className="hidden md:flex text-gray-400 hover:text-[#cee741] transition-colors">
-              <User className="w-6 h-6" />
-            </button>
+            {/* Puntos badge — siempre visible */}
+            {isAuthenticated && (
+              <div className="flex items-center gap-1.5 bg-[#cee741]/15 border border-[#cee741]/30 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full">
+                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#cee741] fill-[#cee741]" />
+                <span className="text-xs sm:text-sm font-bold text-[#cee741]">
+                  {user?.billetera_id?.classes ?? 0}
+                </span>
+                <span className="text-[10px] sm:text-xs text-[#cee741]/70 font-medium">puntos</span>
+              </div>
+            )}
+            {isAuthenticated ? (
+              <div className="hidden md:flex items-center gap-3">
+                <span className="text-sm text-gray-300 max-w-[120px] truncate" title={user?.nombre ?? user?.email}>
+                  {user?.nombre ?? user?.email}
+                </span>
+                <button
+                  onClick={() => { logout(); router.push("/login"); }}
+                  className="text-gray-400 hover:text-red-400 transition-colors"
+                  title="Cerrar sesión"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
+            ) : (
+              <Link href="/login" className="hidden md:flex text-gray-400 hover:text-[#cee741] transition-colors">
+                <User className="w-6 h-6" />
+              </Link>
+            )}
             <button
               onClick={() => setIsCartOpen(true)}
               className="relative text-gray-400 hover:text-[#cee741] transition-colors"
@@ -145,6 +172,37 @@ export default function Header() {
               >
                 Accesorios
               </Link>
+              {/* Mobile auth link */}
+              <div className="pt-3 mt-3 border-t border-gray-700 space-y-3">
+                {isAuthenticated ? (
+                  <>
+                    {/* Mobile puntos badge */}
+                    <div className="flex items-center gap-2 bg-[#cee741]/15 border border-[#cee741]/30 px-4 py-2.5 rounded-xl">
+                      <Zap className="w-5 h-5 text-[#cee741] fill-[#cee741]" />
+                      <span className="text-lg font-bold text-[#cee741]">
+                        {user?.billetera_id?.classes ?? 0}
+                      </span>
+                      <span className="text-sm text-[#cee741]/70 font-medium">puntos disponibles</span>
+                    </div>
+                    <button
+                      onClick={() => { logout(); router.push("/login"); setIsMenuOpen(false); }}
+                      className="flex items-center gap-2 text-gray-300 hover:text-red-400 font-medium w-full"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Cerrar sesión
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-2 text-gray-300 hover:text-[#cee741] font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <User className="w-4 h-4" />
+                    Iniciar Sesión
+                  </Link>
+                )}
+              </div>
             </nav>
           </div>
         )}
