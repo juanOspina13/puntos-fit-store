@@ -3,6 +3,8 @@ import Image from "next/image";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import ProductGrid from "@/components/product/ProductGrid";
 import { getFeaturedProducts, getCategories } from "@/data/products";
+import { Suspense } from "react";
+import AutoLoginHandler from "@/components/auth/AutoLoginHandler";
 
 export default async function HomePage() {
   const [featuredProducts, categories] = await Promise.all([
@@ -12,6 +14,11 @@ export default async function HomePage() {
 
   return (
     <div>
+      {/* Auto-login si llega ?userToken=xxx */}
+      <Suspense fallback={null}>
+        <AutoLoginHandler />
+      </Suspense>
+
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
         {/* Background Pattern */}

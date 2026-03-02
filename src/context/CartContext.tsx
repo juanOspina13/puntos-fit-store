@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import type { CartItem, Product } from "@/types";
+import { useAuth } from "@/context/AuthContext";
 
 interface CartContextType {
   items: CartItem[];
@@ -35,11 +36,17 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const { user, isAuthenticated } = useAuth();
   const [items, setItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [tokensToUse, setTokensToUse] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState<"puntos" | "dinero" | "mixto">("puntos");
   const [isHydrated, setIsHydrated] = useState(false);
+
+  // Puntos disponibles del usuario
+  const availablePoints = isAuthenticated
+    ? Number(user?.billetera_id?.classes) || 0
+    : 0;
 
   // Hidratación del carrito desde localStorage
   useEffect(() => {
@@ -56,6 +63,31 @@ export function CartProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("cart", JSON.stringify(items));
     }
   }, [items, isHydrated]);
+
+  // Auto-aplicar puntos disponibles cuando el carrito cambia
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    const currentTotalPrice = items.reduce(
+      (sum, item) => sum + item.product.puntosFit * item.quantity,
+      0,
+    );
+
+    if (currentTotalPrice === 0 || availablePoints === 0) {
+      setTokensToUse(0);
+      if (currentTotalPrice > 0) setPaymentMethod("dinero");
+      return;
+    }
+
+    const pointsToApply = Math.min(availablePoints, currentTotalPrice);
+    setTokensToUse(pointsToApply);
+
+    if (pointsToApply >= currentTotalPrice) {
+      setPaymentMethod("puntos");
+    } else {
+      setPaymentMethod("mixto");
+    }
+  }, [items, availablePoints, isHydrated]);
 
   const addToCart = (
     product: Product,

@@ -81,6 +81,30 @@ export const getUserProfile = async (): Promise<UserProfile> => {
 };
 
 /**
+ * Obtiene el perfil del usuario usando un token proporcionado directamente.
+ * Útil para auto-login vía query param (sin depender de localStorage).
+ */
+export const getUserProfileWithToken = async (
+  token: string
+): Promise<UserProfile> => {
+  const env = getEnvironment();
+
+  const res = await fetch(`${env.baseUrl}usuario/current/user`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Error al obtener perfil de usuario con token");
+  }
+
+  return res.json();
+};
+
+/**
  * Cierra sesión eliminando datos del storage.
  */
 export const logoutUser = () => {
