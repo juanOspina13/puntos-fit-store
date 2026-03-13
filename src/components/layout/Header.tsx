@@ -30,7 +30,7 @@ export default function Header() {
             <div className="w-10 h-10 bg-[#cee741] rounded-lg flex items-center justify-center">
               <span className="text-gray-900 font-bold text-xl">PF</span>
             </div>
-            <span className="text-xl font-bold text-white hidden sm:block">Tienda de Puntos Fit</span>
+            <span className="text-xl font-bold text-white hidden sm:block">Puntos Fit Store</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -38,21 +38,16 @@ export default function Header() {
             <Link href="/" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors ml-8">
               Inicio
             </Link>
-            <Link href="/products" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
-              Todos los Productos
-            </Link>
+            
+            <Link href="/suscripciones" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors flex items-center gap-1">
+              <span>Suscripciones</span>
+              <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">TOP</span>
+            </Link> 
             <Link href="/products?category=supplements" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
               Suplementos
             </Link>
             <Link href="/products?category=clothing" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
               Ropa
-            </Link>
-            <Link href="/products?category=accessories" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
-              Accesorios
-            </Link>
-            <Link href="/suscripciones" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors flex items-center gap-1">
-              <span>Suscripciones</span>
-              <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
             </Link>
           </nav>
 
@@ -149,11 +144,11 @@ export default function Header() {
                 Inicio
               </Link>
               <Link
-                href="/products"
+                href="/suscripciones"
                 className="text-gray-300 hover:text-[#cee741] font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Todos los Productos
+                Suscripciones
               </Link>
               <Link
                 href="/products?category=supplements"
@@ -170,19 +165,12 @@ export default function Header() {
                 Ropa
               </Link>
               <Link
-                href="/products?category=accessories"
-                className="text-gray-300 hover:text-[#cee741] font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Accesorios
-              </Link>
-              <Link
                 href="/suscripciones"
                 className="text-gray-300 hover:text-[#cee741] font-medium flex items-center gap-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <span>Suscripciones</span>
-                <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
+                <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">TOP</span>
               </Link>
               {/* Mobile auth link */}
               <div className="pt-3 mt-3 border-t border-gray-700 space-y-3">

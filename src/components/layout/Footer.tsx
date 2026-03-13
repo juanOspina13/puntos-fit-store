@@ -13,10 +13,10 @@ export default function Footer() {
               <div className="w-10 h-10 bg-[#cee741] rounded-lg flex items-center justify-center">
                 <span className="text-gray-900 font-bold text-xl">PF</span>
               </div>
-              <span className="text-xl font-bold text-white">Tienda de Puntos Fit</span>
+              <span className="text-xl font-bold text-white">Puntos Fit Store</span>
             </Link>
             <p className="text-gray-400 mb-6">
-              Suplementos, ropa y accesorios para cada etapa de tu camino.
+              Suscripciones mensuales de suplementos por objetivo. Resultados reales en 30 dias, sin adivinar que tomar.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -39,13 +39,13 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-4">Enlaces Rápidos</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/products" className="text-gray-400 hover:text-white transition-colors">
-                  Todos los Productos
+                <Link href="/suscripciones" className="text-gray-400 hover:text-white transition-colors">
+                  Suscripciones mensuales
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=supplements" className="text-gray-400 hover:text-white transition-colors">
-                  Suplementos
+                  Suplementos individuales
                 </Link>
               </li>
               <li>
@@ -54,13 +54,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=accessories" className="text-gray-400 hover:text-white transition-colors">
-                  Accesorios
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                  Como funciona el sistema
                 </Link>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Ofertas
+                  Preguntas frecuentes
                 </a>
               </li>
             </ul>
@@ -124,9 +124,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-gray-400 text-sm">
-              © 2025 Tienda de puntos Fit async function name(params:type) {
-                
-              }. Todos los derechos reservados.
+              © 2026 Puntos Fit Store. Todos los derechos reservados.
             </p>
             <div className="flex items-center space-x-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">

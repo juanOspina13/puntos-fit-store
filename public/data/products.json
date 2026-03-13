@@ -2,31 +2,17 @@
   "categories": [
     {
       "id": "1",
-      "name": "Suplementos Fitness",
+      "name": "Fitness",
       "slug": "supplements",
       "image": "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=400",
       "description": "Proteínas, aminoácidos, pre-entrenos y más"
     },
     {
       "id": "2",
-      "name": "Suplementos Wellness",
+      "name": "Wellness",
       "slug": "wellness_supplements",
       "image": "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=400",
       "description": "Ropa de entrenamiento de alta calidad"
-    },
-    {
-      "id": "3",
-      "name": "Ropa Deportiva",
-      "slug": "clothing",
-      "image": "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=400",
-      "description": "Ropa de entrenamiento de alta calidad"
-    },
-    {
-      "id": "4",
-      "name": "Accesorios",
-      "slug": "accessories",
-      "image": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400",
-      "description": "Guantes, cinturones, shakers y más"
     }
   ],
   "products": [
@@ -274,7 +260,7 @@
   "subscriptions": [
     {
       "id": "1",
-      "name": "Pack Masa Muscular",
+      "name": "Ganancia de Masa Muscular",
       "description": "Suscripción mensual diseñada para maximizar tus ganancias de masa muscular. Incluye creatina premium y proteína de alta calidad para potenciar tu crecimiento muscular.",
       "monthlyPrice": 270000,
       "originalPrice": 315900,
@@ -283,7 +269,7 @@
       "objetivo": "ganar-musculo",
       "objetivoLabel": "Ganar Músculo",
       "frequency": "monthly",
-      "includedProducts": ["1", "3"],
+      "includedProducts": ["2", "3"],
       "benefits": [
         "Envío gratis mensual",
         "15% de descuento vs compra individual",
@@ -320,30 +306,7 @@
       "tags": ["fuerza", "creatina", "potencia", "rendimiento"],
       "icon": "💪"
     },
-    {
-      "id": "3",
-      "name": "Pack Proteína Premium",
-      "description": "Todo lo que necesitas en proteína para tu mes. Incluye proteína Whey de alta calidad en presentación grande para máxima recuperación.",
-      "monthlyPrice": 435000,
-      "originalPrice": 510900,
-      "discount": 15,
-      "image": "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=400",
-      "objetivo": "ganar-musculo",
-      "objetivoLabel": "Ganar Músculo",
-      "frequency": "monthly",
-      "includedProducts": ["4", "3"],
-      "benefits": [
-        "Envío gratis mensual",
-        "15% de descuento vs compra individual",
-        "Plan de nutrición incluido",
-        "Puntos Fit dobles"
-      ],
-      "puntosFit": 786,
-      "rating": 4.9,
-      "subscribers": 1100,
-      "tags": ["proteína", "recuperación", "músculo", "whey"],
-      "icon": "💪"
-    },
+   
     {
       "id": "4",
       "name": "Pack Definición Total",

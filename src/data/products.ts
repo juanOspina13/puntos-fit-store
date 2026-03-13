@@ -40,7 +40,9 @@ export async function getProductsByCategory(category: string): Promise<Product[]
 
 export async function getFeaturedProducts(): Promise<Product[]> {
   const products = await getProducts();
-  return products.filter((p) => p.featured);
+  const featured = products.filter((p) => p.featured);
+  if (featured.length > 0) return featured;
+  return products.slice(0, 8);
 }
 
 export async function getNewProducts(): Promise<Product[]> {

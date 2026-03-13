@@ -113,7 +113,10 @@ function ProductsContent() {
             {getCategoryTitle()}
           </h1>
           <p className="text-gray-800">
-            {filteredProducts.length} productos encontrados
+            {filteredProducts.length} productos encontrados para complementar tu plan
+          </p>
+          <p className="text-gray-800/80 mt-2 text-sm">
+            ¿Buscas un plan completo por objetivo? Mira nuestras suscripciones mensuales y ten resultados en 30 dias.
           </p>
         </div>
       </div>

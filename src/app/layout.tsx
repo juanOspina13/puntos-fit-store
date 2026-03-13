@@ -8,8 +8,9 @@ import CartDrawer from "@/components/cart/CartDrawer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PuntosFit Store - Suplementos, Ropa y Accesorios Deportivos",
-  description: "Canjea tus puntos por suplementos de alta calidad y ropa deportiva. Tu esfuerzo tiene recompensa.",
+  title: "Puntos Fit Store | Suscripciones mensuales de suplementos por objetivo",
+  description:
+    "Suscripciones mensuales de suplementos inteligentes por objetivo: gana musculo, quema grasa, duerme mejor y reduce el estres. Resultados en 30 dias.",
 };
 
 export default function RootLayout({

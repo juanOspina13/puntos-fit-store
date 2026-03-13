@@ -33,3 +33,30 @@ export interface Category {
   image: string;
   description: string;
 }
+
+export interface Subscription {
+  id: string;
+  name: string;
+  description: string;
+  monthlyPrice: number;
+  originalPrice: number;
+  discount: number;
+  image: string;
+  objetivo: string;
+  objetivoLabel: string;
+  frequency: string;
+  includedProducts: string[];
+  benefits: string[];
+  puntosFit: number;
+  rating: number;
+  subscribers: number;
+  tags: string[];
+  icon: string;
+}
+
+export interface Objetivo {
+  id: string;
+  label: string;
+  icon: string;
+  description: string;
+}

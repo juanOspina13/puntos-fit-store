@@ -17,11 +17,11 @@ import { getSubscriptions, getObjetivos, getProductById } from "@/data/products"
 import type { Subscription, Product } from "@/types";
 
 const objetivoDescriptions: Record<string, string> = {
-  "ganar-musculo": "Maximiza tus ganancias con suplementos diseñados para el crecimiento muscular y la fuerza.",
-  "bajar-peso": "Acelera tu metabolismo y define tu cuerpo con combinaciones efectivas para quemar grasa.",
-  "dormir-bien": "Mejora tu descanso y recuperación con suplementos que promueven un sueño reparador.",
-  "energia": "Mantén tu vitalidad durante todo el día con vitaminas y adaptógenos naturales.",
-  "salud-general": "Cuida tu bienestar integral con los mejores suplementos para tu salud diaria."
+  "ganar-musculo": "Construye masa muscular y fuerza con un sistema claro de suplementacion en ciclos de 30 dias.",
+  "bajar-peso": "Acelera la quema de grasa sin perder rendimiento con combinaciones enfocadas en definicion.",
+  "dormir-bien": "Mejora tu descanso y recuperacion nocturna para entrenar con mas energia durante el dia.",
+  "energia": "Sostiene tu energia diaria con vitaminas y adaptogenos para rendir sin altibajos.",
+  "salud-general": "Refuerza tu bienestar integral y reduce el estres con suplementos inteligentes."
 };
 
 const objetivoColors: Record<string, string> = {
@@ -123,22 +123,22 @@ export default function SuscripcionesPage() {
         <div className="relative max-w-7xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-[#cee741]/10 border border-[#cee741]/30 rounded-full px-4 py-2 mb-6">
             <Sparkles className="w-4 h-4 text-[#cee741]" />
-            <span className="text-[#cee741] text-sm font-medium">Ahorra hasta 15% con suscripciones</span>
+            <span className="text-[#cee741] text-sm font-medium">Suscripciones mensuales · Resultados maximos en 30 dias</span>
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-            Suscripciones <span className="text-[#cee741]">Fitness</span>
+            Transforma tu cuerpo y tu energia <span className="text-[#cee741]">con resultados en 30 dias</span>
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
-            Elige tu objetivo y recibe mensualmente los suplementos perfectos para alcanzarlo. 
-            Envío gratis, descuentos exclusivos y puntos Fit dobles.
+            Suscripciones mensuales de suplementos por objetivo. Recibe exactamente lo que tu cuerpo necesita
+            para ganar musculo, quemar grasa, dormir mejor o reducir el estres, sin adivinar que tomar.
           </p>
 
           {/* Stats */}
           <div className="flex flex-wrap justify-center gap-8 mt-12">
             <div className="text-center">
               <div className="text-3xl font-bold text-[#cee741]">12</div>
-              <div className="text-gray-400 text-sm">Packs disponibles</div>
+              <div className="text-gray-400 text-sm">Suscripciones disponibles</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-[#cee741]">5</div>
@@ -146,129 +146,11 @@ export default function SuscripcionesPage() {
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-[#cee741]">15%</div>
-              <div className="text-gray-400 text-sm">Ahorro promedio</div>
+              <div className="text-gray-400 text-sm">Ahorro promedio mensual</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-[#cee741]">7K+</div>
               <div className="text-gray-400 text-sm">Suscriptores activos</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Suscripción Personalizada - Puntos */}
-      <section className="py-12 px-4 bg-gradient-to-b from-gray-950 to-gray-900">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 border-2 border-[#cee741]/40 rounded-3xl p-8 relative overflow-hidden">
-            {/* Glow effect */}
-            <div className="absolute top-0 right-0 w-72 h-72 bg-[#cee741]/10 rounded-full blur-[100px]"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#cee741]/5 rounded-full blur-[80px]"></div>
-            
-            <div className="relative">
-              {/* Header */}
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-14 h-14 bg-gradient-to-br from-[#cee741] to-[#a8c030] rounded-2xl flex items-center justify-center">
-                  <Wallet className="w-7 h-7 text-gray-900" />
-                </div>
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-white">Suscripción Personalizada</h2>
-                  <p className="text-gray-400">Elige cuánto invertir y acumula puntos cada mes</p>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-8">
-                {/* Input Section */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-3">
-                    ¿Cuánto quieres invertir mensualmente?
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-xl">$</span>
-                    <input
-                      type="text"
-                      value={inputValue}
-                      onChange={(e) => handleMontoChange(e.target.value)}
-                      className="w-full pl-10 pr-4 py-4 bg-gray-900 border-2 border-gray-700 rounded-xl text-white text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-[#cee741] focus:border-[#cee741] transition-all"
-                      placeholder="100,000"
-                    />
-                  </div>
-
-                  {/* Montos sugeridos */}
-                  <div className="mt-4">
-                    <span className="text-xs text-gray-500 mb-2 block">Montos sugeridos:</span>
-                    <div className="flex flex-wrap gap-2">
-                      {MONTOS_SUGERIDOS.map((monto) => (
-                        <button
-                          key={monto}
-                          onClick={() => handleMontoSugerido(monto)}
-                          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                            montoPersonalizado === monto
-                              ? "bg-[#cee741] text-gray-900"
-                              : "bg-gray-700/50 text-gray-300 hover:bg-gray-600 border border-gray-600"
-                          }`}
-                        >
-                          ${formatCurrency(monto)}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Nota de conversión */}
-                  <div className="mt-6 flex items-center gap-2 text-sm text-gray-400">
-                    <Calculator className="w-4 h-4" />
-                    <span>1 Punto Fit = ${formatCurrency(PESOS_POR_PUNTO)} COP</span>
-                  </div>
-                </div>
-
-                {/* Resultado Section */}
-                <div className="bg-gray-900/80 rounded-2xl p-6 border border-gray-700">
-                  <div className="text-center mb-6">
-                    <p className="text-gray-400 text-sm mb-3">Recibirás mensualmente</p>
-                    <div className="flex items-center justify-center gap-3">
-                      <Zap className="w-12 h-12 text-[#cee741] fill-[#cee741]" />
-                      <span className="text-6xl font-bold text-[#cee741]">{puntosGenerados.toLocaleString()}</span>
-                    </div>
-                    <p className="text-xl text-white font-semibold mt-2">Puntos Fit</p>
-                  </div>
-
-                  <div className="space-y-3 mb-6">
-                    <div className="flex items-center gap-3 text-gray-300">
-                      <Check className="w-5 h-5 text-[#cee741] flex-shrink-0" />
-                      <span>Cobro automático mensual</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-gray-300">
-                      <Check className="w-5 h-5 text-[#cee741] flex-shrink-0" />
-                      <span>Cancela cuando quieras</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-gray-300">
-                      <Check className="w-5 h-5 text-[#cee741] flex-shrink-0" />
-                      <span>Usa tus puntos en cualquier producto</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-gray-300">
-                      <Check className="w-5 h-5 text-[#cee741] flex-shrink-0" />
-                      <span>Sin productos fijos, libertad total</span>
-                    </div>
-                  </div>
-
-                  <button 
-                    className={`w-full py-4 px-6 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 ${
-                      montoPersonalizado >= PESOS_POR_PUNTO
-                        ? "bg-[#cee741] hover:bg-[#ddf752] text-gray-900"
-                        : "bg-gray-700 text-gray-400 cursor-not-allowed"
-                    }`}
-                    disabled={montoPersonalizado < PESOS_POR_PUNTO}
-                  >
-                    <Zap className="w-5 h-5" />
-                    Suscribirme por ${formatCurrency(montoPersonalizado)}/mes
-                  </button>
-                  
-                  {montoPersonalizado < PESOS_POR_PUNTO && (
-                    <p className="text-xs text-red-400 text-center mt-3">
-                      El monto mínimo es ${formatCurrency(PESOS_POR_PUNTO)} para obtener al menos 1 punto
-                    </p>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -364,11 +246,129 @@ export default function SuscripcionesPage() {
         </div>
       </section>
 
+      {/* Suscripción Personalizada - Puntos */}
+      <section className="py-12 px-4 bg-gradient-to-b from-gray-950 to-gray-900">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-gray-800/80 to-gray-900/80 border-2 border-[#cee741]/40 rounded-3xl p-8 relative overflow-hidden">
+            {/* Glow effect */}
+            <div className="absolute top-0 right-0 w-72 h-72 bg-[#cee741]/10 rounded-full blur-[100px]"></div>
+            <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#cee741]/5 rounded-full blur-[80px]"></div>
+            
+            <div className="relative">
+              {/* Header */}
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-14 h-14 bg-gradient-to-br from-[#cee741] to-[#a8c030] rounded-2xl flex items-center justify-center">
+                  <Wallet className="w-7 h-7 text-gray-900" />
+                </div>
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-bold text-white">Suscripción Personalizada</h2>
+                  <p className="text-gray-400">Si prefieres flexibilidad total, elige cuanto invertir y acumula puntos cada mes</p>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Input Section */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-3">
+                    ¿Cuánto quieres invertir mensualmente?
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-xl">$</span>
+                    <input
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => handleMontoChange(e.target.value)}
+                      className="w-full pl-10 pr-4 py-4 bg-gray-900 border-2 border-gray-700 rounded-xl text-white text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-[#cee741] focus:border-[#cee741] transition-all"
+                      placeholder="100,000"
+                    />
+                  </div>
+
+                  {/* Montos sugeridos */}
+                  <div className="mt-4">
+                    <span className="text-xs text-gray-500 mb-2 block">Montos sugeridos:</span>
+                    <div className="flex flex-wrap gap-2">
+                      {MONTOS_SUGERIDOS.map((monto) => (
+                        <button
+                          key={monto}
+                          onClick={() => handleMontoSugerido(monto)}
+                          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                            montoPersonalizado === monto
+                              ? "bg-[#cee741] text-gray-900"
+                              : "bg-gray-700/50 text-gray-300 hover:bg-gray-600 border border-gray-600"
+                          }`}
+                        >
+                          ${formatCurrency(monto)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Nota de conversión */}
+                  <div className="mt-6 flex items-center gap-2 text-sm text-gray-400">
+                    <Calculator className="w-4 h-4" />
+                    <span>1 Punto Fit = ${formatCurrency(PESOS_POR_PUNTO)} COP</span>
+                  </div>
+                </div>
+
+                {/* Resultado Section */}
+                <div className="bg-gray-900/80 rounded-2xl p-6 border border-gray-700">
+                  <div className="text-center mb-6">
+                    <p className="text-gray-400 text-sm mb-3">Recibiras mensualmente</p>
+                    <div className="flex items-center justify-center gap-3">
+                      <Zap className="w-12 h-12 text-[#cee741] fill-[#cee741]" />
+                      <span className="text-6xl font-bold text-[#cee741]">{puntosGenerados.toLocaleString()}</span>
+                    </div>
+                    <p className="text-xl text-white font-semibold mt-2">Puntos Fit</p>
+                  </div>
+
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center gap-3 text-gray-300">
+                      <Check className="w-5 h-5 text-[#cee741] flex-shrink-0" />
+                      <span>Cobro automatico mensual</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-gray-300">
+                      <Check className="w-5 h-5 text-[#cee741] flex-shrink-0" />
+                      <span>Cancela cuando quieras</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-gray-300">
+                      <Check className="w-5 h-5 text-[#cee741] flex-shrink-0" />
+                      <span>Usa tus puntos en cualquier producto</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-gray-300">
+                      <Check className="w-5 h-5 text-[#cee741] flex-shrink-0" />
+                      <span>Sin productos fijos, libertad total</span>
+                    </div>
+                  </div>
+
+                  <button 
+                    className={`w-full py-4 px-6 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 ${
+                      montoPersonalizado >= PESOS_POR_PUNTO
+                        ? "bg-[#cee741] hover:bg-[#ddf752] text-gray-900"
+                        : "bg-gray-700 text-gray-400 cursor-not-allowed"
+                    }`}
+                    disabled={montoPersonalizado < PESOS_POR_PUNTO}
+                  >
+                    <Zap className="w-5 h-5" />
+                    Activar suscripcion por ${formatCurrency(montoPersonalizado)}/mes
+                  </button>
+                  
+                  {montoPersonalizado < PESOS_POR_PUNTO && (
+                    <p className="text-xs text-red-400 text-center mt-3">
+                      El monto minimo es ${formatCurrency(PESOS_POR_PUNTO)} para obtener al menos 1 punto
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 px-4 bg-gradient-to-b from-gray-900 to-gray-950">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
-            ¿Por qué suscribirte?
+            ¿Por que suscribirte?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
             <div className="bg-gray-800/50 rounded-2xl p-6 border border-gray-700">
@@ -376,21 +376,21 @@ export default function SuscripcionesPage() {
                 <Package className="w-6 h-6 text-[#cee741]" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">Envío Gratis</h3>
-              <p className="text-gray-400 text-sm">Recibe tus suplementos cada mes sin costo de envío.</p>
+              <p className="text-gray-400 text-sm">Recibe tus suplementos cada mes sin costo de envio.</p>
             </div>
             <div className="bg-gray-800/50 rounded-2xl p-6 border border-gray-700">
               <div className="w-12 h-12 bg-[#cee741]/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
                 <Zap className="w-6 h-6 text-[#cee741]" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">Puntos Fit x2</h3>
-              <p className="text-gray-400 text-sm">Gana el doble de puntos en cada entrega mensual.</p>
+              <p className="text-gray-400 text-sm">Gana mas valor en cada entrega mensual y acelera tu progreso.</p>
             </div>
             <div className="bg-gray-800/50 rounded-2xl p-6 border border-gray-700">
               <div className="w-12 h-12 bg-[#cee741]/20 rounded-xl flex items-center justify-center mb-4 mx-auto">
                 <Star className="w-6 h-6 text-[#cee741]" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">Cancela cuando quieras</h3>
-              <p className="text-gray-400 text-sm">Sin permanencia mínima. Flexibilidad total.</p>
+              <p className="text-gray-400 text-sm">Sin permanencia minima. Flexibilidad total para ajustar tu estrategia.</p>
             </div>
           </div>
         </div>
@@ -520,7 +520,7 @@ function SubscriptionCard({
 
         {/* Subscribe Button */}
         <button className="w-full mt-4 bg-[#cee741] hover:bg-[#ddf752] text-gray-900 font-bold py-3 px-6 rounded-xl transition-colors">
-          Suscribirme
+          Iniciar plan
         </button>
       </div>
     </div>
