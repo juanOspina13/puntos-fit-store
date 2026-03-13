@@ -1,4 +1,4 @@
-import type { Product, Category } from "@/types";
+import type { Product, Category, Subscription } from "@/types";
 
 // For build-time (server) - import JSON directly
 import productsDataStatic from "../../public/data/products.json";
@@ -7,7 +7,7 @@ import productsDataStatic from "../../public/data/products.json";
 const isBrowser = typeof window !== "undefined";
 
 // Fetch products.json at runtime (client) or use static import (server/build)
-async function fetchProductsData(): Promise<{ products: Product[]; categories: Category[] }> {
+async function fetchProductsData(): Promise<{ products: Product[]; categories: Category[]; subscriptions: Subscription[] }> {
   if (isBrowser) {
     // Client-side: fetch from public folder (allows runtime updates)
     const res = await fetch("/data/products.json", { cache: "no-store" });
@@ -15,7 +15,7 @@ async function fetchProductsData(): Promise<{ products: Product[]; categories: C
     return res.json();
   }
   // Server-side/build-time: use static import
-  return productsDataStatic as { products: Product[]; categories: Category[] };
+  return productsDataStatic as { products: Product[]; categories: Category[]; subscriptions: Subscription[] };
 }
 
 export async function getProducts(): Promise<Product[]> {
@@ -48,6 +48,16 @@ export async function getNewProducts(): Promise<Product[]> {
   return products.filter((p) => p.isNew);
 }
 
+export async function getSubscriptions(): Promise<Subscription[]> {
+  const data = await fetchProductsData();
+  return data.subscriptions as Subscription[];
+}
+
+export async function getSubscriptionsByObjective(objetivo: string): Promise<Subscription[]> {
+  const subscriptions = await getSubscriptions();
+  return subscriptions.filter((s) => s.objetivo === objetivo);
+}
+
 export async function searchProducts(query: string): Promise<Product[]> {
   const products = await getProducts();
   const lowercaseQuery = query.toLowerCase();
@@ -57,4 +67,40 @@ export async function searchProducts(query: string): Promise<Product[]> {
       p.description.toLowerCase().includes(lowercaseQuery) ||
       p.tags?.some((tag) => tag.toLowerCase().includes(lowercaseQuery))
   );
+}
+
+// Subscription functions
+export async function getSubscriptionById(id: string): Promise<Subscription | undefined> {
+  const subscriptions = await getSubscriptions();
+  return subscriptions.find((s) => s.id === id);
+}
+
+export async function getSubscriptionsByObjetivo(objetivo: string): Promise<Subscription[]> {
+  const subscriptions = await getSubscriptions();
+  return subscriptions.filter((s) => s.objetivo === objetivo);
+}
+
+export async function getObjetivos(): Promise<{ id: string; label: string; icon: string; count: number }[]> {
+  const subscriptions = await getSubscriptions();
+  const objetivosMap = new Map<string, { label: string; icon: string; count: number }>();
+  
+  subscriptions.forEach((sub) => {
+    if (objetivosMap.has(sub.objetivo)) {
+      const existing = objetivosMap.get(sub.objetivo)!;
+      existing.count++;
+    } else {
+      objetivosMap.set(sub.objetivo, {
+        label: sub.objetivoLabel,
+        icon: sub.icon,
+        count: 1
+      });
+    }
+  });
+
+  return Array.from(objetivosMap.entries()).map(([id, data]) => ({
+    id,
+    label: data.label,
+    icon: data.icon,
+    count: data.count
+  }));
 }

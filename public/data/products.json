@@ -2,20 +2,27 @@
   "categories": [
     {
       "id": "1",
-      "name": "Suplementos",
+      "name": "Suplementos Fitness",
       "slug": "supplements",
       "image": "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=400",
       "description": "Proteínas, aminoácidos, pre-entrenos y más"
     },
     {
       "id": "2",
+      "name": "Suplementos Wellness",
+      "slug": "wellness_supplements",
+      "image": "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=400",
+      "description": "Ropa de entrenamiento de alta calidad"
+    },
+    {
+      "id": "3",
       "name": "Ropa Deportiva",
       "slug": "clothing",
       "image": "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=400",
       "description": "Ropa de entrenamiento de alta calidad"
     },
     {
-      "id": "3",
+      "id": "4",
       "name": "Accesorios",
       "slug": "accessories",
       "image": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400",
@@ -24,7 +31,7 @@
   ],
   "products": [
     {
-      "id": "4",
+      "id": "1",
       "name": "Monohidrato Creatina Platinum Muscletech",
       "description": "100% monohidrato de creatina. Aumenta la fuerza, potencia y masa muscular magra.",
       "price": 156000,
@@ -39,7 +46,53 @@
       "puntosFit": 120
     },
     {
-      "id": "11",
+      "id": "2",
+      "name": "Legacy Proscience",
+      "servicios": 50,
+      "description": "Creatina de alta calidad con 5g por porción. Aumenta la fuerza, potencia y masa muscular magra.",
+      "price": 130000,
+      "precioCompra": 104000,
+      "image": "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/legacy.jpg",
+      "category": "supplements",
+      "subcategory": "Creatina",
+      "rating": 4.9,
+      "reviews": 2100,
+      "inStock": true,
+      "tags": ["creatina", "fuerza", "legacy", "proscience"],
+      "puntosFit": 100
+    },
+    {
+      "id": "3",
+      "name": "Best Whey 2 lbs Proscience",
+      "description": "Proteína de suero 100% pura con 26g de proteína por porción.",
+      "price": 159900,
+      "precioCompra": 127920,
+      "image": "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/bestWhey2lb.jpeg",
+      "category": "supplements",
+      "subcategory": "Proteínas",
+      "rating": 4.8,
+      "reviews": 890,
+      "inStock": true,
+      "tags": ["proteína", "whey", "proscience"],
+      "puntosFit": 123
+    },
+    {
+      "id": "4",
+      "name": "Best Whey 5 lbs Proscience",
+      "description": "Proteína de suero 100% pura con 26g de proteína por porción.",
+      "price": 351000,
+      "precioCompra": 280000,
+      "image": "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/bestWhey2lb.jpeg",
+      "category": "supplements",
+      "subcategory": "Proteínas",
+      "rating": 4.8,
+      "reviews": 890,
+      "inStock": true,
+      "tags": ["proteína", "whey", "proscience"],
+      "puntosFit": 270
+    },
+    {
+      "id": "5",
       "name": "Whey Protein Elite 100% Vitanas 2 lbs",
       "description": "Proteína de suero 100% pura con 25g de proteína por porción. Presentación de 2 libras para probar la calidad.",
       "price": 163800,
@@ -54,7 +107,7 @@
       "puntosFit": 126
     },
     {
-      "id": "2",
+      "id": "6",
       "name": "Whey Protein Elite 100% Vitanas 5 lbs",
       "description": "Proteína de suero 100% pura con 25g de proteína por porción. Fórmula avanzada para máxima absorción y recuperación muscular.",
       "price": 330000,
@@ -67,22 +120,7 @@
       "inStock": true,
       "tags": ["proteína", "whey", "vitanas"],
       "puntosFit": 254
-    },
-    {
-      "id": "3",
-      "name": "Whey Protein Elite 100% Vitanas 8 lbs",
-      "description": "Proteína de suero 100% pura con 25g de proteína por porción. Presentación de 8 libras para mayor durabilidad.",
-      "price": 495000,
-      "precioCompra": 396000,
-      "image": "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/wheyEliteVitanas8lb.jpg",
-      "category": "supplements",
-      "subcategory": "Proteínas",
-      "rating": 4.8,
-      "reviews": 890,
-      "inStock": true,
-      "tags": ["proteína", "whey", "vitanas"],
-      "puntosFit": 380
-    },
+    }, 
     {
       "id": "7",
       "name": "Magnesio de Now 400mg",
@@ -99,7 +137,7 @@
       "puntosFit": 90
     },
     {
-      "id": "5",
+      "id": "8",
       "name": "Multi vitamínico platinum Muscletech",
       "description": "Complejo vitamínico completo diseñado especialmente para atletas. Con vitaminas, minerales y antioxidantes.",
       "price": 84500,
@@ -114,7 +152,22 @@
       "puntosFit": 65
     },
     {
-      "id": "6",
+      "id": "9",
+      "name": "The One",
+      "description": "Complejo vitamínico completo diseñado especialmente para atletas. Con vitaminas, minerales y antioxidantes.",
+      "price": 92000,
+      "precioCompra": 72000,
+      "image": "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/theOne.jpg",
+      "category": "supplements",
+      "subcategory": "Vitaminas",
+      "rating": 4.5,
+      "reviews": 445,
+      "inStock": true,
+      "tags": ["vitaminas", "salud"],
+      "puntosFit": 70
+    },
+    {
+      "id": "10",
       "name": "Omega de Now",
       "description": "Aceite de pescado con EPA y DHA de alta concentración. Apoya la salud cardiovascular, cerebral y articular.",
       "price": 78000,
@@ -129,7 +182,51 @@
       "puntosFit": 60
     },
     {
-      "id": "8",
+      "id": "11",
+      "name": "Omegaplus de proscience",
+      "description": "Aceite de pescado con EPA y DHA de alta concentración. Apoya la salud cardiovascular, cerebral y articular.",
+      "price": 78000,
+      "precioCompra": 61600,
+      "image": "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/omegaPlus.jpg",
+      "category": "supplements",
+      "subcategory": "Vitaminas",
+      "rating": 4.7,
+      "reviews": 632,
+      "inStock": true,
+      "tags": ["omega 3", "salud", "ácidos grasos"],
+      "puntosFit": 60
+    },
+    {
+      "id": "12",
+      "name": "Vitamina d3 + K12",
+      "description": "Suplemento de vitamina D3 y K2 para apoyar la salud ósea, inmunitaria y cardiovascular.",
+      "price": 78000,
+      "precioCompra": 61600,
+      "image": "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/vitaminaD3K12.jpg",
+      "category": "supplements",
+      "subcategory": "Vitaminas",
+      "rating": 4.7,
+      "reviews": 632,
+      "inStock": true,
+      "tags": ["vitamina D3", "vitamina K2", "salud ósea", "inmunidad"]
+    },
+    {
+      "id": "13",
+      "name": "KSM66- Ashwagandha",
+      "description": "Suplemento de ashwagandha con extracto KSM66 para apoyar la reducción del estrés, mejora del rendimiento físico y bienestar general.",
+      "price": 75400,
+      "precioCompra": 61600,
+      "image": "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/ashwagandha.jpeg",
+      "category": "supplements",
+      "subcategory": "Vitaminas",
+      "rating": 4.7,
+      "reviews": 632,
+      "inStock": true,
+      "tags": ["ashwagandha", "adaptógeno", "estrés", "rendimiento"],
+      "puntosFit": 58
+    },
+    {
+      "id": "14",
       "name": "Lipodrene Quemador de Grasa",
       "description": "Potente quemador de grasa con ingredientes termogénicos para apoyar la pérdida de peso y energía durante el entrenamiento.",
       "price": 149500,
@@ -144,7 +241,7 @@
       "puntosFit": 115
     },
     {
-      "id": "9",
+      "id": "15",
       "name": "Set Cotton Deportivo Mujer",
       "description": "Conjunto deportivo de algodón premium, ideal para entrenamiento y uso casual.",
       "price": 149500,
@@ -159,7 +256,7 @@
       "puntosFit": 115
     },
     {
-      "id": "10",
+      "id": "16",
       "name": "Chaqueta Deportiva Mujer",
       "description": "Chaqueta deportiva para mujer, confeccionada en tela transpirable y ligera. Ideal para entrenamientos al aire libre.",
       "price": 119600,
@@ -172,6 +269,297 @@
       "inStock": true,
       "tags": ["chaqueta", "ropa deportiva", "mujer", "entrenamiento"],
       "puntosFit": 92
+    }
+  ],
+  "subscriptions": [
+    {
+      "id": "1",
+      "name": "Pack Masa Muscular",
+      "description": "Suscripción mensual diseñada para maximizar tus ganancias de masa muscular. Incluye creatina premium y proteína de alta calidad para potenciar tu crecimiento muscular.",
+      "monthlyPrice": 270000,
+      "originalPrice": 315900,
+      "discount": 15,
+      "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400",
+      "objetivo": "ganar-musculo",
+      "objetivoLabel": "Ganar Músculo",
+      "frequency": "monthly",
+      "includedProducts": ["1", "3"],
+      "benefits": [
+        "Envío gratis mensual",
+        "15% de descuento vs compra individual",
+        "Cancela cuando quieras",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 486,
+      "rating": 4.9,
+      "subscribers": 1250,
+      "tags": ["masa muscular", "creatina", "proteína", "fuerza"],
+      "icon": "💪"
+    },
+    {
+      "id": "2",
+      "name": "Pack Fuerza Extrema",
+      "description": "Aumenta tu fuerza y potencia con este combo de creatinas premium. Ideal para atletas que buscan romper sus límites.",
+      "monthlyPrice": 243000,
+      "originalPrice": 286000,
+      "discount": 15,
+      "image": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400",
+      "objetivo": "ganar-musculo",
+      "objetivoLabel": "Ganar Músculo",
+      "frequency": "monthly",
+      "includedProducts": ["1", "2"],
+      "benefits": [
+        "Envío gratis mensual",
+        "15% de descuento vs compra individual",
+        "Guía de entrenamiento de fuerza",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 440,
+      "rating": 4.8,
+      "subscribers": 890,
+      "tags": ["fuerza", "creatina", "potencia", "rendimiento"],
+      "icon": "💪"
+    },
+    {
+      "id": "3",
+      "name": "Pack Proteína Premium",
+      "description": "Todo lo que necesitas en proteína para tu mes. Incluye proteína Whey de alta calidad en presentación grande para máxima recuperación.",
+      "monthlyPrice": 435000,
+      "originalPrice": 510900,
+      "discount": 15,
+      "image": "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=400",
+      "objetivo": "ganar-musculo",
+      "objetivoLabel": "Ganar Músculo",
+      "frequency": "monthly",
+      "includedProducts": ["4", "3"],
+      "benefits": [
+        "Envío gratis mensual",
+        "15% de descuento vs compra individual",
+        "Plan de nutrición incluido",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 786,
+      "rating": 4.9,
+      "subscribers": 1100,
+      "tags": ["proteína", "recuperación", "músculo", "whey"],
+      "icon": "💪"
+    },
+    {
+      "id": "4",
+      "name": "Pack Definición Total",
+      "description": "Pierde grasa manteniendo tu masa muscular. Combina quemador termogénico con proteína para resultados óptimos en definición.",
+      "monthlyPrice": 263000,
+      "originalPrice": 309400,
+      "discount": 15,
+      "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400",
+      "objetivo": "bajar-peso",
+      "objetivoLabel": "Bajar de Peso",
+      "frequency": "monthly",
+      "includedProducts": ["14", "3"],
+      "benefits": [
+        "Envío gratis mensual",
+        "15% de descuento vs compra individual",
+        "Plan de nutrición para definición",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 476,
+      "rating": 4.7,
+      "subscribers": 720,
+      "tags": ["definición", "quemador", "proteína", "cutting"],
+      "icon": "🔥"
+    },
+    {
+      "id": "5",
+      "name": "Pack Quema Grasa Intenso",
+      "description": "Maximiza tu quema de grasa con el potente Lipodrene y omega 3 para acelerar tu metabolismo de forma saludable.",
+      "monthlyPrice": 193000,
+      "originalPrice": 227500,
+      "discount": 15,
+      "image": "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=400",
+      "objetivo": "bajar-peso",
+      "objetivoLabel": "Bajar de Peso",
+      "frequency": "monthly",
+      "includedProducts": ["14", "10"],
+      "benefits": [
+        "Envío gratis mensual",
+        "15% de descuento vs compra individual",
+        "Guía de cardio efectivo",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 350,
+      "rating": 4.6,
+      "subscribers": 650,
+      "tags": ["quemador", "metabolismo", "omega", "termogénico"],
+      "icon": "🔥"
+    },
+    {
+      "id": "6",
+      "name": "Pack Sueño Reparador",
+      "description": "Mejora la calidad de tu sueño y recuperación nocturna. El magnesio y ashwagandha trabajan juntos para un descanso profundo.",
+      "monthlyPrice": 163000,
+      "originalPrice": 192400,
+      "discount": 15,
+      "image": "https://images.unsplash.com/photo-1531353826977-0941b4779a1c?w=400",
+      "objetivo": "dormir-bien",
+      "objetivoLabel": "Dormir Bien",
+      "frequency": "monthly",
+      "includedProducts": ["7", "13"],
+      "benefits": [
+        "Envío gratis mensual",
+        "15% de descuento vs compra individual",
+        "Guía de higiene del sueño",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 296,
+      "rating": 4.8,
+      "subscribers": 540,
+      "tags": ["sueño", "magnesio", "ashwagandha", "relajación"],
+      "icon": "😴"
+    },
+    {
+      "id": "7",
+      "name": "Pack Descanso Completo",
+      "description": "Optimiza tu recuperación nocturna con magnesio, omega 3 y vitamina D3+K2 para despertar renovado cada día.",
+      "monthlyPrice": 232000,
+      "originalPrice": 273000,
+      "discount": 15,
+      "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400",
+      "objetivo": "dormir-bien",
+      "objetivoLabel": "Dormir Bien",
+      "frequency": "monthly",
+      "includedProducts": ["7", "10", "12"],
+      "benefits": [
+        "Envío gratis mensual",
+        "15% de descuento vs compra individual",
+        "Mejor recuperación muscular",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 420,
+      "rating": 4.8,
+      "subscribers": 480,
+      "tags": ["recuperación", "sueño", "vitaminas", "descanso"],
+      "icon": "😴"
+    },
+    {
+      "id": "8",
+      "name": "Pack Energía Diaria",
+      "description": "Mantén tu energía y vitalidad durante todo el día con vitaminas, omega y ashwagandha adaptógena.",
+      "monthlyPrice": 210000,
+      "originalPrice": 245400,
+      "discount": 14,
+      "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400",
+      "objetivo": "energia",
+      "objetivoLabel": "Más Energía",
+      "frequency": "monthly",
+      "includedProducts": ["9", "11", "13"],
+      "benefits": [
+        "Envío gratis mensual",
+        "14% de descuento vs compra individual",
+        "Más energía y menos estrés",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 376,
+      "rating": 4.7,
+      "subscribers": 580,
+      "tags": ["energía", "vitalidad", "adaptógeno", "bienestar"],
+      "icon": "⚡"
+    },
+    {
+      "id": "9",
+      "name": "Pack Vitalidad Total",
+      "description": "Combo premium de vitaminas para mantener tu cuerpo funcionando al máximo. Multivitamínico, omega y vitamina D3.",
+      "monthlyPrice": 205000,
+      "originalPrice": 240500,
+      "discount": 15,
+      "image": "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=400",
+      "objetivo": "energia",
+      "objetivoLabel": "Más Energía",
+      "frequency": "monthly",
+      "includedProducts": ["8", "10", "12"],
+      "benefits": [
+        "Envío gratis mensual",
+        "15% de descuento vs compra individual",
+        "Sistema inmune fortalecido",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 370,
+      "rating": 4.8,
+      "subscribers": 720,
+      "tags": ["vitaminas", "energía", "inmunidad", "vitalidad"],
+      "icon": "⚡"
+    },
+    {
+      "id": "10",
+      "name": "Pack Bienestar Integral",
+      "description": "Cuida tu salud de forma completa con The One, omega plus y vitamina D3+K2. Ideal para mantener un estilo de vida saludable.",
+      "monthlyPrice": 211000,
+      "originalPrice": 248000,
+      "discount": 15,
+      "image": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400",
+      "objetivo": "salud-general",
+      "objetivoLabel": "Salud General",
+      "frequency": "monthly",
+      "includedProducts": ["9", "11", "12"],
+      "benefits": [
+        "Envío gratis mensual",
+        "15% de descuento vs compra individual",
+        "Guía de bienestar digital",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 380,
+      "rating": 4.8,
+      "subscribers": 890,
+      "tags": ["wellness", "vitaminas", "omega", "salud"],
+      "icon": "🌿"
+    },
+    {
+      "id": "11",
+      "name": "Pack Anti-Estrés",
+      "description": "Combate el estrés del día a día con ashwagandha adaptógena, magnesio relajante y omega 3 para el cerebro.",
+      "monthlyPrice": 230000,
+      "originalPrice": 270400,
+      "discount": 15,
+      "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400",
+      "objetivo": "salud-general",
+      "objetivoLabel": "Salud General",
+      "frequency": "monthly",
+      "includedProducts": ["13", "7", "10"],
+      "benefits": [
+        "Envío gratis mensual",
+        "15% de descuento vs compra individual",
+        "Técnicas de manejo del estrés",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 416,
+      "rating": 4.9,
+      "subscribers": 670,
+      "tags": ["estrés", "relajación", "adaptógeno", "bienestar"],
+      "icon": "🌿"
+    },
+    {
+      "id": "12",
+      "name": "Pack Rendimiento Atlético",
+      "description": "El pack definitivo para atletas serios. Creatina, proteína 5lbs y multivitamínico para rendir al máximo.",
+      "monthlyPrice": 502000,
+      "originalPrice": 591500,
+      "discount": 15,
+      "image": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400",
+      "objetivo": "ganar-musculo",
+      "objetivoLabel": "Ganar Músculo",
+      "frequency": "monthly",
+      "includedProducts": ["1", "4", "8"],
+      "benefits": [
+        "Envío gratis express",
+        "15% de descuento vs compra individual",
+        "Asesoría nutricional mensual",
+        "Puntos Fit triples",
+        "Acceso a comunidad VIP"
+      ],
+      "puntosFit": 910,
+      "rating": 4.9,
+      "subscribers": 430,
+      "tags": ["premium", "rendimiento", "atleta", "completo"],
+      "icon": "💪"
     }
   ]
 }

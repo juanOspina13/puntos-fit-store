@@ -50,6 +50,10 @@ export default function Header() {
             <Link href="/products?category=accessories" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
               Accesorios
             </Link>
+            <Link href="/suscripciones" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors flex items-center gap-1">
+              <span>Suscripciones</span>
+              <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
+            </Link>
           </nav>
 
           {/* Search Bar */}
@@ -171,6 +175,14 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Accesorios
+              </Link>
+              <Link
+                href="/suscripciones"
+                className="text-gray-300 hover:text-[#cee741] font-medium flex items-center gap-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <span>Suscripciones</span>
+                <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">NEW</span>
               </Link>
               {/* Mobile auth link */}
               <div className="pt-3 mt-3 border-t border-gray-700 space-y-3">
