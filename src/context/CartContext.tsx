@@ -40,7 +40,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [tokensToUse, setTokensToUse] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState<"puntos" | "dinero" | "mixto">("puntos");
+  const [paymentMethod, setPaymentMethod] = useState<
+    "puntos" | "dinero" | "mixto"
+  >("puntos");
   const [isHydrated, setIsHydrated] = useState(false);
 
   // Puntos disponibles del usuario
@@ -147,7 +149,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const totalPrice = items.reduce(
     (sum, item) => sum + item.product.puntosFit * item.quantity,
     0,
-  );
+  )
+    ? items.reduce(
+        (sum, item) => sum + item.product.puntosFit * item.quantity,
+        0,
+      )
+    : 0;
   const totalPriceCash = items.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0,

@@ -166,7 +166,7 @@ export default function CartDrawer() {
                 <p className="text-sm text-gray-500">Subtotal</p>
                 {paymentMethod === "puntos" && (
                   <p className="text-xl font-bold text-white">
-                    {totalPrice} Puntos Fit
+                    {totalPrice ? totalPrice : 0} Puntos Fit
                   </p>
                 )}
                 {paymentMethod === "dinero" && (

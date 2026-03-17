@@ -16,7 +16,7 @@ export default function Footer() {
               <span className="text-xl font-bold text-white">Puntos Fit Store</span>
             </Link>
             <p className="text-gray-400 mb-6">
-              Suscripciones mensuales de suplementos por objetivo. Resultados reales en 30 dias, sin adivinar que tomar.
+              Paquetes mensuales de suplementos por objetivo. Resultados reales en 90 días, sin adivinar que tomar.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -39,8 +39,8 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-4">Enlaces Rápidos</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/suscripciones" className="text-gray-400 hover:text-white transition-colors">
-                  Suscripciones mensuales
+                <Link href="/paquetes" className="text-gray-400 hover:text-white transition-colors">
+                  Paquetes mensuales
                 </Link>
               </li>
               <li>

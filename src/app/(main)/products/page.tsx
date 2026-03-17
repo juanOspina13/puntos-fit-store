@@ -116,7 +116,7 @@ function ProductsContent() {
             {filteredProducts.length} productos encontrados para complementar tu plan
           </p>
           <p className="text-gray-800/80 mt-2 text-sm">
-            ¿Buscas un plan completo por objetivo? Mira nuestras suscripciones mensuales y ten resultados en 30 dias.
+            ¿Buscas un plan completo por objetivo? Mira nuestros paquetes mensuales y ten resultados en 90 días.
           </p>
         </div>
       </div>

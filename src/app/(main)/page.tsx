@@ -55,20 +55,20 @@ export default async function HomePage() {
                 <br />
                 y tu energia con
                 <br />
-                <span className="text-[#cee741]">resultados en 30 dias</span>
+                <span className="text-[#cee741]">resultados en 90 días</span>
               </h1>
               <p className="text-lg text-gray-300 mb-8 max-w-lg">
-                Suscripciones mensuales de suplementos por objetivo. Recibe
+                Paquetes mensuales de suplementos por objetivo. Recibe
                 exactamente lo que tu cuerpo necesita para ganar musculo,
                 quemar grasa, dormir mejor y reducir el estres, sin adivinar
                 que tomar.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Link
-                  href="/suscripciones"
+                  href="/paquetes"
                   className="inline-flex items-center justify-center bg-[#cee741] text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-all shadow-lg shadow-[#cee741]/30 hover:shadow-[#cee741]/50"
                 >
-                  Ver suscripciones
+                  Ver paquetes
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
                 <Link
@@ -127,7 +127,7 @@ export default async function HomePage() {
                     <span className="text-2xl">💪</span>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-400">Suscriptores activos</p>
+                    <p className="text-sm text-gray-400">Clientes activos</p>
                     <p className="text-xl font-bold text-white">
                       {totalSubscribers.toLocaleString()}+
                     </p>
@@ -155,17 +155,17 @@ export default async function HomePage() {
           <div className="flex items-center justify-between mb-10">
             <div>
               <h2 className="text-3xl font-bold text-white mb-2">
-                Suscripciones mensuales por objetivo
+                Paquetes mensuales por objetivo
               </h2>
               <p className="text-gray-400">
-                Elige tu meta y recibe los suplementos correctos cada mes. Resultados maximos en 30 dias.
+                Elige tu meta y recibe los suplementos correctos cada mes. Resultados en 90 días.
               </p>
             </div>
             <Link
-              href="/suscripciones"
+              href="/paquetes"
               className="hidden sm:inline-flex items-center text-[#cee741] font-medium hover:text-[#b5cc1a]"
             >
-              Ver todas las suscripciones
+              Ver todos los paquetes
               <ChevronRight className="w-5 h-5 ml-1" />
             </Link>
           </div>
@@ -174,7 +174,7 @@ export default async function HomePage() {
             {packsTop.map((pack) => (
               <Link
                 key={pack.id}
-                href="/suscripciones"
+                href="/paquetes"
                 className="group rounded-2xl border border-gray-700 bg-gray-800/60 overflow-hidden hover:border-[#cee741]/60 transition-all"
               >
                 <div className="relative h-44">
@@ -212,10 +212,10 @@ export default async function HomePage() {
 
           <div className="text-center mt-8 sm:hidden">
             <Link
-              href="/suscripciones"
+              href="/paquetes"
               className="inline-flex items-center text-[#cee741] font-medium"
             >
-              Ver todas las suscripciones
+              Ver todos los paquetes
               <ChevronRight className="w-5 h-5 ml-1" />
             </Link>
           </div>
