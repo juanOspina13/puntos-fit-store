@@ -77,36 +77,7 @@
       "tags": ["proteína", "whey", "proscience"],
       "puntosFit": 270
     },
-    {
-      "id": "5",
-      "name": "Whey Protein Elite 100% Vitanas 2 lbs",
-      "description": "Proteína de suero 100% pura con 25g de proteína por porción. Presentación de 2 libras para probar la calidad.",
-      "price": 163800,
-      "precioCompra": 126000,
-      "image": "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/wheyEliteVitanas5lb.jpg",
-      "category": "supplements",
-      "subcategory": "Proteínas",
-      "rating": 4.8,
-      "reviews": 890,
-      "inStock": true,
-      "tags": ["proteína", "whey", "vitanas"],
-      "puntosFit": 126
-    },
-    {
-      "id": "6",
-      "name": "Whey Protein Elite 100% Vitanas 5 lbs",
-      "description": "Proteína de suero 100% pura con 25g de proteína por porción. Fórmula avanzada para máxima absorción y recuperación muscular.",
-      "price": 330000,
-      "precioCompra": 270400,
-      "image": "https://api.gymconnect.com.co/training-connect-services/web/img/suplementos/wheyEliteVitanas5lb.jpg",
-      "category": "supplements",
-      "subcategory": "Proteínas",
-      "rating": 4.8,
-      "reviews": 890,
-      "inStock": true,
-      "tags": ["proteína", "whey", "vitanas"],
-      "puntosFit": 254
-    }, 
+   
     {
       "id": "7",
       "name": "Magnesio de Now 400mg",
@@ -487,6 +458,72 @@
       "rating": 4.9,
       "subscribers": 430,
       "tags": ["premium", "rendimiento", "atleta", "completo"],
+      "icon": "💪"
+    },
+    {
+      "id": "13",
+      "name": "Pack Vitamínico Esencial",
+      "description": "Tu base diaria de bienestar. Incluye multivitamínico completo para atletas que buscan mantener su salud al día sin complicarse.",
+      "monthlyPrice": 92000,
+      "originalPrice": 92000,
+      "discount": 0,
+      "image": "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=400",
+      "objetivo": "salud-general",
+      "objetivoLabel": "Salud General",
+      "frequency": "monthly",
+      "includedProducts": ["9"],
+      "benefits": [
+        "Envío gratis",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 70,
+      "rating": 4.7,
+      "subscribers": 320,
+      "tags": ["vitaminas", "esencial", "salud", "básico"],
+      "icon": "🌿"
+    },
+    {
+      "id": "14",
+      "name": "Pack Fuerza Esencial",
+      "description": "Creatina de alta calidad cada mes para potenciar tu fuerza y rendimiento en el gimnasio. Ideal para quienes entrenan con intensidad.",
+      "monthlyPrice": 130000,
+      "originalPrice": 130000,
+      "discount": 0,
+      "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400",
+      "objetivo": "ganar-musculo",
+      "objetivoLabel": "Ganar Músculo",
+      "frequency": "monthly",
+      "includedProducts": ["2"],
+      "benefits": [
+        "Envío gratis",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 100,
+      "rating": 4.8,
+      "subscribers": 410,
+      "tags": ["creatina", "fuerza", "esencial", "rendimiento"],
+      "icon": "💪"
+    },
+    {
+      "id": "15",
+      "name": "Pack Proteína Mensual",
+      "description": "Proteína whey premium cada mes para asegurar tu recuperación muscular. 26g de proteína por porción para máximos resultados.",
+      "monthlyPrice": 160000,
+      "originalPrice": 160000,
+      "discount": 0,
+      "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400",
+      "objetivo": "ganar-musculo",
+      "objetivoLabel": "Ganar Músculo",
+      "frequency": "monthly",
+      "includedProducts": ["3"],
+      "benefits": [
+        "Envío gratis",
+        "Puntos Fit dobles"
+      ],
+      "puntosFit": 123,
+      "rating": 4.8,
+      "subscribers": 530,
+      "tags": ["proteína", "whey", "mensual", "recuperación"],
       "icon": "💪"
     }
   ]
