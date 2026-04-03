@@ -29,7 +29,7 @@
       "reviews": 2100,
       "inStock": true,
       "tags": ["creatina", "fuerza", "bestseller"],
-      "puntosFit": 120
+      "puntosFit": 156
     },
     {
       "id": "2",
@@ -45,7 +45,7 @@
       "reviews": 2100,
       "inStock": true,
       "tags": ["creatina", "fuerza", "legacy", "proscience"],
-      "puntosFit": 100
+      "puntosFit": 130
     },
     {
       "id": "3",
@@ -60,7 +60,7 @@
       "reviews": 890,
       "inStock": true,
       "tags": ["proteína", "whey", "proscience"],
-      "puntosFit": 123
+      "puntosFit": 160
     },
     {
       "id": "4",
@@ -75,7 +75,7 @@
       "reviews": 890,
       "inStock": true,
       "tags": ["proteína", "whey", "proscience"],
-      "puntosFit": 270
+      "puntosFit": 351
     },
    
     {
@@ -91,7 +91,7 @@
       "reviews": 421,
       "inStock": true,
       "tags": ["magnesio", "salud", "sueño"],
-      "puntosFit": 90
+      "puntosFit": 117
     },
     {
       "id": "8",
@@ -106,7 +106,7 @@
       "reviews": 445,
       "inStock": true,
       "tags": ["vitaminas", "salud"],
-      "puntosFit": 65
+      "puntosFit": 85
     },
     {
       "id": "9",
@@ -121,7 +121,7 @@
       "reviews": 445,
       "inStock": true,
       "tags": ["vitaminas", "salud"],
-      "puntosFit": 70
+      "puntosFit": 92
     },
     {
       "id": "10",
@@ -136,7 +136,7 @@
       "reviews": 632,
       "inStock": true,
       "tags": ["omega 3", "salud", "ácidos grasos"],
-      "puntosFit": 60
+      "puntosFit": 78
     },
     {
       "id": "11",
@@ -151,7 +151,7 @@
       "reviews": 632,
       "inStock": true,
       "tags": ["omega 3", "salud", "ácidos grasos"],
-      "puntosFit": 60
+      "puntosFit": 78
     },
     {
       "id": "12",
@@ -166,7 +166,7 @@
       "reviews": 632,
       "inStock": true,
       "tags": ["vitamina D3", "vitamina K2", "salud ósea", "inmunidad"],
-      "puntosFit": 60
+      "puntosFit": 78
     },
     {
       "id": "13",
@@ -181,7 +181,7 @@
       "reviews": 632,
       "inStock": true,
       "tags": ["ashwagandha", "adaptógeno", "estrés", "rendimiento"],
-      "puntosFit": 58
+      "puntosFit": 76
     },
     {
       "id": "14",
@@ -196,7 +196,7 @@
       "reviews": 512,
       "inStock": true,
       "tags": ["quemador", "lipodrene", "termogénico", "energía"],
-      "puntosFit": 115
+      "puntosFit": 150
     },
     {
       "id": "15",
@@ -211,7 +211,7 @@
       "reviews": 512,
       "inStock": true,
       "tags": ["quemador", "lipodrene", "termogénico", "energía"],
-      "puntosFit": 125
+      "puntosFit": 160
     }
   ],
   "subscriptions": [
