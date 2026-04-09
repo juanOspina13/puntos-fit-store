@@ -42,7 +42,10 @@ export default function Header() {
             <Link href="/paquetes" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors flex items-center gap-1">
               <span>Paquetes</span>
               <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">TOP</span>
-            </Link> 
+            </Link>
+            <Link href="/suscripciones" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
+              Suscripciones
+            </Link>
             <Link href="/products?category=supplements" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
               Suplementos
             </Link>
@@ -149,6 +152,13 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Paquetes
+              </Link>
+              <Link
+                href="/suscripciones"
+                className="text-gray-300 hover:text-[#cee741] font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Suscripciones
               </Link>
               <Link
                 href="/products?category=supplements"
