@@ -9,8 +9,27 @@ import {
 } from "@/data/products";
 import { Suspense } from "react";
 import AutoLoginHandler from "@/components/auth/AutoLoginHandler";
+import {
+  getUserProfile,
+  getUserProfileWithToken,
+} from "@/services/auth-service";
 
-export default async function HomePage() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = await searchParams;
+
+  console.log(params);
+  if (params.tk) {
+    console.log("token", params.tk);
+    // localStorage.setItem("user-token", JSON.stringify(params.tk));
+    if (typeof params.tk === "string") {
+      let userData = await getUserProfileWithToken(params.tk);
+      console.log(userData);
+    }
+  }
   const [featuredProducts, categories, subscriptions] = await Promise.all([
     getFeaturedProducts(),
     getCategories(),
@@ -20,18 +39,15 @@ export default async function HomePage() {
   const packsTop = subscriptions.slice(0, 6);
   const totalSubscribers = subscriptions.reduce(
     (acc, sub) => acc + sub.subscribers,
-    0
+    0,
   );
   const maxDiscount = subscriptions.reduce(
     (acc, sub) => Math.max(acc, sub.discount),
-    0
+    0,
   );
 
   return (
     <div>
-      <Suspense fallback={null}>
-        <AutoLoginHandler />
-      </Suspense>
 
       <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -39,7 +55,7 @@ export default async function HomePage() {
             className="absolute inset-0"
             style={{
               backgroundImage:
-                'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+                "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
             }}
           />
         </div>
@@ -59,9 +75,8 @@ export default async function HomePage() {
               </h1>
               <p className="text-lg text-gray-300 mb-8 max-w-lg">
                 Paquetes mensuales de suplementos por objetivo. Recibe
-                exactamente lo que tu cuerpo necesita para ganar musculo,
-                quemar grasa, dormir mejor y reducir el estres, sin adivinar
-                que tomar.
+                exactamente lo que tu cuerpo necesita para ganar musculo, quemar
+                grasa, dormir mejor y reducir el estres, sin adivinar que tomar.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Link
@@ -82,7 +97,9 @@ export default async function HomePage() {
               <div className="mt-10 pt-8 border-t border-gray-700/50">
                 <p className="text-gray-400 text-sm mb-3 text-center md:text-left">
                   Puntos Fit Store hace parte del ecosistema{" "}
-                  <span className="font-semibold text-[#cee741]">Gym Connect</span>
+                  <span className="font-semibold text-[#cee741]">
+                    Gym Connect
+                  </span>
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                   <a
@@ -91,7 +108,11 @@ export default async function HomePage() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2.5 rounded-lg transition-colors border border-gray-700"
                   >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <svg
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
                       <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z" />
                     </svg>
                     <span className="text-sm font-medium">Google Play</span>
@@ -102,7 +123,11 @@ export default async function HomePage() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2.5 rounded-lg transition-colors border border-gray-700"
                   >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <svg
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
                       <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
                     </svg>
                     <span className="text-sm font-medium">App Store</span>
@@ -141,7 +166,9 @@ export default async function HomePage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-400">Ahorro en packs</p>
-                    <p className="text-xl font-bold text-white">Hasta {maxDiscount}%</p>
+                    <p className="text-xl font-bold text-white">
+                      Hasta {maxDiscount}%
+                    </p>
                   </div>
                 </div>
               </div>
@@ -158,7 +185,8 @@ export default async function HomePage() {
                 Paquetes mensuales por objetivo
               </h2>
               <p className="text-gray-400">
-                Elige tu meta y recibe los suplementos correctos cada mes. Resultados en 90 días.
+                Elige tu meta y recibe los suplementos correctos cada mes.
+                Resultados en 90 días.
               </p>
             </div>
             <Link
@@ -190,7 +218,9 @@ export default async function HomePage() {
                   </span>
                 </div>
                 <div className="p-5">
-                  <p className="text-sm text-[#cee741] mb-2">{pack.objetivoLabel}</p>
+                  <p className="text-sm text-[#cee741] mb-2">
+                    {pack.objetivoLabel}
+                  </p>
                   <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2">
                     {pack.name}
                   </h3>
@@ -225,9 +255,12 @@ export default async function HomePage() {
       <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-3">Complementa tu plan</h2>
+            <h2 className="text-3xl font-bold text-white mb-3">
+              Complementa tu plan
+            </h2>
             <p className="text-gray-400">
-              Tambien puedes comprar productos individuales segun tus necesidades
+              Tambien puedes comprar productos individuales segun tus
+              necesidades
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -245,8 +278,12 @@ export default async function HomePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-2xl font-bold text-white mb-2">{category.name}</h3>
-                  <p className="text-gray-300 text-sm mb-4">{category.description}</p>
+                  <h3 className="text-2xl font-bold text-white mb-2">
+                    {category.name}
+                  </h3>
+                  <p className="text-gray-300 text-sm mb-4">
+                    {category.description}
+                  </p>
                   <span className="inline-flex items-center text-white font-medium group-hover:gap-3 gap-2 transition-all">
                     Ver categoria
                     <ChevronRight className="w-5 h-5" />
