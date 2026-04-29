@@ -6,8 +6,8 @@ import { useAuth } from "@/context/AuthContext";
 import {
   loginRequest,
   loginSSORequest,
-  getUserProfile,
 } from "@/services/auth-service";
+import { postLogin } from "@/lib/auth-helpers";
 
 export const useLogin = () => {
   const router = useRouter();
@@ -19,20 +19,17 @@ export const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const isFormValid = email.length > 0 && password.length > 0 && email.includes("@");
+  const isFormValid =
+    email.length > 0 && password.length > 0 && email.includes("@");
 
   /**
-   * Flujo post-login compartido: guarda token, obtiene perfil,
-   * dispara contexto y redirige al home.
+   * Wrapper del flujo post-login compartido.
    */
-  const postLogin = useCallback(
+  const handlePostLogin = useCallback(
     async (tokenData: { token: string }) => {
-      localStorage.setItem("user-token", JSON.stringify(tokenData.token));
-      const userData = await getUserProfile();
-      login(tokenData.token, userData);
-      router.push("/");
+      await postLogin(tokenData, login, router);
     },
-    [login, router]
+    [login, router],
   );
 
   /**
@@ -46,16 +43,16 @@ export const useLogin = () => {
 
     try {
       const tokenData = await loginRequest({ username: email, password });
-      await postLogin(tokenData);
+      await handlePostLogin(tokenData);
     } catch (err) {
       console.error("Login error:", err);
       setError(
-        "Credenciales inválidas. Por favor, verifica tu email y contraseña."
+        "Credenciales inválidas. Por favor, verifica tu email y contraseña.",
       );
     } finally {
       setLoading(false);
     }
-  }, [email, password, isFormValid, postLogin]);
+  }, [email, password, isFormValid, handlePostLogin]);
 
   /**
    * Login SSO solo con email
@@ -68,14 +65,14 @@ export const useLogin = () => {
 
     try {
       const tokenData = await loginSSORequest(email);
-      await postLogin(tokenData);
+      await handlePostLogin(tokenData);
     } catch (err) {
       console.error("SSO Login error:", err);
       setError("Error al iniciar sesión con SSO. Intenta de nuevo.");
     } finally {
       setLoading(false);
     }
-  }, [email, postLogin]);
+  }, [email, handlePostLogin]);
 
   /**
    * Permite enviar el form presionando Enter
@@ -86,7 +83,7 @@ export const useLogin = () => {
         handleSubmit();
       }
     },
-    [isFormValid, handleSubmit]
+    [isFormValid, handleSubmit],
   );
 
   return {
@@ -103,5 +100,6 @@ export const useLogin = () => {
     handleSubmit,
     handleSSOLogin,
     handleKeyPress,
+    postLogin: handlePostLogin,
   };
 };

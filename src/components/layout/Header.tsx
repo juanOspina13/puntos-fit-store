@@ -1,220 +1,70 @@
-"use client";
+import { Suspense } from "react";
+import { getServerUser } from "@/lib/server-auth";
+import HeaderClient from "./HeaderClient";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Search, ShoppingCart, Menu, X, User, Heart, LogOut, Zap } from "lucide-react";
-import { useCart } from "@/context/CartContext";
-import { useAuth } from "@/context/AuthContext";
+interface HeaderProps {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}
 
-export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const { totalItems, setIsCartOpen } = useCart();
-  const { user, isAuthenticated, logout } = useAuth();
-  const router = useRouter();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
-    }
-  };
-
+function HeaderSkeleton() {
   return (
     <header className="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-[#cee741] rounded-lg flex items-center justify-center">
-              <span className="text-gray-900 font-bold text-xl">PF</span>
-            </div>
-            <span className="text-xl font-bold text-white hidden sm:block">Puntos Fit Store</span>
-          </Link>
+          {/* Logo skeleton */}
+          <div className="flex items-center space-x-2">
+            <div className="w-10 h-10 bg-gray-800 rounded-lg animate-pulse" />
+            <div className="hidden sm:block w-32 h-6 bg-gray-800 rounded animate-pulse" />
+          </div>
 
-          {/* Desktop Navigation */}
+          {/* Navigation skeleton */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors ml-8">
-              Inicio
-            </Link>
-            
-            <Link href="/paquetes" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors flex items-center gap-1">
-              <span>Paquetes</span>
-              <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">TOP</span>
-            </Link>
-            <Link href="/suscripciones" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
-              Suscripciones
-            </Link>
-            <Link href="/products?category=supplements" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
-              Suplementos
-            </Link>
-            
+            <div className="w-16 h-4 bg-gray-800 rounded animate-pulse" />
+            <div className="w-20 h-4 bg-gray-800 rounded animate-pulse" />
+            <div className="w-24 h-4 bg-gray-800 rounded animate-pulse" />
+            <div className="w-20 h-4 bg-gray-800 rounded animate-pulse" />
           </nav>
 
-          {/* Search Bar */}
-          <form onSubmit={handleSearch} className="hidden lg:flex items-center flex-1 max-w-md mx-8">
-            <div className="relative w-full">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar productos..."
-                className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 text-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-[#cee741] focus:border-transparent text-sm placeholder-gray-500"
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
-            </div>
-          </form>
+          {/* Search skeleton */}
+          <div className="hidden lg:flex flex-1 max-w-md mx-8">
+            <div className="w-full h-10 bg-gray-800 rounded-full animate-pulse" />
+          </div>
 
-          {/* Right Icons */}
+          {/* Right icons skeleton */}
           <div className="flex items-center space-x-4">
-            <button className="hidden md:flex text-gray-400 hover:text-[#cee741] transition-colors">
-              <Heart className="w-6 h-6" />
-            </button>
-            {/* Puntos badge — siempre visible */}
-            {isAuthenticated && (
-              <div className="flex items-center gap-1.5 bg-[#cee741]/15 border border-[#cee741]/30 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full">
-                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#cee741] fill-[#cee741]" />
-                <span className="text-xs sm:text-sm font-bold text-[#cee741]">
-                  {user?.billetera_id?.classes ?? 0}
-                </span>
-                <span className="text-[10px] sm:text-xs text-[#cee741]/70 font-medium">puntos</span>
-              </div>
-            )}
-            {isAuthenticated ? (
-              <div className="hidden md:flex items-center gap-3">
-                <span className="text-sm text-gray-300 max-w-[120px] truncate" title={user?.nombre ?? user?.email}>
-                  {user?.nombre ?? user?.email}
-                </span>
-                <button
-                  onClick={() => { logout(); router.push("/login"); }}
-                  className="text-gray-400 hover:text-red-400 transition-colors"
-                  title="Cerrar sesión"
-                >
-                  <LogOut className="w-5 h-5" />
-                </button>
-              </div>
-            ) : (
-              <Link href="/login" className="hidden md:flex text-gray-400 hover:text-[#cee741] transition-colors">
-                <User className="w-6 h-6" />
-              </Link>
-            )}
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="relative text-gray-400 hover:text-[#cee741] transition-colors"
-            >
-              <ShoppingCart className="w-6 h-6" />
-              {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#cee741] text-gray-900 text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
-                  {totalItems}
-                </span>
-              )}
-            </button>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden text-gray-400"
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            <div className="hidden md:block w-6 h-6 bg-gray-800 rounded animate-pulse" />
+            <div className="w-6 h-6 bg-gray-800 rounded animate-pulse" />
+            <div className="w-6 h-6 bg-gray-800 rounded animate-pulse" />
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-800">
-            <form onSubmit={handleSearch} className="mb-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Buscar productos..."
-                  className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 text-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-500"
-                />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
-              </div>
-            </form>
-            <nav className="flex flex-col space-y-3">
-              <Link
-                href="/"
-                className="text-gray-300 hover:text-[#cee741] font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Inicio
-              </Link>
-              <Link
-                href="/paquetes"
-                className="text-gray-300 hover:text-[#cee741] font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Paquetes
-              </Link>
-              <Link
-                href="/suscripciones"
-                className="text-gray-300 hover:text-[#cee741] font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Suscripciones
-              </Link>
-              <Link
-                href="/products?category=supplements"
-                className="text-gray-300 hover:text-[#cee741] font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Suplementos
-              </Link>
-              <Link
-                href="/products?category=clothing"
-                className="text-gray-300 hover:text-[#cee741] font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Ropa
-              </Link>
-              <Link
-                href="/paquetes"
-                className="text-gray-300 hover:text-[#cee741] font-medium flex items-center gap-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <span>Paquetes</span>
-                <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">TOP</span>
-              </Link>
-              {/* Mobile auth link */}
-              <div className="pt-3 mt-3 border-t border-gray-700 space-y-3">
-                {isAuthenticated ? (
-                  <>
-                    {/* Mobile puntos badge */}
-                    <div className="flex items-center gap-2 bg-[#cee741]/15 border border-[#cee741]/30 px-4 py-2.5 rounded-xl">
-                      <Zap className="w-5 h-5 text-[#cee741] fill-[#cee741]" />
-                      <span className="text-lg font-bold text-[#cee741]">
-                        {user?.billetera_id?.classes ?? 0}
-                      </span>
-                      <span className="text-sm text-[#cee741]/70 font-medium">puntos disponibles</span>
-                    </div>
-                    <button
-                      onClick={() => { logout(); router.push("/login"); setIsMenuOpen(false); }}
-                      className="flex items-center gap-2 text-gray-300 hover:text-red-400 font-medium w-full"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      Cerrar sesión
-                    </button>
-                  </>
-                ) : (
-                  <Link
-                    href="/login"
-                    className="flex items-center gap-2 text-gray-300 hover:text-[#cee741] font-medium"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <User className="w-4 h-4" />
-                    Iniciar Sesión
-                  </Link>
-                )}
-              </div>
-            </nav>
-          </div>
-        )}
       </div>
     </header>
+  );
+}
+
+async function HeaderWithData({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  let token: string | undefined;
+
+  // Extract token from searchParams if provided
+  if (searchParams) {
+    const params = await searchParams;
+    const tkParam = params.tk;
+    token = typeof tkParam === "string" ? tkParam : undefined;
+  }
+
+  // Get authenticated user from server (cached across request)
+  const userData = await getServerUser(token);
+  return <HeaderClient serverUserData={userData} />;
+}
+
+export default function Header({ searchParams }: HeaderProps) {
+  return (
+    <Suspense fallback={<HeaderSkeleton />}>
+      <HeaderWithData searchParams={searchParams} />
+    </Suspense>
   );
 }
