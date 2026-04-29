@@ -7,29 +7,9 @@ import {
   getCategories,
   getSubscriptions,
 } from "@/data/products";
-import { Suspense } from "react";
 import AutoLoginHandler from "@/components/auth/AutoLoginHandler";
-import {
-  getUserProfile,
-  getUserProfileWithToken,
-} from "@/services/auth-service";
 
-export default async function HomePage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  const params = await searchParams;
-
-  console.log(params);
-  if (params.tk) {
-    console.log("token", params.tk);
-    // localStorage.setItem("user-token", JSON.stringify(params.tk));
-    if (typeof params.tk === "string") {
-      let userData = await getUserProfileWithToken(params.tk);
-      console.log(userData);
-    }
-  }
+export default async function HomePage() {
   const [featuredProducts, categories, subscriptions] = await Promise.all([
     getFeaturedProducts(),
     getCategories(),
@@ -48,6 +28,7 @@ export default async function HomePage({
 
   return (
     <div>
+      <AutoLoginHandler />
 
       <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
