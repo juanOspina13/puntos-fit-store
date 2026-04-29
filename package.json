@@ -6,13 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "ts-node --project tsconfig.typeorm.json -r tsconfig-paths/register src/seeds/seed.ts",
+    "typeorm": "ts-node --project tsconfig.typeorm.json -r tsconfig-paths/register node_modules/typeorm/cli.js",
+     "migration:create": "npm run typeorm -- migration:create src/migrations/InitialSchema",
+    "migration:generate": "npm run typeorm -- migration:generate src/migrations/InitialSchema -d src/lib/data-source.cli.ts",
+    "migration:run": "npm run typeorm -- migration:run -d src/lib/data-source.cli.ts",
+    "migration:staging": "npx dotenv -e .env.staging -- npm run migration:run"
   },
   "dependencies": {
     "lucide-react": "^0.562.0",
+    "mysql2": "^3.20.0",
     "next": "^15.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.28"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
@@ -23,6 +32,8 @@
     "eslint-config-next": "^15.1.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.2"
   }
 }

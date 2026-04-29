@@ -1,73 +1,59 @@
-# React + TypeScript + Vite
+# Puntos Fit Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Transforma tu cuerpo y tu energía en 90 días.
 
-Currently, two official plugins are available:
+Puntos Fit Store es una tienda construida con Next.js donde la propuesta principal es un sistema de suplementos inteligentes por objetivos:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Ganar musculo
+- Quemar grasa
+- Dormir mejor
+- Reducir estres
+- Mejorar bienestar general
 
-## React Compiler
+La oferta central vive en los packs de Paquetes cargados desde `public/data/products.json`. Tambien se mantiene el paquete personalizado por monto para usuarios que quieren total flexibilidad.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack
 
-## Expanding the ESLint configuration
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Desarrollo
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Instalar dependencias:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Ejecutar en local:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+Build de produccion:
+
+```bash
+npm run build
+npm start
+```
+
+## Rutas clave
+
+- `/`: Home con propuesta de valor y packs destacados
+- `/paquetes`: Packs por objetivo + paquete personalizado por monto
+- `/products`: Catalogo de productos individuales para complementar el plan
+- `/checkout`: Flujo de compra
+
+## Fuente de datos
+
+Toda la oferta comercial esta en:
+
+- `public/data/products.json`
+
+Secciones principales del JSON:
+
+- `categories`
+- `products`
+- `subscriptions`
