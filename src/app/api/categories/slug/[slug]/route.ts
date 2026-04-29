@@ -11,7 +11,7 @@ export async function GET(
     const ds = await getDataSource();
     const repo = ds.getRepository(Category);
 
-    const category = await repo.findOneBy({ slug });
+    const category = await repo.findOneBy({ slug, enabled: true });
     if (!category) {
       return NextResponse.json(
         { error: "Categoría no encontrada" },

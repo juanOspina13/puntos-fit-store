@@ -49,9 +49,7 @@ export default function Header() {
             <Link href="/products?category=supplements" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
               Suplementos
             </Link>
-            <Link href="/products?category=clothing" className="text-gray-300 hover:text-[#cee741] font-medium transition-colors">
-              Ropa
-            </Link>
+            
           </nav>
 
           {/* Search Bar */}

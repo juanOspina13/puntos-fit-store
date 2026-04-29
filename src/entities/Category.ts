@@ -16,4 +16,7 @@ export class Category {
 
   @Column({ type: "text" })
   description!: string;
+
+  @Column({ type: "boolean", default: true })
+  enabled!: boolean;
 }

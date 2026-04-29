@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const ds = await getDataSource();
     const repo = ds.getRepository(Category);
-    const categories = await repo.find();
+    const categories = await repo.find({ where: { enabled: true } });
     return NextResponse.json(categories);
   } catch (error) {
     console.error("Database error:", error);

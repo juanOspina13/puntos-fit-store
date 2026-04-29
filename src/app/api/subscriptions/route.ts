@@ -12,6 +12,8 @@ export async function GET(request: Request) {
 
     const qb = repo.createQueryBuilder("subscription");
 
+    qb.andWhere("subscription.enabled = :enabled", { enabled: true });
+
     if (objetivo) {
       qb.andWhere("subscription.objetivo = :objetivo", { objetivo });
     }

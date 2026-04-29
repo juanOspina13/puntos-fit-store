@@ -14,6 +14,8 @@ export async function GET(request: Request) {
 
     const qb = repo.createQueryBuilder("product");
 
+    qb.andWhere("product.enabled = :enabled", { enabled: true });
+
     if (category) {
       qb.andWhere("product.category = :category", { category });
     }

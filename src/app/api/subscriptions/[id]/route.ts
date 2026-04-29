@@ -11,7 +11,7 @@ export async function GET(
     const ds = await getDataSource();
     const repo = ds.getRepository(Subscription);
 
-    const subscription = await repo.findOneBy({ id });
+    const subscription = await repo.findOneBy({ id, enabled: true });
     if (!subscription) {
       return NextResponse.json(
         { error: "Suscripción no encontrada" },

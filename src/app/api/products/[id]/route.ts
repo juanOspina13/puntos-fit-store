@@ -11,7 +11,7 @@ export async function GET(
     const ds = await getDataSource();
     const repo = ds.getRepository(Product);
 
-    const product = await repo.findOneBy({ id });
+    const product = await repo.findOneBy({ id, enabled: true });
     if (!product) {
       return NextResponse.json(
         { error: "Producto no encontrado" },
