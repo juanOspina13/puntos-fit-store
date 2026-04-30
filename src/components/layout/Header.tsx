@@ -3,7 +3,7 @@ import { getServerUser } from "@/lib/server-auth";
 import HeaderClient from "./HeaderClient";
 
 interface HeaderProps {
-  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+  userData: any;
 }
 
 function HeaderSkeleton() {
@@ -42,29 +42,14 @@ function HeaderSkeleton() {
   );
 }
 
-async function HeaderWithData({
-  searchParams,
-}: {
-  searchParams?: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  let token: string | undefined;
-
-  // Extract token from searchParams if provided
-  if (searchParams) {
-    const params = await searchParams;
-    const tkParam = params.tk;
-    token = typeof tkParam === "string" ? tkParam : undefined;
-  }
-
-  // Get authenticated user from server (cached across request)
-  const userData = await getServerUser(token);
+async function HeaderWithData({ userData }: { userData: any }) {
   return <HeaderClient serverUserData={userData} />;
 }
 
-export default function Header({ searchParams }: HeaderProps) {
+export default function Header({ userData }: HeaderProps) {
   return (
     <Suspense fallback={<HeaderSkeleton />}>
-      <HeaderWithData searchParams={searchParams} />
+      <HeaderWithData userData={userData} />
     </Suspense>
   );
 }

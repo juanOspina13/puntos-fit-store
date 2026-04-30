@@ -9,13 +9,13 @@ import {
 } from "@/data/products";
 import AutoLoginHandler from "@/components/auth/AutoLoginHandler";
 
-export default async function HomePage() {
+export default async function HomePage({ searchParams }: { searchParams?: Promise<Record<string, string | string[] | undefined>> }) {
   const [featuredProducts, categories, subscriptions] = await Promise.all([
     getFeaturedProducts(),
     getCategories(),
     getSubscriptions(),
   ]);
-
+console.log("searchParams", searchParams);
   const packsTop = subscriptions.slice(0, 6);
   const totalSubscribers = subscriptions.reduce(
     (acc, sub) => acc + sub.subscribers,

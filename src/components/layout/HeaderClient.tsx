@@ -22,7 +22,6 @@ interface HeaderClientProps {
 }
 
 export default function HeaderClient({ serverUserData }: HeaderClientProps) {
-    console.log(serverUserData);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { totalItems, setIsCartOpen } = useCart();
