@@ -19,9 +19,10 @@ import type { UserProfile } from "@/types/auth";
 
 interface HeaderClientProps {
   serverUserData?: UserProfile | null;
+  searchParams?: Record<string, string | string[] | undefined>;
 }
 
-export default function HeaderClient({ serverUserData }: HeaderClientProps) {
+export default function HeaderClient({ serverUserData, searchParams }: HeaderClientProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { totalItems, setIsCartOpen } = useCart();

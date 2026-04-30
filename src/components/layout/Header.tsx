@@ -3,7 +3,8 @@ import { getServerUser } from "@/lib/server-auth";
 import HeaderClient from "./HeaderClient";
 
 interface HeaderProps {
-  userData: any;
+  userData?: any;
+  searchParams?: Record<string, string | string[] | undefined>;
 }
 
 function HeaderSkeleton() {
@@ -42,14 +43,16 @@ function HeaderSkeleton() {
   );
 }
 
-async function HeaderWithData({ userData }: { userData: any }) {
-  return <HeaderClient serverUserData={userData} />;
+async function HeaderWithData({ userData, searchParams }: { userData?: any; searchParams?: Record<string, string | string[] | undefined> }) {
+  return <HeaderClient serverUserData={userData} searchParams={searchParams} />;
 }
 
-export default function Header({ userData }: HeaderProps) {
+export default async function Header({ userData, searchParams }: HeaderProps) {
+  const user = userData ?? await getServerUser();
+  console.log("user", user);
   return (
     <Suspense fallback={<HeaderSkeleton />}>
-      <HeaderWithData userData={userData} />
+      <HeaderWithData userData={user} searchParams={searchParams} />
     </Suspense>
   );
 }
