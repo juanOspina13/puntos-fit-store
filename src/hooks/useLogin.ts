@@ -4,10 +4,10 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import {
-  loginRequest,
-  loginSSORequest,
-} from "@/services/auth-service";
-import { postLogin } from "@/lib/auth-helpers";
+  loginAction,
+  loginSSOAction,
+  getUserProfileAction,
+} from "@/app/actions/auth";
 
 export const useLogin = () => {
   const router = useRouter();
@@ -24,10 +24,19 @@ export const useLogin = () => {
 
   /**
    * Wrapper del flujo post-login compartido.
+   * Guarda el token, obtiene el perfil y redirige.
    */
   const handlePostLogin = useCallback(
-    async (tokenData: { token: string }) => {
-      await postLogin(tokenData, login, router);
+    async (token: string) => {
+      // Obtener perfil del usuario
+      const profileResult = await getUserProfileAction(token);
+      
+      if (profileResult.success) {
+        login(token, profileResult.profile);
+        router.push("/");
+      } else {
+        throw new Error(profileResult.error);
+      }
     },
     [login, router],
   );
@@ -42,8 +51,13 @@ export const useLogin = () => {
     setError("");
 
     try {
-      const tokenData = await loginRequest({ username: email, password });
-      await handlePostLogin(tokenData);
+      const result = await loginAction({ username: email, password });
+      
+      if (result.success) {
+        await handlePostLogin(result.token);
+      } else {
+        setError(result.error);
+      }
     } catch (err) {
       console.error("Login error:", err);
       setError(
@@ -64,8 +78,13 @@ export const useLogin = () => {
     setError("");
 
     try {
-      const tokenData = await loginSSORequest(email);
-      await handlePostLogin(tokenData);
+      const result = await loginSSOAction(email);
+      
+      if (result.success) {
+        await handlePostLogin(result.token);
+      } else {
+        setError(result.error);
+      }
     } catch (err) {
       console.error("SSO Login error:", err);
       setError("Error al iniciar sesión con SSO. Intenta de nuevo.");
@@ -100,6 +119,5 @@ export const useLogin = () => {
     handleSubmit,
     handleSSOLogin,
     handleKeyPress,
-    postLogin: handlePostLogin,
   };
 };
