@@ -51,7 +51,7 @@ export const useLogin = () => {
     setError("");
 
     try {
-      const result = await loginAction({ username: email, password });
+        const result = await loginAction({ username: email, password });
       
       if (result.success) {
         await handlePostLogin(result.token);
