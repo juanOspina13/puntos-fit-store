@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import { 
   Zap, 
   Check, 
@@ -14,6 +15,7 @@ import {
 import { getSubscriptions, getObjetivos, getProductById } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import type { Subscription, Product } from "@/types";
+import { featureFlags } from "@/config/featureFlags";
 
 const objetivoDescriptions: Record<string, string> = {
   "ganar-musculo": "Construye masa muscular y fuerza con un sistema claro de suplementacion en ciclos de 90 días.",
@@ -35,6 +37,11 @@ const PESOS_POR_PUNTO = 1300;
 
 
 export default function PaquetesPage() {
+  // Feature flag check
+  if (!featureFlags.packages) {
+    notFound();
+  }
+
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [objetivos, setObjetivos] = useState<{ id: string; label: string; icon: string; count: number }[]>([]);
   const [selectedObjetivo, setSelectedObjetivo] = useState<string | null>(null);
@@ -97,8 +104,11 @@ export default function PaquetesPage() {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-            Transforma tu cuerpo y tu energía <span className="text-[#cee741]">con resultados en 90 días</span>
+            Convierte tu esfuerzo en <span className="text-[#cee741]">resultados</span>
           </h1>
+          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-4">
+            Canjea tus puntos de Gym Connect por suplementos que impulsen tu transformación.
+          </p>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
             Paquetes de suplementos por objetivo. Recibe exactamente lo que tu cuerpo necesita
             para ganar musculo, quemar grasa, dormir mejor o reducir el estres, sin adivinar que tomar.

@@ -10,6 +10,7 @@ import {
 import AutoLoginHandler from "@/components/auth/AutoLoginHandler";
 import Header from "@/components/layout/Header";
 import { getServerUser } from "@/lib/server-auth";
+import { featureFlags } from "@/config/featureFlags";
 
 export default async function HomePage({
   searchParams,
@@ -70,33 +71,38 @@ export default async function HomePage({
                     Sistema de suplementos inteligentes
                   </span>
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
-                    Transforma tu cuerpo
+                    Convierte tu esfuerzo
                     <br />
-                    y tu energia con
-                    <br />
-                    <span className="text-[#cee741]">
-                      resultados en 90 días
-                    </span>
+                    en{" "}
+                    <span className="text-[#cee741]">resultados</span>
                   </h1>
-                  <p className="text-lg text-gray-300 mb-8 max-w-lg">
-                    Paquetes mensuales de suplementos por objetivo. Recibe
-                    exactamente lo que tu cuerpo necesita para ganar musculo,
-                    quemar grasa, dormir mejor y reducir el estres, sin adivinar
-                    que tomar.
+                  <p className="text-xl text-gray-200 mb-4 max-w-lg">
+                    Canjea tus puntos de Gym Connect por suplementos que
+                    impulsen tu transformación.
                   </p>
+                  {featureFlags.packages && (
+                    <p className="text-lg text-gray-300 mb-8 max-w-lg">
+                      Paquetes mensuales de suplementos por objetivo. Recibe
+                      exactamente lo que tu cuerpo necesita para ganar musculo,
+                      quemar grasa, dormir mejor y reducir el estres, sin adivinar
+                      que tomar.
+                    </p>
+                  )}
                   <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <Link
-                      href="/paquetes"
-                      className="inline-flex items-center justify-center bg-[#cee741] text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-all shadow-lg shadow-[#cee741]/30 hover:shadow-[#cee741]/50"
-                    >
-                      Ver paquetes
-                      <ArrowRight className="ml-2 w-5 h-5" />
-                    </Link>
+                    {featureFlags.packages && (
+                      <Link
+                        href="/paquetes"
+                        className="inline-flex items-center justify-center bg-[#cee741] text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-all shadow-lg shadow-[#cee741]/30 hover:shadow-[#cee741]/50"
+                      >
+                        Ver paquetes
+                        <ArrowRight className="ml-2 w-5 h-5" />
+                      </Link>
+                    )}
                     <Link
                       href="/products"
                       className="inline-flex items-center justify-center bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all border border-white/20"
                     >
-                      Suplementos individuales
+                      {featureFlags.packages ? "Suplementos individuales" : "Ver suplementos"}
                     </Link>
                   </div>
 
@@ -185,86 +191,88 @@ export default async function HomePage({
             </div>
           </section>
 
-          <section className="py-16 bg-gray-900">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex items-center justify-between mb-10">
-                <div>
-                  <h2 className="text-3xl font-bold text-white mb-2">
-                    Paquetes mensuales por objetivo
-                  </h2>
-                  <p className="text-gray-400">
-                    Elige tu meta y recibe los suplementos correctos cada mes.
-                    Resultados en 90 días.
-                  </p>
-                </div>
-                <Link
-                  href="/paquetes"
-                  className="hidden sm:inline-flex items-center text-[#cee741] font-medium hover:text-[#b5cc1a]"
-                >
-                  Ver todos los paquetes
-                  <ChevronRight className="w-5 h-5 ml-1" />
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {packsTop.map((pack) => (
+          {featureFlags.packages && (
+            <section className="py-16 bg-gray-900">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between mb-10">
+                  <div>
+                    <h2 className="text-3xl font-bold text-white mb-2">
+                      Paquetes mensuales por objetivo
+                    </h2>
+                    <p className="text-gray-400">
+                      Elige tu meta y recibe los suplementos correctos cada mes.
+                      Resultados en 90 días.
+                    </p>
+                  </div>
                   <Link
-                    key={pack.id}
                     href="/paquetes"
-                    className="group rounded-2xl border border-gray-700 bg-gray-800/60 overflow-hidden hover:border-[#cee741]/60 transition-all"
+                    className="hidden sm:inline-flex items-center text-[#cee741] font-medium hover:text-[#b5cc1a]"
                   >
-                    <div className="relative h-44">
-                      <Image
-                        src={pack.image}
-                        alt={pack.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                      <span className="absolute top-3 left-3 bg-[#cee741] text-gray-900 text-xs font-bold px-2.5 py-1 rounded-full">
-                        -{pack.discount}%
-                      </span>
-                    </div>
-                    <div className="p-5">
-                      <p className="text-sm text-[#cee741] mb-2">
-                        {pack.objetivoLabel}
-                      </p>
-                      <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2">
-                        {pack.name}
-                      </h3>
-                      <p className="text-sm text-gray-400 mb-4 line-clamp-2">
-                        {pack.description}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-[#cee741] font-bold">
-                          ${pack.monthlyPrice.toLocaleString("es-CO")}/mes
-                        </span>
-                        <span className="text-gray-400 text-sm">
-                          {pack.puntosFit} pts/mes
+                    Ver todos los paquetes
+                    <ChevronRight className="w-5 h-5 ml-1" />
+                  </Link>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {packsTop.map((pack) => (
+                    <Link
+                      key={pack.id}
+                      href="/paquetes"
+                      className="group rounded-2xl border border-gray-700 bg-gray-800/60 overflow-hidden hover:border-[#cee741]/60 transition-all"
+                    >
+                      <div className="relative h-44">
+                        <Image
+                          src={pack.image}
+                          alt={pack.name}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                        <span className="absolute top-3 left-3 bg-[#cee741] text-gray-900 text-xs font-bold px-2.5 py-1 rounded-full">
+                          -{pack.discount}%
                         </span>
                       </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                      <div className="p-5">
+                        <p className="text-sm text-[#cee741] mb-2">
+                          {pack.objetivoLabel}
+                        </p>
+                        <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2">
+                          {pack.name}
+                        </h3>
+                        <p className="text-sm text-gray-400 mb-4 line-clamp-2">
+                          {pack.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-[#cee741] font-bold">
+                            ${pack.monthlyPrice.toLocaleString("es-CO")}/mes
+                          </span>
+                          <span className="text-gray-400 text-sm">
+                            {pack.puntosFit} pts/mes
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
 
-              <div className="text-center mt-8 sm:hidden">
-                <Link
-                  href="/paquetes"
-                  className="inline-flex items-center text-[#cee741] font-medium"
-                >
-                  Ver todos los paquetes
-                  <ChevronRight className="w-5 h-5 ml-1" />
-                </Link>
+                <div className="text-center mt-8 sm:hidden">
+                  <Link
+                    href="/paquetes"
+                    className="inline-flex items-center text-[#cee741] font-medium"
+                  >
+                    Ver todos los paquetes
+                    <ChevronRight className="w-5 h-5 ml-1" />
+                  </Link>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          )}
 
           <section className="py-16 bg-gray-900">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold text-white mb-3">
-                  Complementa tu plan
+                  {featureFlags.packages ? "Complementa tu plan" : "Productos destacados"}
                 </h2>
                 <p className="text-gray-400">
                   Tambien puedes comprar productos individuales segun tus

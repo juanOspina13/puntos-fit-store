@@ -9,7 +9,7 @@
     "lint": "next lint",
     "seed": "ts-node --project tsconfig.typeorm.json -r tsconfig-paths/register src/seeds/seed.ts",
     "typeorm": "ts-node --project tsconfig.typeorm.json -r tsconfig-paths/register node_modules/typeorm/cli.js",
-     "migration:create": "npm run typeorm -- migration:create src/migrations/InitialSchema",
+    "migration:create": "npm run typeorm -- migration:create src/migrations/InitialSchema",
     "migration:generate": "npm run typeorm -- migration:generate src/migrations/InitialSchema -d src/lib/data-source.cli.ts",
     "migration:run": "npm run typeorm -- migration:run -d src/lib/data-source.cli.ts",
     "migration:staging": "npx dotenv -e .env.staging -- npm run migration:run"
@@ -21,7 +21,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.28"
+    "typeorm": "^0.3.28",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

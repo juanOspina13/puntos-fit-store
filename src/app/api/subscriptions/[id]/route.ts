@@ -1,11 +1,20 @@
 import { NextResponse } from "next/server";
 import { getDataSource } from "@/lib/data-source";
 import { Subscription } from "@/entities/Subscription";
+import { featureFlags } from "@/config/featureFlags";
 
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Feature flag check
+  if (!featureFlags.subscriptions) {
+    return NextResponse.json(
+      { error: "Subscriptions feature is disabled" },
+      { status: 404 }
+    );
+  }
+
   try {
     const { id } = await params;
     const ds = await getDataSource();
@@ -33,6 +42,14 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Feature flag check
+  if (!featureFlags.subscriptions) {
+    return NextResponse.json(
+      { error: "Subscriptions feature is disabled" },
+      { status: 404 }
+    );
+  }
+
   try {
     const { id } = await params;
     const body = await request.json();

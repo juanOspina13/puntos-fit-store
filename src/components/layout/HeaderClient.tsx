@@ -16,6 +16,7 @@ import {
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import type { UserProfile } from "@/types/auth";
+import { featureFlags } from "@/config/featureFlags";
 
 interface HeaderClientProps {
   serverUserData?: UserProfile | null;
@@ -68,21 +69,25 @@ export default function HeaderClient({ serverUserData, searchParams }: HeaderCli
               Inicio
             </Link>
 
-            <Link
-              href="/paquetes"
-              className="text-gray-300 hover:text-[#cee741] font-medium transition-colors flex items-center gap-1"
-            >
-              <span>Paquetes</span>
-              <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                TOP
-              </span>
-            </Link>
-            <Link
-              href="/suscripciones"
-              className="text-gray-300 hover:text-[#cee741] font-medium transition-colors"
-            >
-              Suscripciones
-            </Link>
+            {featureFlags.packages && (
+              <Link
+                href="/paquetes"
+                className="text-gray-300 hover:text-[#cee741] font-medium transition-colors flex items-center gap-1"
+              >
+                <span>Paquetes</span>
+                <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                  TOP
+                </span>
+              </Link>
+            )}
+            {featureFlags.subscriptions && (
+              <Link
+                href="/suscripciones"
+                className="text-gray-300 hover:text-[#cee741] font-medium transition-colors"
+              >
+                Suscripciones
+              </Link>
+            )}
             <Link
               href="/products?category=supplements"
               className="text-gray-300 hover:text-[#cee741] font-medium transition-colors"
@@ -198,43 +203,33 @@ export default function HeaderClient({ serverUserData, searchParams }: HeaderCli
               >
                 Inicio
               </Link>
-              <Link
-                href="/paquetes"
-                className="text-gray-300 hover:text-[#cee741] font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Paquetes
-              </Link>
-              <Link
-                href="/suscripciones"
-                className="text-gray-300 hover:text-[#cee741] font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Suscripciones
-              </Link>
+              {featureFlags.packages && (
+                <Link
+                  href="/paquetes"
+                  className="text-gray-300 hover:text-[#cee741] font-medium flex items-center gap-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <span>Paquetes</span>
+                  <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                    TOP
+                  </span>
+                </Link>
+              )}
+              {featureFlags.subscriptions && (
+                <Link
+                  href="/suscripciones"
+                  className="text-gray-300 hover:text-[#cee741] font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Suscripciones
+                </Link>
+              )}
               <Link
                 href="/products?category=supplements"
                 className="text-gray-300 hover:text-[#cee741] font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Suplementos
-              </Link>
-              <Link
-                href="/products?category=clothing"
-                className="text-gray-300 hover:text-[#cee741] font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Ropa
-              </Link>
-              <Link
-                href="/paquetes"
-                className="text-gray-300 hover:text-[#cee741] font-medium flex items-center gap-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <span>Paquetes</span>
-                <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                  TOP
-                </span>
               </Link>
               {/* Mobile auth link */}
               <div className="pt-3 mt-3 border-t border-gray-700 space-y-3">

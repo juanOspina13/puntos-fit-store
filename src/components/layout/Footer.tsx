@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import { featureFlags } from "@/config/featureFlags";
 
 export default function Footer() {
   return (
@@ -16,7 +17,10 @@ export default function Footer() {
               <span className="text-xl font-bold text-white">Puntos Fit Store</span>
             </Link>
             <p className="text-gray-400 mb-6">
-              Paquetes mensuales de suplementos por objetivo. Resultados reales en 90 días, sin adivinar que tomar.
+              {featureFlags.packages 
+                ? "Paquetes mensuales de suplementos por objetivo. Resultados reales en 90 días, sin adivinar que tomar."
+                : "Canjea tus puntos de Gym Connect por suplementos de calidad que impulsen tu transformación."
+              }
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -38,11 +42,13 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Enlaces Rápidos</h4>
             <ul className="space-y-2">
-              <li>
-                <Link href="/paquetes" className="text-gray-400 hover:text-white transition-colors">
-                  Paquetes mensuales
-                </Link>
-              </li>
+              {featureFlags.packages && (
+                <li>
+                  <Link href="/paquetes" className="text-gray-400 hover:text-white transition-colors">
+                    Paquetes mensuales
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link href="/products?category=supplements" className="text-gray-400 hover:text-white transition-colors">
                   Suplementos individuales

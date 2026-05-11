@@ -1,8 +1,17 @@
 import { NextResponse } from "next/server";
 import { getDataSource } from "@/lib/data-source";
 import { Subscription } from "@/entities/Subscription";
+import { featureFlags } from "@/config/featureFlags";
 
 export async function GET(request: Request) {
+  // Feature flag check
+  if (!featureFlags.subscriptions) {
+    return NextResponse.json(
+      { error: "Subscriptions feature is disabled" },
+      { status: 404 }
+    );
+  }
+
   try {
     const ds = await getDataSource();
     const repo = ds.getRepository(Subscription);
@@ -30,6 +39,14 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  // Feature flag check
+  if (!featureFlags.subscriptions) {
+    return NextResponse.json(
+      { error: "Subscriptions feature is disabled" },
+      { status: 404 }
+    );
+  }
+
   try {
     const body = await request.json();
     const ds = await getDataSource();

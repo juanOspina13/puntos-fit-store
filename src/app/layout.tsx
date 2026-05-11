@@ -8,9 +8,9 @@ import CartDrawer from "@/components/cart/CartDrawer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Puntos Fit Store | Paquetes mensuales de suplementos por objetivo",
+  title: "Puntos Fit Store | Canjea tus puntos por suplementos de calidad",
   description:
-    "Paquetes mensuales de suplementos inteligentes por objetivo: gana musculo, quema grasa, duerme mejor y reduce el estrés. Resultados en 90 días.",
+    "Canjea tus puntos de Gym Connect por suplementos de calidad que impulsen tu transformación. Suplementos para ganar músculo, quemar grasa, dormir mejor y reducir el estrés.",
 };
 
 export default function RootLayout({
