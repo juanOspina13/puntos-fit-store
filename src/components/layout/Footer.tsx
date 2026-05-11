@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { featureFlags } from "@/config/featureFlags";
 
 export default function Footer() {
@@ -54,6 +54,7 @@ export default function Footer() {
                   Suplementos individuales
                 </Link>
               </li>
+              {/*
               <li>
                 <Link href="/products?category=clothing" className="text-gray-400 hover:text-white transition-colors">
                   Ropa Deportiva
@@ -69,6 +70,8 @@ export default function Footer() {
                   Preguntas frecuentes
                 </a>
               </li>
+              */}
+
             </ul>
           </div>
 
@@ -76,6 +79,18 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Atención al Cliente</h4>
             <ul className="space-y-2">
+              <li>
+                <a 
+                  href="https://wa.me/573169847703?text=Hola,%20me%20gustaría%20obtener%20información%20sobre%20los%20productos%20de%20Puntos%20Fit%20Store" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors flex items-center gap-2"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Contactar por WhatsApp
+                </a>
+              </li>
+              {/*
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors">
                   Mi Cuenta
@@ -91,14 +106,10 @@ export default function Footer() {
                   Devoluciones
                 </a>
               </li>
+              */}
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors">
                   Preguntas Frecuentes
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Guía de Tallas
                 </a>
               </li>
             </ul>

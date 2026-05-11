@@ -115,9 +115,11 @@ export default function HeaderClient({ serverUserData, searchParams }: HeaderCli
 */}
           {/* Right Icons */}
           <div className="flex items-center space-x-4">
+           {/*
             <button className="hidden md:flex text-gray-400 hover:text-[#cee741] transition-colors">
               <Heart className="w-6 h-6" />
             </button>
+           */}
             {/* Puntos badge */}
             {isUserAuthenticated && (
               <div className="flex items-center gap-1.5 bg-[#cee741]/15 border border-[#cee741]/30 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full">
