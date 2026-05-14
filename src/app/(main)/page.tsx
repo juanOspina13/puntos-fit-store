@@ -12,15 +12,19 @@ import Header from "@/components/layout/Header";
 import { getServerUser } from "@/lib/server-auth";
 import { featureFlags } from "@/config/featureFlags";
 
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage({
   searchParams,
 }: {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const [featuredProducts, categories, subscriptions] = await Promise.all([
+  const [featuredProducts , categories, // subscriptions
+
+  ] = await Promise.all([
     getFeaturedProducts(),
-    getCategories(),
-    getSubscriptions(),
+     getCategories(),
+    // getSubscriptions(),
   ]);
 
   let token: string | undefined;
@@ -34,8 +38,7 @@ export default async function HomePage({
 
   // Get authenticated user from server (cached across request)
   const userData = await getServerUser(token);
-  console.log(userData);
-
+  /*
   const packsTop = subscriptions.slice(0, 6);
   const totalSubscribers = subscriptions.reduce(
     (acc, sub) => acc + sub.subscribers,
@@ -45,7 +48,7 @@ export default async function HomePage({
     (acc, sub) => Math.max(acc, sub.discount),
     0,
   );
-
+  */
   return (
     <div>
       <Header userData={userData} />
@@ -158,34 +161,7 @@ export default async function HomePage({
                       className="rounded-2xl shadow-2xl"
                     />
                   </div>
-                  <div className="absolute -bottom-6 -left-6 bg-gray-800 rounded-xl shadow-xl p-4 border border-gray-700">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-green-900/50 rounded-full flex items-center justify-center">
-                        <span className="text-2xl">💪</span>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400">
-                          Clientes activos
-                        </p>
-                        <p className="text-xl font-bold text-white">
-                          {totalSubscribers.toLocaleString()}+
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="absolute -top-6 -right-6 bg-gray-800 rounded-xl shadow-xl p-4 border border-gray-700">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-yellow-900/50 rounded-full flex items-center justify-center">
-                        <span className="text-2xl">⭐</span>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-400">Ahorro en packs</p>
-                        <p className="text-xl font-bold text-white">
-                          Hasta {maxDiscount}%
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+       
                 </div>
               </div>
             </div>
@@ -213,48 +189,7 @@ export default async function HomePage({
                   </Link>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {packsTop.map((pack) => (
-                    <Link
-                      key={pack.id}
-                      href="/paquetes"
-                      className="group rounded-2xl border border-gray-700 bg-gray-800/60 overflow-hidden hover:border-[#cee741]/60 transition-all"
-                    >
-                      <div className="relative h-44">
-                        <Image
-                          src={pack.image}
-                          alt={pack.name}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                        <span className="absolute top-3 left-3 bg-[#cee741] text-gray-900 text-xs font-bold px-2.5 py-1 rounded-full">
-                          -{pack.discount}%
-                        </span>
-                      </div>
-                      <div className="p-5">
-                        <p className="text-sm text-[#cee741] mb-2">
-                          {pack.objetivoLabel}
-                        </p>
-                        <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2">
-                          {pack.name}
-                        </h3>
-                        <p className="text-sm text-gray-400 mb-4 line-clamp-2">
-                          {pack.description}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-[#cee741] font-bold">
-                            ${pack.monthlyPrice.toLocaleString("es-CO")}/mes
-                          </span>
-                          <span className="text-gray-400 text-sm">
-                            {pack.puntosFit} pts/mes
-                          </span>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-
+             
                 <div className="text-center mt-8 sm:hidden">
                   <Link
                     href="/paquetes"

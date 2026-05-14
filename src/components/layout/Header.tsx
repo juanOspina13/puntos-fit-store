@@ -49,7 +49,6 @@ async function HeaderWithData({ userData, searchParams }: { userData?: any; sear
 
 export default async function Header({ userData, searchParams }: HeaderProps) {
   const user = userData ?? await getServerUser();
-  console.log("user", user);
   return (
     <Suspense fallback={<HeaderSkeleton />}>
       <HeaderWithData userData={user} searchParams={searchParams} />
