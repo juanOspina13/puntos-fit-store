@@ -12,7 +12,11 @@
     "migration:create": "npm run typeorm -- migration:create src/migrations/InitialSchema",
     "migration:generate": "npm run typeorm -- migration:generate src/migrations/InitialSchema -d src/lib/data-source.cli.ts",
     "migration:run": "npm run typeorm -- migration:run -d src/lib/data-source.cli.ts",
-    "migration:staging": "npx dotenv -e .env.staging -- npm run migration:run"
+    "migration:staging": "npx dotenv -e .env.staging -- npm run migration:run",
+    "migration:run:local": "npx dotenv -e .env.local -- npm run migration:run",
+    "migration:generate:local": "npx dotenv -e .env.local -- npm run typeorm -- migration:generate src/migrations/InitialSchema -d src/lib/data-source.cli.ts",
+
+
   },
   "dependencies": {
     "lucide-react": "^0.562.0",
