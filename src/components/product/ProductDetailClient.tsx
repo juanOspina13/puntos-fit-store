@@ -7,6 +7,7 @@ import { ShoppingCart, Heart, Minus, Plus, ChevronRight } from "lucide-react";
 import { getProductById, getProducts } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import ProductGrid from "@/components/product/ProductGrid";
+import PuntosBalanceBanner from "@/components/layout/PuntosBalanceBanner";
 import type { Product } from "@/types";
 
 interface ProductDetailClientProps {
@@ -114,6 +115,10 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Big, prominent Puntos Fit balance — helps the user decide if
+            they can already redeem this product. */}
+        <PuntosBalanceBanner size="lg" className="mb-8" />
+
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Images */}
           <div className="space-y-4">

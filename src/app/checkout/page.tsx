@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Lock, ChevronRight, Check } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import HeaderClient from "@/components/layout/HeaderClient";
+import PuntosBalanceBanner from "@/components/layout/PuntosBalanceBanner";
 
 export default function CheckoutPage() {
   const {
@@ -142,9 +144,12 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-gray-900">
-      {/* Header */}
+      {/* Global header so the user always sees their Puntos Fit balance */}
+      <HeaderClient />
+
+      {/* Secondary checkout strip with the secure-payment hint */}
       <div className="bg-gray-800 border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-[#cee741] rounded-lg flex items-center justify-center">
@@ -161,6 +166,14 @@ export default function CheckoutPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Big, prominent Puntos Fit balance — the user is about to pay,
+            so this is one of the most relevant places to show it. */}
+        <PuntosBalanceBanner
+          size="lg"
+          subtitle="puntos disponibles para tu pago"
+          className="mb-8"
+        />
+
         {/* Steps */}
         <div className="flex items-center justify-center mb-12">
           {["Información", "Envío", "Pago"].map((label, index) => (

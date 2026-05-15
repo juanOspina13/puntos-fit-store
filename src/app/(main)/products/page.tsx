@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Filter, Grid, List, SlidersHorizontal, X } from "lucide-react";
 import ProductGrid from "@/components/product/ProductGrid";
+import PuntosBalanceBanner from "@/components/layout/PuntosBalanceBanner";
 import { getProducts, getCategories, searchProducts, getProductsByCategory } from "@/data/products";
 import type { Product, Category } from "@/types";
 
@@ -122,6 +123,9 @@ function ProductsContent() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Big Puntos Fit balance — useful while the user browses products. */}
+        <PuntosBalanceBanner size="lg" className="mb-6" />
+
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Mobile Filter Button */}
           <button
