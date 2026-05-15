@@ -8,6 +8,8 @@ import {
   getSubscriptions,
 } from "@/data/products";
 import AutoLoginHandler from "@/components/auth/AutoLoginHandler";
+import Header from "@/components/layout/Header";
+import { getServerUser } from "@/lib/server-auth";
 import { featureFlags } from "@/config/featureFlags";
 
 export const dynamic = 'force-dynamic';
@@ -25,11 +27,17 @@ export default async function HomePage({
     // getSubscriptions(),
   ]);
 
-  // Consume searchParams to keep them dynamic (e.g. ?tk=... auto-login token).
-  // The Header / AutoLoginHandler take care of the actual auth handling.
+  let token: string | undefined;
+
+  // Extract token from searchParams if provided
   if (searchParams) {
-    await searchParams;
+    const params = await searchParams;
+    const tkParam = params.tk;
+    token = typeof tkParam === "string" ? tkParam : undefined;
   }
+
+  // Get authenticated user from server (cached across request)
+  const userData = await getServerUser(token);
   /*
   const packsTop = subscriptions.slice(0, 6);
   const totalSubscribers = subscriptions.reduce(
@@ -43,6 +51,7 @@ export default async function HomePage({
   */
   return (
     <div>
+      <Header userData={userData} />
       <main className="flex-1">
         <div>
           <AutoLoginHandler />
