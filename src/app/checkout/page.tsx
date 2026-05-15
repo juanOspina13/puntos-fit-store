@@ -396,7 +396,7 @@ export default function CheckoutPage() {
                           setTokensToUse(puntos);
                           setSplitAmount({
                             puntos,
-                            dinero: +(totalPriceCash - puntos * 1300).toFixed(2),
+                            dinero: +(totalPriceCash - puntos * 1000).toFixed(2),
                           });
                         }}
                         className="w-full px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#cee741]"
