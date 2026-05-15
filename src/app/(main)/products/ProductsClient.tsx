@@ -113,12 +113,6 @@ function ProductsContent() {
           <h1 className="text-3xl md:text-4xl font-bold mb-2">
             {getCategoryTitle()}
           </h1>
-          <p className="text-gray-800">
-            {filteredProducts.length} productos encontrados para complementar tu plan
-          </p>
-          <p className="text-gray-800/80 mt-2 text-sm">
-            ¿Buscas un plan completo por objetivo? Mira nuestros paquetes mensuales y ten resultados en 90 días.
-          </p>
         </div>
       </div>
 

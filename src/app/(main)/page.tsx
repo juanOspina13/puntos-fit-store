@@ -7,7 +7,6 @@ import {
   getCategories,
   getSubscriptions,
 } from "@/data/products";
-import AutoLoginHandler from "@/components/auth/AutoLoginHandler";
 import Header from "@/components/layout/Header";
 import { getServerUser } from "@/lib/server-auth";
 import { featureFlags } from "@/config/featureFlags";
@@ -54,7 +53,7 @@ export default async function HomePage({
       <Header userData={userData} />
       <main className="flex-1">
         <div>
-          <AutoLoginHandler />
+          {/* AutoLoginHandler ya está montado en (main)/layout.tsx */}
 
           <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
             <div className="absolute inset-0 opacity-10">
