@@ -8,6 +8,7 @@ import { getProductById, getProducts } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import ProductGrid from "@/components/product/ProductGrid";
 import PuntosBalanceBanner from "@/components/layout/PuntosBalanceBanner";
+import { formatCurrency } from "@/lib/format";
 import type { Product } from "@/types";
 
 interface ProductDetailClientProps {
@@ -182,10 +183,7 @@ export default function ProductDetailClient({ productId }: ProductDetailClientPr
             <div className="flex items-baseline gap-3">
               <span className="text-3xl font-bold text-white">
                 {product.puntosFit} Puntos Fit /{" "}
-                {product.price.toLocaleString("es-CO", {
-                  style: "currency",
-                  currency: "COP",
-                })}
+                {formatCurrency(product.price)}
               </span>
             </div>
 

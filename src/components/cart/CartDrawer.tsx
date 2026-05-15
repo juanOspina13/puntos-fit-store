@@ -2,6 +2,7 @@
 
 import { X, Plus, Minus, ShoppingBag, Trash2 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { formatCurrency } from "@/lib/format";
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -111,10 +112,7 @@ export default function CartDrawer() {
                     )}
                     <p className="text-[#cee741] font-semibold mt-1">
                       {item.product.puntosFit} Puntos Fit /{" "}
-                      {item.product.price.toLocaleString("es-CO", {
-                        style: "currency",
-                        currency: "COP",
-                      })}
+                      {formatCurrency(item.product.price)}
                     </p>
                     <div className="flex items-center justify-between mt-2">
                       <div className="flex items-center space-x-2">
@@ -171,10 +169,7 @@ export default function CartDrawer() {
                 )}
                 {paymentMethod === "dinero" && (
                   <p className="text-xl font-bold text-white">
-                    {cashToUse.toLocaleString("es-CO", {
-                      style: "currency",
-                      currency: "COP",
-                    })}
+                    {formatCurrency(cashToUse)}
                   </p>
                 )}
               </div>
@@ -227,11 +222,7 @@ export default function CartDrawer() {
                   <div className="flex justify-between text-xs text-gray-400 mt-1">
                     <span>Puntos Fit: {fitPointsToUse}</span>
                     <span>
-                      Dinero:
-                      {partialPriceCash.toLocaleString("es-CO", {
-                        style: "currency",
-                        currency: "COP",
-                      })}
+                      Dinero: {formatCurrency(partialPriceCash)}
                     </span>
                   </div>
                 </div>

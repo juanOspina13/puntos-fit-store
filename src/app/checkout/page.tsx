@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Lock, ChevronRight, Check } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { formatCurrency } from "@/lib/format";
 import HeaderClient from "@/components/layout/HeaderClient";
 import PuntosBalanceBanner from "@/components/layout/PuntosBalanceBanner";
 
@@ -71,12 +72,9 @@ export default function CheckoutPage() {
       }%0A%0A*Productos:*%0A${items
         .map(
           (item) =>
-            `• ${item.product.name} x${item.quantity} - ${(
+            `• ${item.product.name} x${item.quantity} - ${formatCurrency(
               item.product.price * item.quantity
-            ).toLocaleString("es-CO", {
-              style: "currency",
-              currency: "COP",
-            })} `
+            )} `
         )
         .join("%0A")}`;
 
@@ -84,12 +82,12 @@ export default function CheckoutPage() {
       if (paymentMethod === "puntos") {
         pagoDetalle = `*Pago:*%0A100% en Puntos Fit (${total} Puntos Fit)`;
       } else if (paymentMethod === "dinero") {
-        pagoDetalle = `*Pago:*%0A100% en Dinero ($${totalPriceCash.toFixed(2)})`;
+        pagoDetalle = `*Pago:*%0A100% en Dinero (${formatCurrency(totalPriceCash)})`;
       } else {
-        pagoDetalle = `*Pago:*%0A${splitAmount.puntos} Puntos Fit y $${splitAmount.dinero.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} en Dinero`;
+        pagoDetalle = `*Pago:*%0A${splitAmount.puntos} Puntos Fit y ${formatCurrency(splitAmount.dinero)} en Dinero`;
       }
 
-      let message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0APagará: ${tokensToUse} Puntos Fit y $${splitAmount.dinero.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} en Dinero.%0A%0A¡Gracias!`;
+      let message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0APagará: ${tokensToUse} Puntos Fit y ${formatCurrency(splitAmount.dinero)} en Dinero.%0A%0A¡Gracias!`;
 
       if (paymentMethod === "puntos") {
         message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0A¡Gracias!`;
@@ -406,11 +404,7 @@ export default function CheckoutPage() {
                       <div className="flex justify-between text-sm text-gray-400">
                         <span>Puntos Fit: {splitAmount.puntos}</span>
                         <span>
-                          Dinero: $
-                          {partialPriceCash.toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
+                          Dinero: {formatCurrency(partialPriceCash)}
                         </span>
                       </div>
                     </div>
@@ -470,18 +464,12 @@ export default function CheckoutPage() {
                       )}
                       {paymentMethod === "dinero" && (
                         <p className="text-sm font-semibold text-[#cee741]">
-                          {(item.product.price * item.quantity).toLocaleString(
-                            "es-CO",
-                            { style: "currency", currency: "COP" }
-                          )}
+                          {formatCurrency(item.product.price * item.quantity)}
                         </p>
                       )}
                       {paymentMethod === "mixto" && (
                         <p className="text-sm font-semibold text-[#cee741]">
-                          {(item.product.price * item.quantity).toLocaleString(
-                            "es-CO",
-                            { style: "currency", currency: "COP" }
-                          )}
+                          {formatCurrency(item.product.price * item.quantity)}
                         </p>
                       )}
                     </div>
@@ -499,10 +487,7 @@ export default function CheckoutPage() {
                   )}
                   {paymentMethod === "dinero" && (
                     <span className="font-medium text-white">
-                      {totalPriceCash.toLocaleString("es-CO", {
-                        style: "currency",
-                        currency: "COP",
-                      })}
+                      {formatCurrency(totalPriceCash)}
                     </span>
                   )}
                 </div>
@@ -514,10 +499,7 @@ export default function CheckoutPage() {
                   )}
                   {paymentMethod === "dinero" && (
                     <span className="text-[#cee741]">
-                      {totalPriceCash.toLocaleString("es-CO", {
-                        style: "currency",
-                        currency: "COP",
-                      })}
+                      {formatCurrency(totalPriceCash)}
                     </span>
                   )}
                 </div>
@@ -534,18 +516,15 @@ export default function CheckoutPage() {
                 <div className="mt-4 text-sm text-gray-300">
                   <span className="font-semibold">Pago:</span> 100% en{" "}
                   <span className="text-[#cee741]">Dinero</span> (
-                  {totalPriceCash.toLocaleString("es-CO", {
-                    style: "currency",
-                    currency: "COP",
-                  })}
+                  {formatCurrency(totalPriceCash)}
                   )
                 </div>
               )}
               {paymentMethod === "mixto" && (
                 <div className="mt-4 text-sm text-gray-300">
                   <span className="font-semibold">Pago:</span> {tokensToUse}{" "}
-                  <span className="text-[#cee741]">Puntos Fit</span> y $
-                  {splitAmount.dinero.toFixed(2)}{" "}
+                  <span className="text-[#cee741]">Puntos Fit</span> y{" "}
+                  {formatCurrency(splitAmount.dinero)}{" "}
                   <span className="text-[#cee741]">Dinero</span>
                 </div>
               )}

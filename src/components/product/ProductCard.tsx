@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShoppingCart, Heart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { formatCurrency } from "@/lib/format";
 import type { Product } from "@/types";
 
 interface ProductCardProps {
@@ -86,7 +87,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Price */}
           <div className="flex items-center gap-2 mt-3">
             <span className="text-lg font-bold text-white">
-              {product.puntosFit} Puntos Fit / {product.price.toLocaleString("es-CO", { style: "currency", currency: "COP" })}
+              {product.puntosFit} Puntos Fit / {formatCurrency(product.price)}
             </span>
           </div>
 

@@ -15,6 +15,7 @@ import {
   Wallet
 } from "lucide-react";
 import { getSubscriptions, getObjetivos, getProductById } from "@/data/products";
+import { formatCurrency } from "@/lib/format";
 import type { Subscription, Product } from "@/types";
 import { featureFlags } from "@/config/featureFlags";
 
@@ -468,10 +469,10 @@ function SubscriptionCard({
         {/* Price */}
         <div className="flex items-baseline gap-3 mb-4">
           <span className="text-2xl font-bold text-[#cee741]">
-            ${subscription.monthlyPrice.toLocaleString()}
+            {formatCurrency(subscription.monthlyPrice)}
           </span>
           <span className="text-gray-500 line-through text-sm">
-            ${subscription.originalPrice.toLocaleString()}
+            {formatCurrency(subscription.originalPrice)}
           </span>
           <span className="text-gray-400 text-sm">/mes</span>
         </div>
@@ -509,7 +510,7 @@ function SubscriptionCard({
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-white text-sm font-medium truncate">{product.name}</p>
-                    <p className="text-gray-400 text-xs">${product.price.toLocaleString()}</p>
+                    <p className="text-gray-400 text-xs">{formatCurrency(product.price)}</p>
                   </div>
                 </div>
               ))}
