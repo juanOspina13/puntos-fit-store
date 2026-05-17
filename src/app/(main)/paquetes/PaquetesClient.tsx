@@ -34,7 +34,7 @@ const objetivoColors: Record<string, string> = {
   "salud-general": "from-green-500 to-teal-500"
 };
 
-const PESOS_POR_PUNTO = 1000;
+const PESOS_POR_PUNTO = 1200;
 
 
 export default function PaquetesPage() {

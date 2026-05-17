@@ -162,7 +162,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const partialPriceCash =
     items.reduce((sum, item) => sum + item.product.price * item.quantity, 0) -
-    tokensToUse * 1000;
+    tokensToUse * 1200;
 
   return (
     <CartContext.Provider

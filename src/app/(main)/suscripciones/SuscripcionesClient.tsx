@@ -35,8 +35,8 @@ const objetivoColors: Record<string, string> = {
   "salud-general": "from-green-500 to-teal-500"
 };
 
-// Conversión: 1 punto = 1000 pesos
-const PESOS_POR_PUNTO = 1000;
+// Conversión: 1 punto = 1200 pesos
+const PESOS_POR_PUNTO = 1200;
 const MONTOS_SUGERIDOS = [50000, 100000, 150000, 200000, 300000, 500000];
 
 export default function SuscripcionesPage() {
