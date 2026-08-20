@@ -24,6 +24,8 @@ export default function CheckoutPage() {
   const [step, setStep] = useState(1);
 
   const [orderComplete, setOrderComplete] = useState(false);
+  const [isCreatingLink, setIsCreatingLink] = useState(false);
+  const [mpError, setMpError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
@@ -48,56 +50,98 @@ export default function CheckoutPage() {
   const tax = totalPrice * 0;
   const total = totalPrice + shipping + tax;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (step < 2) {
       setStep(step + 1);
-    } else {
-      setOrderComplete(true);
-      const encodedFormData = {
-        nombre: encodeURIComponent(formData.nombre),
-        apellido: encodeURIComponent(formData.apellido),
-        email: encodeURIComponent(formData.email),
-        telefono: encodeURIComponent(formData.telefono),
-        direccion: encodeURIComponent(formData.direccion),
-        ciudad: encodeURIComponent(formData.ciudad),
-        codigoPostal: encodeURIComponent(formData.codigoPostal),
-      };
-      const orderDetails = `*Datos del cliente:*%0ANombre: ${encodedFormData.nombre} ${
-        encodedFormData.apellido
-      }%0ATeléfono: ${encodedFormData.telefono}%0A%0A*Dirección de envío:*%0A${
-        encodedFormData.direccion
-      }, ${encodedFormData.ciudad}, ${
-        encodedFormData.codigoPostal
-      }%0A%0A*Productos:*%0A${items
-        .map(
-          (item) =>
-            `• ${item.product.name} x${item.quantity} - ${formatCurrency(
-              item.product.price * item.quantity
-            )} `
-        )
-        .join("%0A")}`;
-
-      let pagoDetalle = "";
-      if (paymentMethod === "puntos") {
-        pagoDetalle = `*Pago:*%0A100% en Puntos Fit (${total} Puntos Fit)`;
-      } else if (paymentMethod === "dinero") {
-        pagoDetalle = `*Pago:*%0A100% en Dinero (${formatCurrency(totalPriceCash)})`;
-      } else {
-        pagoDetalle = `*Pago:*%0A${splitAmount.puntos} Puntos Fit y ${formatCurrency(splitAmount.dinero)} en Dinero`;
-      }
-
-      let message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0APagará: ${tokensToUse} Puntos Fit y ${formatCurrency(splitAmount.dinero)} en Dinero.%0A%0A¡Gracias!`;
-
-      if (paymentMethod === "puntos") {
-        message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0A¡Gracias!`;
-      } else if (paymentMethod === "dinero") {
-        message = `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0A¡Gracias!`;
-      }
-
-      window.open(`https://wa.me/573169847703?text=${message}`, "_blank");
-      clearCart();
+      return;
     }
+
+    // ── Pay with cash → MercadoPago preference ──
+    if (paymentMethod === "dinero") {
+      setIsCreatingLink(true);
+      setMpError(null);
+      try {
+        const reference = `pfs-${Date.now()}`;
+        const response = await fetch("/api/mercadopago/preference", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            external_reference: reference,
+            payer_email: formData.email || undefined,
+            items: items.map((item) => {
+              const parts: string[] = [];
+              if (item.product.subcategory || item.product.category)
+                parts.push(item.product.subcategory ?? item.product.category);
+              if (item.selectedSize) parts.push(`Talla: ${item.selectedSize}`);
+              if (item.selectedColor) parts.push(`Color: ${item.selectedColor}`);
+              parts.push(`${item.product.puntosFit * item.quantity} Puntos Fit`);
+
+              return {
+                title: item.product.name,
+                description: parts.join(" | "),
+                unit_price: item.product.price * item.quantity,
+                quantity: item.quantity,
+                currency_id: "COP",
+              };
+            }),
+          }),
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.init_point) {
+          throw new Error(data.error || "No se pudo crear el link de pago");
+        }
+
+        clearCart();
+        window.location.href = data.init_point;
+      } catch (err) {
+        setMpError(err instanceof Error ? err.message : "Error desconocido");
+        setIsCreatingLink(false);
+      }
+      return;
+    }
+
+    // ── Pay with points or mixed → WhatsApp ──
+    setOrderComplete(true);
+    const encodedFormData = {
+      nombre: encodeURIComponent(formData.nombre),
+      apellido: encodeURIComponent(formData.apellido),
+      email: encodeURIComponent(formData.email),
+      telefono: encodeURIComponent(formData.telefono),
+      direccion: encodeURIComponent(formData.direccion),
+      ciudad: encodeURIComponent(formData.ciudad),
+      codigoPostal: encodeURIComponent(formData.codigoPostal),
+    };
+    const orderDetails = `*Datos del cliente:*%0ANombre: ${encodedFormData.nombre} ${
+      encodedFormData.apellido
+    }%0ATeléfono: ${encodedFormData.telefono}%0A%0A*Dirección de envío:*%0A${
+      encodedFormData.direccion
+    }, ${encodedFormData.ciudad}, ${
+      encodedFormData.codigoPostal
+    }%0A%0A*Productos:*%0A${items
+      .map(
+        (item) =>
+          `• ${item.product.name} x${item.quantity} - ${formatCurrency(
+            item.product.price * item.quantity
+          )} `
+      )
+      .join("%0A")}`;
+
+    let pagoDetalle = "";
+    if (paymentMethod === "puntos") {
+      pagoDetalle = `*Pago:*%0A100% en Puntos Fit (${total} Puntos Fit)`;
+    } else {
+      pagoDetalle = `*Pago:*%0A${splitAmount.puntos} Puntos Fit y ${formatCurrency(splitAmount.dinero)} en Dinero`;
+    }
+
+    const message =
+      paymentMethod === "puntos"
+        ? `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0A¡Gracias!`
+        : `¡Hola! Acaban de realizar un pedido en PuntosFit Store:%0A%0A${orderDetails}%0A%0A${pagoDetalle}%0A%0APagará: ${tokensToUse} Puntos Fit y ${formatCurrency(splitAmount.dinero)} en Dinero.%0A%0A¡Gracias!`;
+
+    window.open(`https://wa.me/573169847703?text=${message}`, "_blank");
+    clearCart();
   };
 
   if (orderComplete) {
@@ -412,21 +456,40 @@ export default function CheckoutPage() {
                 </div>
               )}
 
+              {mpError && (
+                <p className="text-red-400 text-sm border border-red-500/20 bg-red-500/5 px-4 py-3 mt-2">
+                  {mpError}
+                </p>
+              )}
+
               <div className="flex gap-4 pt-4">
                 {step > 1 && (
                   <button
                     type="button"
                     onClick={() => setStep(step - 1)}
-                    className="flex-1 border border-gray-600 text-gray-300 py-3 rounded-xl font-semibold hover:bg-gray-700 transition-colors"
+                    disabled={isCreatingLink}
+                    className="flex-1 border border-gray-600 text-gray-300 py-3 rounded-xl font-semibold hover:bg-gray-700 transition-colors disabled:opacity-40"
                   >
                     Atrás
                   </button>
                 )}
                 <button
                   type="submit"
-                  className="flex-1 bg-[#cee741] text-gray-900 py-3 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-all"
+                  disabled={isCreatingLink}
+                  className="flex-1 bg-[#cee741] text-gray-900 py-3 rounded-xl font-semibold hover:bg-[#b5cc1a] transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  {step === 2 ? "Completar Pedido" : "Continuar"}
+                  {isCreatingLink ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-gray-900/30 border-t-gray-900 rounded-full animate-spin" />
+                      Generando link...
+                    </>
+                  ) : step === 2 && paymentMethod === "dinero" ? (
+                    "Pagar con MercadoPago"
+                  ) : step === 2 ? (
+                    "Completar Pedido"
+                  ) : (
+                    "Continuar"
+                  )}
                 </button>
               </div>
             </form>
