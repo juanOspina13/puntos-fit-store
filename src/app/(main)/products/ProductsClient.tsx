@@ -73,7 +73,7 @@ function ProductsContent() {
   const getCategoryTitle = () => {
     if (searchQuery) return `"${searchQuery}"`;
     if (selectedCategory === "supplements") return "Suplementos";
-    if (selectedCategory === "clothing") return "Ropa Deportiva";
+    if (selectedCategory === "clothing") return "Ropa y accesorios";
     if (selectedCategory === "accessories") return "Accesorios";
     return "Todos los productos";
   };

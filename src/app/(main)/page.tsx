@@ -70,11 +70,12 @@ export default async function HomePage({
               </h1>
 
               <p className="text-gray-400 text-base md:text-lg max-w-xl mb-10 leading-relaxed">
-                Canjea tus Puntos Fit por suplementos de calidad que impulsen
-                tu transformación. Sin complicaciones.
+                Cada entrenamiento acumula Puntos Fit. Canjéalos por
+                suplementos, ropa y accesorios que potencien tu rendimiento
+                —sin gastar un peso extra.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3">
                 {featureFlags.packages && (
                   <Link
                     href="/paquetes"
@@ -85,10 +86,16 @@ export default async function HomePage({
                   </Link>
                 )}
                 <Link
-                  href="/products"
+                  href="/products?category=supplements"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 text-[11px] tracking-cta uppercase font-medium border border-white/15 text-gray-300 hover:border-white/30 hover:text-white transition-all duration-300"
                 >
-                  {featureFlags.packages ? "Suplementos individuales" : "Ver suplementos"}
+                  {featureFlags.packages ? "Suplementos" : "Ver suplementos"}
+                </Link>
+                <Link
+                  href="/products?category=clothing"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 text-[11px] tracking-cta uppercase font-medium border border-white/15 text-gray-300 hover:border-white/30 hover:text-white transition-all duration-300"
+                >
+                  Ropa &amp; accesorios
                 </Link>
               </div>
 
