@@ -15,8 +15,8 @@ import {
   getObjetivos as fetchObjetivos,
 } from "@/services/subscriptions";
 
-export async function getProducts(): Promise<Product[]> {
-  return fetchProducts();
+export async function getProducts(category?: string): Promise<Product[]> {
+  return fetchProducts(category ? { category } : undefined);
 }
 
 export async function getCategories(): Promise<Category[]> {

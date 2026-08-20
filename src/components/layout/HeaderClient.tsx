@@ -2,17 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import {
-  Search,
-  ShoppingCart,
-  Menu,
-  X,
-  User,
-  Heart,
-  LogOut,
-  Zap,
-} from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ShoppingBag, User, LogOut, Zap, Menu, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import type { UserProfile } from "@/types/auth";
@@ -23,236 +14,205 @@ interface HeaderClientProps {
   searchParams?: Record<string, string | string[] | undefined>;
 }
 
-export default function HeaderClient({ serverUserData, searchParams }: HeaderClientProps) {
+const NAV_LINKS = [
+  { href: "/", label: "Inicio", flag: true },
+  { href: "/paquetes", label: "Paquetes", flag: featureFlags.packages, badge: "TOP" },
+  { href: "/suscripciones", label: "Suscripciones", flag: featureFlags.subscriptions },
+  { href: "/products?category=supplements", label: "Suplementos", flag: true },
+  { href: "/products?category=clothing", label: "Ropa", flag: true },
+];
+
+export default function HeaderClient({ serverUserData }: HeaderClientProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [isHidden, setIsHidden] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const lastScrollY = useRef(0);
+
   const { totalItems, setIsCartOpen } = useCart();
   const { user: clientUser, isAuthenticated, logout } = useAuth();
   const router = useRouter();
 
-  // Use server user data if available, otherwise fall back to client context
   const user = serverUserData || clientUser;
   const isUserAuthenticated = !!user || isAuthenticated;
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/products?search=${encodeURIComponent(searchQuery)}`);
-    }
-  };
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setIsScrolled(y > 20);
+      if (y > lastScrollY.current && y > 80 && !isMenuOpen) {
+        setIsHidden(true);
+      } else {
+        setIsHidden(false);
+      }
+      lastScrollY.current = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isMenuOpen]);
 
   const handleLogout = () => {
     logout();
     router.push("/login");
   };
 
-  return (
-    <header className="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-[#cee741] rounded-lg flex items-center justify-center">
-              <span className="text-gray-900 font-bold text-xl">PF</span>
-            </div>
-            <span className="text-xl font-bold text-white hidden sm:block">
-              Puntos Fit Store
-            </span>
-          </Link>
+  const visibleLinks = NAV_LINKS.filter((l) => l.flag);
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+  return (
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isHidden ? "-translate-y-full" : "translate-y-0"
+        } ${
+          isScrolled
+            ? "bg-[#0d1520]/95 backdrop-blur-md border-b border-white/5 shadow-lg shadow-black/30"
+            : "bg-[#0d1520]/80 backdrop-blur-sm border-b border-white/5"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="flex items-center justify-between h-[68px]">
+
+            {/* Left — desktop nav */}
+            <nav className="hidden md:flex items-center gap-8">
+              {visibleLinks.slice(0, 3).map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="relative flex items-center gap-1.5 text-[11px] tracking-cta uppercase text-gray-400 hover:text-white transition-colors duration-200 group"
+                >
+                  {link.label}
+                  {link.badge && (
+                    <span className="bg-primary text-gray-900 text-[9px] font-bold px-1.5 py-px tracking-wide rounded-sm">
+                      {link.badge}
+                    </span>
+                  )}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
+                </Link>
+              ))}
+            </nav>
+
+            {/* Center — logo */}
             <Link
               href="/"
-              className="text-gray-300 hover:text-[#cee741] font-medium transition-colors ml-8"
+              className="flex items-center gap-2.5 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:left-auto"
             >
-              Inicio
+              <div className="w-8 h-8 bg-primary rounded-sm flex items-center justify-center flex-shrink-0">
+                <span className="font-display text-gray-900 text-sm leading-none">PF</span>
+              </div>
+              <span className="font-display text-white tracking-widest text-base uppercase hidden sm:block">
+                Puntos Fit
+              </span>
             </Link>
 
-            {featureFlags.packages && (
-              <Link
-                href="/paquetes"
-                className="text-gray-300 hover:text-[#cee741] font-medium transition-colors flex items-center gap-1"
-              >
-                <span>Paquetes</span>
-                <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                  TOP
-                </span>
-              </Link>
-            )}
-            {featureFlags.subscriptions && (
-              <Link
-                href="/suscripciones"
-                className="text-gray-300 hover:text-[#cee741] font-medium transition-colors"
-              >
-                Suscripciones
-              </Link>
-            )}
-            <Link
-              href="/products?category=supplements"
-              className="text-gray-300 hover:text-[#cee741] font-medium transition-colors"
-            >
-              Suplementos
-            </Link>
-          </nav>
+            {/* Right — remaining nav + icons */}
+            <div className="flex items-center gap-6">
+              <nav className="hidden md:flex items-center gap-8">
+                {visibleLinks.slice(3).map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="relative text-[11px] tracking-cta uppercase text-gray-400 hover:text-white transition-colors duration-200 group"
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
+                  </Link>
+                ))}
+              </nav>
 
-          {/* Search Bar 
-          <form
-            onSubmit={handleSearch}
-            className="hidden lg:flex items-center flex-1 max-w-md mx-8"
-          >
-            <div className="relative w-full">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar productos..."
-                className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 text-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-[#cee741] focus:border-transparent text-sm placeholder-gray-500"
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
-            </div>
-          </form>
-*/}
-          {/* Right Icons */}
-          <div className="flex items-center space-x-4">
-           {/*
-            <button className="hidden md:flex text-gray-400 hover:text-[#cee741] transition-colors">
-              <Heart className="w-6 h-6" />
-            </button>
-           */}
-            {/* Puntos badge */}
-            {isUserAuthenticated && (
-              <div className="flex items-center gap-1.5 bg-[#cee741]/15 border border-[#cee741]/30 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full">
-                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#cee741] fill-[#cee741]" />
-                <span className="text-xs sm:text-sm font-bold text-[#cee741]">
-                  {user?.billetera_id?.classes ?? 0}
-                </span>
-                <span className="text-[10px] sm:text-xs text-[#cee741]/70 font-medium">
-                  puntos
-                </span>
-              </div>
-            )}
-            {isUserAuthenticated ? (
-              <div className="hidden md:flex items-center gap-3">
-                <span
-                  className="text-sm text-gray-300 max-w-[120px] truncate"
-                  title={user?.nombre ?? user?.email}
-                >
-                  {user?.nombre ?? user?.email}
-                </span>
-                <button
-                  onClick={handleLogout}
-                  className="text-gray-400 hover:text-red-400 transition-colors"
-                  title="Cerrar sesión"
-                >
-                  <LogOut className="w-5 h-5" />
-                </button>
-              </div>
-            ) : (
-              <Link
-                href="/login"
-                className="hidden md:flex text-gray-400 hover:text-[#cee741] transition-colors"
-              >
-                <User className="w-6 h-6" />
-              </Link>
-            )}
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="relative text-gray-400 hover:text-[#cee741] transition-colors"
-            >
-              <ShoppingCart className="w-6 h-6" />
-              {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#cee741] text-gray-900 text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
-                  {totalItems}
-                </span>
+              {/* Points badge */}
+              {isUserAuthenticated && (
+                <div className="hidden sm:flex items-center gap-1.5 bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-sm">
+                  <Zap className="w-3 h-3 text-primary fill-primary" />
+                  <span className="text-[11px] font-bold text-primary tracking-wide">
+                    {user?.billetera_id?.classes ?? 0}
+                  </span>
+                  <span className="text-[10px] text-primary/60 tracking-wide uppercase">pts</span>
+                </div>
               )}
-            </button>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden text-gray-400"
-            >
-              {isMenuOpen ? (
-                <X className="w-6 h-6" />
+              {/* User */}
+              {isUserAuthenticated ? (
+                <div className="hidden md:flex items-center gap-3">
+                  <span className="text-[11px] text-gray-400 max-w-[100px] truncate tracking-wide">
+                    {user?.nombre ?? user?.email}
+                  </span>
+                  <button
+                    onClick={handleLogout}
+                    className="text-gray-500 hover:text-red-400 transition-colors"
+                    title="Cerrar sesión"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                </div>
               ) : (
-                <Menu className="w-6 h-6" />
+                <Link
+                  href="/login"
+                  className="hidden md:flex text-gray-500 hover:text-white transition-colors"
+                >
+                  <User className="w-4.5 h-4.5" />
+                </Link>
               )}
-            </button>
+
+              {/* Cart */}
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="relative text-gray-400 hover:text-white transition-colors"
+              >
+                <ShoppingBag className="w-5 h-5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-primary text-gray-900 text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
+              </button>
+
+              {/* Mobile hamburger */}
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="md:hidden text-gray-400 hover:text-white transition-colors"
+              >
+                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-800">
-            <form onSubmit={handleSearch} className="mb-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Buscar productos..."
-                  className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 text-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-[#cee741] placeholder-gray-500"
-                />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
-              </div>
-            </form>
-            <nav className="flex flex-col space-y-3">
-              <Link
-                href="/"
-                className="text-gray-300 hover:text-[#cee741] font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Inicio
-              </Link>
-              {featureFlags.packages && (
+          <div className="md:hidden border-t border-white/5 bg-[#0d1520]/98 backdrop-blur-md animate-fade-in">
+            <div className="max-w-7xl mx-auto px-6 py-6 space-y-1">
+              {visibleLinks.map((link) => (
                 <Link
-                  href="/paquetes"
-                  className="text-gray-300 hover:text-[#cee741] font-medium flex items-center gap-2"
+                  key={link.href}
+                  href={link.href}
                   onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center justify-between py-3 border-b border-white/5 text-[11px] tracking-cta uppercase text-gray-400 hover:text-white transition-colors"
                 >
-                  <span>Paquetes</span>
-                  <span className="bg-[#cee741] text-gray-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                    TOP
+                  <span className="flex items-center gap-2">
+                    {link.label}
+                    {link.badge && (
+                      <span className="bg-primary text-gray-900 text-[9px] font-bold px-1.5 py-px rounded-sm">
+                        {link.badge}
+                      </span>
+                    )}
                   </span>
                 </Link>
-              )}
-              {featureFlags.subscriptions && (
-                <Link
-                  href="/suscripciones"
-                  className="text-gray-300 hover:text-[#cee741] font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Suscripciones
-                </Link>
-              )}
-              <Link
-                href="/products?category=supplements"
-                className="text-gray-300 hover:text-[#cee741] font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Suplementos
-              </Link>
-              {/* Mobile auth link */}
-              <div className="pt-3 mt-3 border-t border-gray-700 space-y-3">
+              ))}
+
+              <div className="pt-4 space-y-4">
                 {isUserAuthenticated ? (
                   <>
-                    {/* Mobile puntos badge */}
-                    <div className="flex items-center gap-2 bg-[#cee741]/15 border border-[#cee741]/30 px-4 py-2.5 rounded-xl">
-                      <Zap className="w-5 h-5 text-[#cee741] fill-[#cee741]" />
-                      <span className="text-lg font-bold text-[#cee741]">
+                    <div className="flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-3 rounded-sm">
+                      <Zap className="w-4 h-4 text-primary fill-primary" />
+                      <span className="text-base font-bold text-primary">
                         {user?.billetera_id?.classes ?? 0}
                       </span>
-                      <span className="text-sm text-[#cee741]/70 font-medium">
+                      <span className="text-[11px] text-primary/60 uppercase tracking-widest">
                         puntos disponibles
                       </span>
                     </div>
                     <button
-                      onClick={() => {
-                        handleLogout();
-                        setIsMenuOpen(false);
-                      }}
-                      className="flex items-center gap-2 text-gray-300 hover:text-red-400 font-medium w-full"
+                      onClick={() => { handleLogout(); setIsMenuOpen(false); }}
+                      className="flex items-center gap-2 text-[11px] tracking-cta uppercase text-gray-500 hover:text-red-400 transition-colors"
                     >
                       <LogOut className="w-4 h-4" />
                       Cerrar sesión
@@ -261,18 +221,21 @@ export default function HeaderClient({ serverUserData, searchParams }: HeaderCli
                 ) : (
                   <Link
                     href="/login"
-                    className="flex items-center gap-2 text-gray-300 hover:text-[#cee741] font-medium"
                     onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2 text-[11px] tracking-cta uppercase text-gray-400 hover:text-white transition-colors"
                   >
                     <User className="w-4 h-4" />
                     Iniciar Sesión
                   </Link>
                 )}
               </div>
-            </nav>
+            </div>
           </div>
         )}
-      </div>
-    </header>
+      </header>
+
+      {/* Spacer so content doesn't sit under fixed header */}
+      <div className="h-[68px]" />
+    </>
   );
 }

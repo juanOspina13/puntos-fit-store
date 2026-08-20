@@ -20,7 +20,8 @@ class ApiService {
       const searchParams = new URLSearchParams(params);
       url += `?${searchParams.toString()}`;
     }
-
+    console.log("URL", url);
+  
     const response = await fetch(url, {
       ...init,
       headers: {
@@ -28,7 +29,7 @@ class ApiService {
         ...init.headers,
       },
     });
-
+    console.log(response)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

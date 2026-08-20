@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Heart } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { formatCurrency } from "@/lib/format";
 import type { Product } from "@/types";
@@ -11,12 +11,23 @@ interface ProductCardProps {
   product: Product;
 }
 
+const COLOR_MAP: Record<string, string> = {
+  Negro: "#111",
+  Blanco: "#f5f5f5",
+  Azul: "#3B82F6",
+  Rojo: "#EF4444",
+  Gris: "#9CA3AF",
+  Morado: "#8B5CF6",
+  Verde: "#10B981",
+  Rosa: "#EC4899",
+  "Azul Marino": "#1E3A8A",
+  Marrón: "#92400E",
+};
+
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const discount = product.originalPrice
-    ? Math.round(
-        ((product.originalPrice - product.price) / product.originalPrice) * 100
-      )
+    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -26,109 +37,76 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <Link href={`/product/${product.id}`} className="group">
-      <div className="bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-[#cee741]/10 transition-all duration-300 overflow-hidden border border-gray-700">
-        {/* Image Container */}
-        <div className="relative aspect-square overflow-hidden bg-gray-900">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            className="object-cover group-hover:scale-110 transition-transform duration-500"
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-          />
+    <Link href={`/product/${product.id}`} className="group block">
+      {/* Image */}
+      <div className="relative aspect-[3/4] overflow-hidden bg-[#161f2e] rounded-sm mb-3">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.04]"
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+        />
 
-          {/* Badges */}
-          <div className="absolute top-3 left-3 flex flex-col gap-2">
-            {product.isNew && (
-              <span className="bg-green-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
-                Nuevo
-              </span>
-            )}
-            {discount > 0 && (
-              <span className="bg-red-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
-                -{discount}%
-              </span>
-            )}
-          </div>
+        {/* Dark overlay on hover */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
 
-          {/* Wishlist Button */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-            className="absolute top-3 right-3 w-9 h-9 bg-gray-800/80 backdrop-blur-sm rounded-full shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-gray-700"
-          >
-            <Heart className="w-4 h-4 text-gray-300" />
-          </button>
-
-          {/* Quick Add Button */}
-          <button
-            onClick={handleAddToCart}
-            className="absolute bottom-3 right-3 bg-[#cee741] text-gray-900 p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 hover:bg-[#b5cc1a]"
-          >
-            <ShoppingCart className="w-5 h-5" />
-          </button>
+        {/* Badges */}
+        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+          {product.isNew && (
+            <span className="text-eyebrow bg-primary text-gray-900 px-2 py-0.5">
+              Nuevo
+            </span>
+          )}
+          {discount > 0 && (
+            <span className="text-[10px] uppercase tracking-eyebrow font-medium bg-white/90 text-gray-900 px-2 py-0.5">
+              -{discount}%
+            </span>
+          )}
         </div>
 
-        {/* Content */}
-        <div className="p-4">
-          {/* Category */}
-          <p className="text-xs text-[#cee741] font-medium uppercase tracking-wide mb-1">
-            {product.subcategory || product.category}
-          </p>
+        {/* Slide-up Add to Cart */}
+        <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-400 ease-out">
+          <button
+            onClick={handleAddToCart}
+            className="w-full flex items-center justify-center gap-2 bg-primary text-gray-900 py-3 text-[10px] tracking-cta uppercase font-medium hover:bg-primary-hover transition-colors duration-200"
+          >
+            <ShoppingBag className="w-3.5 h-3.5" />
+            Agregar al carrito
+          </button>
+        </div>
+      </div>
 
-          {/* Title */}
-          <h3 className="font-semibold text-white group-hover:text-[#cee741] transition-colors line-clamp-2 min-h-[2.5rem]">
-            {product.name}
-          </h3>
-
-          {/* Price */}
-          <div className="flex items-center gap-2 mt-3">
-            <span className="text-lg font-bold text-white">
-              {product.puntosFit} Puntos Fit / {formatCurrency(product.price)}
-            </span>
+      {/* Info */}
+      <div className="px-0.5">
+        <p className="text-eyebrow mb-1">
+          {product.subcategory || product.category}
+        </p>
+        <h3 className="text-[13px] text-white leading-snug tracking-wide2 mb-2 line-clamp-2 group-hover:text-primary/90 transition-colors duration-300">
+          {product.name}
+        </h3>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-[13px] font-semibold text-white">
+              {product.puntosFit}{" "}
+              <span className="text-primary text-[11px] font-medium">pts</span>
+            </p>
+            <p className="text-[11px] text-gray-500 mt-0.5">{formatCurrency(product.price)}</p>
           </div>
 
-          {/* Colors Preview */}
+          {/* Color swatches */}
           {product.colors && product.colors.length > 0 && (
-            <div className="flex items-center gap-1 mt-3">
-              {product.colors.slice(0, 4).map((color, index) => (
+            <div className="flex items-center gap-1">
+              {product.colors.slice(0, 4).map((color, i) => (
                 <div
-                  key={index}
-                  className="w-4 h-4 rounded-full border border-gray-600"
-                  style={{
-                    backgroundColor:
-                      color === "Negro"
-                        ? "#000"
-                        : color === "Blanco"
-                        ? "#fff"
-                        : color === "Azul"
-                        ? "#3B82F6"
-                        : color === "Rojo"
-                        ? "#EF4444"
-                        : color === "Gris"
-                        ? "#9CA3AF"
-                        : color === "Morado"
-                        ? "#8B5CF6"
-                        : color === "Verde"
-                        ? "#10B981"
-                        : color === "Rosa"
-                        ? "#EC4899"
-                        : color === "Azul Marino"
-                        ? "#1E3A8A"
-                        : color === "Marrón"
-                        ? "#92400E"
-                        : "#ccc",
-                  }}
+                  key={i}
+                  className="w-3 h-3 rounded-full border border-white/20"
+                  style={{ backgroundColor: COLOR_MAP[color] ?? "#888" }}
                   title={color}
                 />
               ))}
               {product.colors.length > 4 && (
-                <span className="text-xs text-gray-500">
-                  +{product.colors.length - 4}
-                </span>
+                <span className="text-[10px] text-gray-600">+{product.colors.length - 4}</span>
               )}
             </div>
           )}

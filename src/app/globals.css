@@ -2,44 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Primary color custom property */
+/* ─── Brand tokens ─── */
 :root {
   --color-primary: #cee741;
   --color-primary-hover: #b5cc1a;
   --color-primary-dark: #9ab212;
+  --color-surface: #111827;
+  --color-surface-raised: #161f2e;
+  --color-surface-overlay: #1a2436;
+  --color-border: rgba(255,255,255,0.07);
+  --color-border-hover: rgba(206,231,65,0.25);
+  --header-height: 68px;
 }
 
-/* Dark theme base */
+/* ─── Base ─── */
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
 }
 
 body {
-  background-color: #111827;
-  color: #f3f4f6;
+  background-color: var(--color-surface);
+  color: #e8ecf0;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Custom scrollbar - Dark theme */
+/* ─── Typography utilities ─── */
+@layer utilities {
+  .text-eyebrow {
+    @apply text-[10px] uppercase tracking-eyebrow font-medium text-primary;
+  }
+  .text-label {
+    @apply text-[11px] uppercase tracking-cta font-medium;
+  }
+  .section-title {
+    @apply font-display uppercase tracking-heading;
+  }
+  .img-zoom img {
+    transition: transform 900ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .img-zoom:hover img,
+  .group:hover .img-zoom-target {
+    transform: scale(1.04);
+  }
+}
+
+/* ─── Scrollbar ─── */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #1f2937;
+  background: var(--color-surface-raised);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #4b5563;
-  border-radius: 4px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 99px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
+  background: rgba(206,231,65,0.3);
 }
 
-/* Line clamp utility */
+/* ─── Line clamp ─── */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -47,18 +72,55 @@ body {
   overflow: hidden;
 }
 
-/* Custom animations */
+/* ─── Animations ─── */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
+.animate-fade-in  { animation: fadeIn  0.7s ease-out forwards; }
+.animate-slide-up { animation: slideUp 0.8s ease-out forwards; }
+.animate-slide-in-right { animation: slideInRight 0.4s cubic-bezier(0.4,0,0.2,1) forwards; }
+.animate-marquee  { animation: marquee 28s linear infinite; }
+
+/* ─── Gradient text ─── */
+.text-gradient-primary {
+  background: linear-gradient(135deg, #cee741 0%, #9ab212 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Primary button — gradient slide reveal ─── */
+.btn-primary-reveal {
+  background: linear-gradient(to right, #cee741 50%, #111827 50%);
+  background-size: 200% 100%;
+  background-position: left center;
+  transition: background-position 0.35s ease-in-out, color 0.35s ease-in-out;
+  color: #111827;
+}
+.btn-primary-reveal:hover {
+  background-position: right center;
+  color: #cee741;
+}
+
+/* ─── Cart drawer transition ─── */
+.drawer-enter {
+  transform: translateX(100%);
+}
+.drawer-enter-active {
+  transform: translateX(0);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
 }

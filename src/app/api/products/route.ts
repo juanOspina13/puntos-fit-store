@@ -13,7 +13,7 @@ export async function GET(request: Request) {
     const inStock = searchParams.get("inStock");
 
     const qb = repo.createQueryBuilder("product");
-
+    console.log(category);
     qb.andWhere("product.enabled = :enabled", { enabled: true });
 
     if (category) {

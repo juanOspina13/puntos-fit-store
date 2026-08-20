@@ -2,6 +2,7 @@ import { api } from "./api";
 import type { Product } from "@/types";
 
 export async function getProducts(params?: Record<string, string>): Promise<Product[]> {
+  console.log("before");
   try {
     return await api.get<Product[]>("/products", params);
   } catch (error) {
