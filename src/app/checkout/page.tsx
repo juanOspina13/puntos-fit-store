@@ -41,14 +41,16 @@ export default function CheckoutPage() {
     dinero: partialPriceCash,
   });
 
+  const [requiresShipping, setRequiresShipping] = useState(false);
+  const SHIPPING_COST = 12000;
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const shipping = totalPrice >= 50 ? 0 : 9.99;
-  const tax = totalPrice * 0;
-  const total = totalPrice + shipping + tax;
+  const shippingCost = requiresShipping ? SHIPPING_COST : 0;
+  const total = totalPrice;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,22 +71,33 @@ export default function CheckoutPage() {
           body: JSON.stringify({
             external_reference: reference,
             payer_email: formData.email || undefined,
-            items: items.map((item) => {
-              const parts: string[] = [];
-              if (item.product.subcategory || item.product.category)
-                parts.push(item.product.subcategory ?? item.product.category);
-              if (item.selectedSize) parts.push(`Talla: ${item.selectedSize}`);
-              if (item.selectedColor) parts.push(`Color: ${item.selectedColor}`);
-              parts.push(`${item.product.puntosFit * item.quantity} Puntos Fit`);
+            items: [
+              ...items.map((item) => {
+                const parts: string[] = [];
+                if (item.product.subcategory || item.product.category)
+                  parts.push(item.product.subcategory ?? item.product.category);
+                if (item.selectedSize) parts.push(`Talla: ${item.selectedSize}`);
+                if (item.selectedColor) parts.push(`Color: ${item.selectedColor}`);
+                parts.push(`${item.product.puntosFit * item.quantity} Puntos Fit`);
 
-              return {
-                title: item.product.name,
-                description: parts.join(" | "),
-                unit_price: item.product.price * item.quantity,
-                quantity: item.quantity,
-                currency_id: "COP",
-              };
-            }),
+                return {
+                  title: item.product.name,
+                  description: parts.join(" | "),
+                  unit_price: item.product.price * item.quantity,
+                  quantity: item.quantity,
+                  currency_id: "COP",
+                };
+              }),
+              ...(requiresShipping
+                ? [{
+                    title: "Envío nacional",
+                    description: "Envío a domicilio a nivel nacional",
+                    unit_price: SHIPPING_COST,
+                    quantity: 1,
+                    currency_id: "COP",
+                  }]
+                : []),
+            ],
           }),
         });
 
@@ -128,11 +141,15 @@ export default function CheckoutPage() {
       )
       .join("%0A")}`;
 
+    const shippingLine = requiresShipping
+      ? `%0AEnvío nacional: ${formatCurrency(SHIPPING_COST)}`
+      : "";
+
     let pagoDetalle = "";
     if (paymentMethod === "puntos") {
-      pagoDetalle = `*Pago:*%0A100% en Puntos Fit (${total} Puntos Fit)`;
+      pagoDetalle = `*Pago:*%0A100% en Puntos Fit (${total} Puntos Fit)${shippingLine}`;
     } else {
-      pagoDetalle = `*Pago:*%0A${splitAmount.puntos} Puntos Fit y ${formatCurrency(splitAmount.dinero)} en Dinero`;
+      pagoDetalle = `*Pago:*%0A${splitAmount.puntos} Puntos Fit y ${formatCurrency(splitAmount.dinero + shippingCost)} en Dinero${shippingLine}`;
     }
 
     const message =
@@ -375,6 +392,7 @@ export default function CheckoutPage() {
                       <option>Colombia</option>
                     </select>
                   </div>
+
                 </>
               )}
 
@@ -391,7 +409,7 @@ export default function CheckoutPage() {
                         name="paymentMethod"
                         value="puntos"
                         checked={paymentMethod === "puntos"}
-                        onChange={() => setPaymentMethod("puntos")}
+                        onChange={() => { setPaymentMethod("puntos"); setRequiresShipping(false); }}
                         className="accent-[#cee741]"
                       />
                       <span>100% Puntos Fit</span>
@@ -407,6 +425,22 @@ export default function CheckoutPage() {
                       />
                       <span>100% Dinero</span>
                     </label>
+                    {paymentMethod === "dinero" && (
+                      <label className="flex items-start gap-3 cursor-pointer bg-gray-700/50 border border-gray-600 rounded-xl px-4 py-3 ml-6">
+                        <input
+                          type="checkbox"
+                          checked={requiresShipping}
+                          onChange={(e) => setRequiresShipping(e.target.checked)}
+                          className="mt-0.5 accent-[#cee741] w-4 h-4 flex-shrink-0"
+                        />
+                        <div>
+                          <p className="text-sm font-medium text-white">Requiero envío a domicilio</p>
+                          <p className="text-xs text-gray-400 mt-0.5">
+                            Envío nacional — <span className="text-[#cee741] font-medium">{formatCurrency(SHIPPING_COST)}</span>
+                          </p>
+                        </div>
+                      </label>
+                    )}
                     <label className="flex items-center gap-2">
                       <input
                         type="radio"
@@ -415,6 +449,7 @@ export default function CheckoutPage() {
                         checked={paymentMethod === "mixto"}
                         onChange={() => {
                           setPaymentMethod("mixto");
+                          setRequiresShipping(false);
                           setSplitAmount({
                             puntos: Math.round(total / 2),
                             dinero: +(total / 2).toFixed(2),
@@ -548,21 +583,42 @@ export default function CheckoutPage() {
                       {totalPrice} Puntos Fit
                     </span>
                   )}
-                  {paymentMethod === "dinero" && (
+                  {(paymentMethod === "dinero" || paymentMethod === "mixto") && (
                     <span className="font-medium text-white">
                       {formatCurrency(totalPriceCash)}
                     </span>
                   )}
                 </div>
 
+                {requiresShipping && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-400">Envío nacional</span>
+                    <span className="font-medium text-white">
+                      {formatCurrency(SHIPPING_COST)}
+                    </span>
+                  </div>
+                )}
+
                 <div className="flex justify-between text-lg font-bold border-t border-gray-700 pt-3">
                   <span className="text-white">Total</span>
                   {paymentMethod === "puntos" && (
-                    <span className="text-[#cee741]">{total} Puntos Fit</span>
+                    <div className="text-right">
+                      <span className="text-[#cee741]">{total} Puntos Fit</span>
+                      {requiresShipping && (
+                        <p className="text-xs text-gray-400 font-normal mt-0.5">
+                          + {formatCurrency(SHIPPING_COST)} envío
+                        </p>
+                      )}
+                    </div>
                   )}
                   {paymentMethod === "dinero" && (
                     <span className="text-[#cee741]">
-                      {formatCurrency(totalPriceCash)}
+                      {formatCurrency(totalPriceCash + shippingCost)}
+                    </span>
+                  )}
+                  {paymentMethod === "mixto" && (
+                    <span className="text-[#cee741]">
+                      {formatCurrency(totalPriceCash + shippingCost)}
                     </span>
                   )}
                 </div>
