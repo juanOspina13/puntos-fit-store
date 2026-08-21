@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MapPin, ArrowRight, Heart, Store } from "lucide-react";
 import { getCompanies } from "@/services/companies";
+import { Skeleton } from "@/components/ui/Skeleton";
 import type { Company } from "@/types";
 
 const FALLBACK_IMAGE =
@@ -23,10 +24,33 @@ export default function PereiraClient() {
 
   if (isLoading) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-[#0b1119]">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-          <p className="text-[11px] tracking-cta uppercase text-gray-600">Cargando</p>
+      <div className="bg-[#0b1119]">
+        {/* Hero skeleton */}
+        <div className="relative py-24 md:py-32 border-b border-white/5 flex flex-col items-center gap-4 px-6">
+          <Skeleton className="h-3 w-32" />
+          <Skeleton className="h-12 w-72 md:w-96" />
+          <Skeleton className="h-12 w-56 md:w-80" />
+          <Skeleton className="h-4 w-80 md:w-[480px] mt-2" />
+          <Skeleton className="h-4 w-64 md:w-96" />
+        </div>
+        {/* Cards skeleton */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+          <Skeleton className="h-3 w-20 mb-3" />
+          <Skeleton className="h-8 w-48 mb-12" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="bg-[#0d1520] flex flex-col">
+                <Skeleton className="h-56 rounded-none" />
+                <div className="p-6 flex flex-col gap-3">
+                  <Skeleton className="h-2 w-24" />
+                  <Skeleton className="h-6 w-40" />
+                  <Skeleton className="h-3 w-full" />
+                  <Skeleton className="h-3 w-4/5" />
+                  <Skeleton className="h-3 w-3/5 mt-2" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );

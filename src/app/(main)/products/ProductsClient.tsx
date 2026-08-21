@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Filter, Grid, SlidersHorizontal, X, Zap } from "lucide-react";
 import ProductGrid from "@/components/product/ProductGrid";
 import PuntosBalanceBanner from "@/components/layout/PuntosBalanceBanner";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { getProducts, getCategories, searchProducts, getProductsByCategory } from "@/data/products";
 import type { Product, Category } from "@/types";
 
@@ -80,10 +81,41 @@ function ProductsContent() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0b1119] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-          <p className="text-[11px] tracking-cta uppercase text-gray-600">Cargando</p>
+      <div className="min-h-screen bg-[#0b1119]">
+        {/* Header */}
+        <div className="border-b border-white/5 bg-[#0d1520] px-6 lg:px-10 py-10">
+          <Skeleton className="h-3 w-20 mb-3" />
+          <Skeleton className="h-9 w-64" />
+        </div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10">
+          <Skeleton className="h-12 w-full mb-8" />
+          <div className="flex flex-col lg:flex-row gap-10">
+            {/* Sidebar */}
+            <div className="hidden lg:flex flex-col gap-3 w-56 flex-shrink-0">
+              <Skeleton className="h-3 w-20 mb-2" />
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Skeleton key={i} className="h-3 w-full" />
+              ))}
+              <Skeleton className="h-3 w-20 mt-6 mb-2" />
+              <Skeleton className="h-3 w-full" />
+              <Skeleton className="h-3 w-3/4" />
+            </div>
+            {/* Grid */}
+            <div className="flex-1">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-white/5">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="bg-[#0d1520]">
+                    <Skeleton className="aspect-square rounded-none" />
+                    <div className="p-4 flex flex-col gap-2">
+                      <Skeleton className="h-3 w-3/4" />
+                      <Skeleton className="h-3 w-1/2" />
+                      <Skeleton className="h-4 w-16 mt-1" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -241,8 +273,25 @@ export default function ProductsPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#0b1119] flex items-center justify-center">
-          <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+        <div className="min-h-screen bg-[#0b1119]">
+          <div className="border-b border-white/5 bg-[#0d1520] px-6 lg:px-10 py-10">
+            <Skeleton className="h-3 w-20 mb-3" />
+            <Skeleton className="h-9 w-64" />
+          </div>
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-white/5">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="bg-[#0d1520]">
+                  <Skeleton className="aspect-square rounded-none" />
+                  <div className="p-4 flex flex-col gap-2">
+                    <Skeleton className="h-3 w-3/4" />
+                    <Skeleton className="h-3 w-1/2" />
+                    <Skeleton className="h-4 w-16 mt-1" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       }
     >

@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/pereira",
+        permanent: false,
+      },
+    ];
+  },
   serverExternalPackages: ["typeorm", "reflect-metadata"],
   images: {
     domains: ["gym-connect-bucket.s3.us-east-1.amazonaws.com"],

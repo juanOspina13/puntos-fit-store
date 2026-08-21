@@ -17,6 +17,7 @@ import PuntosBalanceBanner from "@/components/layout/PuntosBalanceBanner";
 import { getCompanyBySlug } from "@/services/companies";
 import { getProducts } from "@/services/products";
 import { getCategories } from "@/services/categories";
+import { Skeleton } from "@/components/ui/Skeleton";
 import type { Company, Product, Category } from "@/types";
 
 const COMPANY_SLUG = "pereira-running-culture";
@@ -81,10 +82,50 @@ export default function RunningCultureClient() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#0b1119] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-          <p className="text-[11px] tracking-cta uppercase text-gray-600">Cargando</p>
+      <div className="min-h-screen bg-[#0b1119]">
+        {/* Back bar */}
+        <div className="border-b border-white/5 bg-[#0d1520] px-6 lg:px-10 py-4">
+          <Skeleton className="h-3 w-32" />
+        </div>
+        {/* Hero skeleton */}
+        <div className="py-20 md:py-28 border-b border-white/5 max-w-7xl mx-auto px-6 lg:px-10 flex flex-col gap-4">
+          <Skeleton className="h-3 w-36" />
+          <Skeleton className="h-14 w-80 md:w-[480px]" />
+          <Skeleton className="h-14 w-56 md:w-80" />
+          <Skeleton className="h-4 w-full max-w-xl mt-2" />
+          <Skeleton className="h-4 w-4/5 max-w-lg" />
+          <Skeleton className="h-4 w-3/5 max-w-sm" />
+          <Skeleton className="h-3 w-24 mt-2" />
+        </div>
+        {/* Store skeleton */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-10">
+          <Skeleton className="h-12 w-full mb-8" />
+          <div className="flex flex-col lg:flex-row gap-10">
+            {/* Sidebar */}
+            <div className="hidden lg:flex flex-col gap-4 w-56 flex-shrink-0">
+              <Skeleton className="h-3 w-20" />
+              {Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton key={i} className="h-3 w-full" />
+              ))}
+              <Skeleton className="h-3 w-20 mt-4" />
+              <Skeleton className="h-3 w-full" />
+            </div>
+            {/* Product grid */}
+            <div className="flex-1">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-white/5">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="bg-[#0d1520] flex flex-col">
+                    <Skeleton className="aspect-square rounded-none" />
+                    <div className="p-4 flex flex-col gap-2">
+                      <Skeleton className="h-3 w-3/4" />
+                      <Skeleton className="h-3 w-1/2" />
+                      <Skeleton className="h-4 w-16 mt-1" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

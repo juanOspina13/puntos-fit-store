@@ -18,6 +18,7 @@ import { getSubscriptions, getObjetivos, getProductById } from "@/data/products"
 import { formatCurrency } from "@/lib/format";
 import type { Subscription, Product } from "@/types";
 import { featureFlags } from "@/config/featureFlags";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 const objetivoDescriptions: Record<string, string> = {
   "ganar-musculo": "Construye masa muscular y fuerza con un sistema claro de suplementacion en ciclos de 90 días.",
@@ -115,8 +116,26 @@ export default function SuscripcionesPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#cee741]"></div>
+      <div className="min-h-screen bg-gray-950 px-6 lg:px-10 py-16 max-w-7xl mx-auto">
+        <Skeleton className="h-3 w-24 mb-4" />
+        <Skeleton className="h-10 w-80 mb-2" />
+        <Skeleton className="h-4 w-96 mb-10" />
+        <div className="flex gap-3 mb-10 flex-wrap">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Skeleton key={i} className="h-9 w-28" />
+          ))}
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="flex flex-col gap-3">
+              <Skeleton className="h-48 rounded-none" />
+              <Skeleton className="h-5 w-3/4" />
+              <Skeleton className="h-3 w-full" />
+              <Skeleton className="h-3 w-4/5" />
+              <Skeleton className="h-8 w-full mt-2" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
