@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { Category } from "../entities/Category";
+import { Company } from "../entities/Company";
 import { Product } from "../entities/Product";
 import { Subscription } from "../entities/Subscription";
 
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
   password: process.env.DATABASE_PASSWORD || "admin",
   database: process.env.DATABASE_NAME || "puntos_fit_store",
 
-  entities: [Category, Product, Subscription],
+  entities: [Category, Company, Product, Subscription],
   migrations: [],
 
   synchronize: false,

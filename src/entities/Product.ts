@@ -44,6 +44,9 @@ export class Product {
   @Column({ type: "int", nullable: true })
   servicios!: number;
 
+  @Column({ type: "varchar", length: 50, nullable: true })
+  companyId!: string;
+
   @Column({ type: "boolean", default: true })
   enabled!: boolean;
 }

@@ -17,6 +17,17 @@ export interface Product {
   featured?: boolean;
   isNew?: boolean;
   puntosFit: number;
+  companyId?: string;
+}
+
+export interface Company {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  descripcionLarga: string;
+  slug: string;
+  imagen?: string;
+  enabled: boolean;
 }
 
 export interface CartItem {

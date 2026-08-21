@@ -11,6 +11,7 @@ export async function GET(request: Request) {
     const category = searchParams.get("category");
     const subcategory = searchParams.get("subcategory");
     const inStock = searchParams.get("inStock");
+    const companyId = searchParams.get("companyId");
 
     const qb = repo.createQueryBuilder("product");
     console.log(category);
@@ -24,6 +25,9 @@ export async function GET(request: Request) {
     }
     if (inStock === "true") {
       qb.andWhere("product.inStock = :inStock", { inStock: true });
+    }
+    if (companyId) {
+      qb.andWhere("product.companyId = :companyId", { companyId });
     }
 
     const products = await qb.getMany();
