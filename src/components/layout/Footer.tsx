@@ -54,6 +54,11 @@ export default function Footer() {
                   Suplementos individuales
                 </Link>
               </li>
+              <li>
+                <Link href="/pereira" className="text-gray-400 hover:text-white transition-colors">
+                  Pereira, con el corazón
+                </Link>
+              </li>
               {/*
               <li>
                 <Link href="/products?category=clothing" className="text-gray-400 hover:text-white transition-colors">

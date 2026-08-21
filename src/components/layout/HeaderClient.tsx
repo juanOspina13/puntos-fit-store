@@ -20,6 +20,7 @@ const NAV_LINKS = [
   { href: "/suscripciones", label: "Suscripciones", flag: featureFlags.subscriptions },
   { href: "/products?category=supplements", label: "Suplementos", flag: true },
   { href: "/products?category=clothing", label: "Ropa y accesorios", flag: true },
+  { href: "/pereira", label: "Pereira, con el corazón", flag: true },
 ];
 
 export default function HeaderClient({ serverUserData }: HeaderClientProps) {
