@@ -17,7 +17,7 @@ export const LOCAL_COMPANIES: LocalCompany[] = [
     description:
       "Un colectivo de runners pereiranos que impulsa la cultura del running en la ciudad con entrenamientos, comunidad y productos pensados para quienes viven corriendo.",
     image:
-      "https://images.unsplash.com/photo-1502224562085-639556652f33?w=1200",
+      "https://gym-connect-bucket.s3.us-east-1.amazonaws.com/img/satelites/PRCmini.jpg",
     location: "Pereira, Risaralda",
     instagram: "https://instagram.com/pereirarunningculture",
     productIds: ["17"],

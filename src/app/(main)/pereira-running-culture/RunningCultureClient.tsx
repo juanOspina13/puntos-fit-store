@@ -34,12 +34,13 @@ export default function RunningCultureClient() {
 
   useEffect(() => {
     async function loadData() {
-      const [comp, prods, cats] = await Promise.all([
-        getCompanyBySlug(COMPANY_SLUG),
-        getProducts({ companyId: COMPANY_SLUG }),
+      const comp = await getCompanyBySlug(COMPANY_SLUG);
+      setCompany(comp);
+
+      const [prods, cats] = await Promise.all([
+        comp ? getProducts({ companyId: comp.id }) : Promise.resolve([]),
         getCategories(),
       ]);
-      setCompany(comp);
       setAllProducts(prods);
       setCategories(cats);
       setIsLoading(false);
@@ -92,7 +93,7 @@ export default function RunningCultureClient() {
   const displayName = company?.nombre ?? "Pereira Running Culture";
   const displayImage =
     company?.imagen ??
-    "https://images.unsplash.com/photo-1502224562085-639556652f33?w=1600";
+    "https://gym-connect-bucket.s3.us-east-1.amazonaws.com/img/satelites/PRCmini.jpg";
 
   return (
     <div className="min-h-screen bg-[#0b1119]">
