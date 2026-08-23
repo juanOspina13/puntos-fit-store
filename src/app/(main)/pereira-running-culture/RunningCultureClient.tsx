@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import ProductGrid from "@/components/product/ProductGrid";
 import PuntosBalanceBanner from "@/components/layout/PuntosBalanceBanner";
+import DonateButton from "@/components/company/DonateButton";
 import { getCompanyBySlug } from "@/services/companies";
 import { getProducts } from "@/services/products";
 import { getCategories } from "@/services/categories";
@@ -194,6 +195,7 @@ export default function RunningCultureClient() {
                 <Instagram className="w-3.5 h-3.5" />
                 Instagram
               </a>
+              {company && <DonateButton company={company} />}
             </div>
           </div>
         </div>

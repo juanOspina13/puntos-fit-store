@@ -6,6 +6,7 @@ import Link from "next/link";
 import { MapPin, ArrowRight, Heart, Store } from "lucide-react";
 import { getCompanies } from "@/services/companies";
 import { Skeleton } from "@/components/ui/Skeleton";
+import DonateButton from "@/components/company/DonateButton";
 import type { Company } from "@/types";
 
 const FALLBACK_IMAGE =
@@ -150,10 +151,13 @@ export default function PereiraClient() {
                       {company.descripcion}
                     </p>
 
-                    <span className="inline-flex items-center gap-2 text-[11px] tracking-cta uppercase text-gray-500 group-hover:text-primary transition-colors duration-300">
-                      Ver tienda
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
-                    </span>
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center gap-2 text-[11px] tracking-cta uppercase text-gray-500 group-hover:text-primary transition-colors duration-300">
+                        Ver tienda
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />
+                      </span>
+                      <DonateButton company={company} />
+                    </div>
                   </div>
                 </Link>
               ))}
