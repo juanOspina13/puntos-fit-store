@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { getDataSource } from "@/lib/data-source";
 import { Product } from "@/entities/Product";
+import { ProductPhoto } from "@/entities/ProductPhoto";
+import { ProductSize } from "@/entities/ProductSize";
+import { ProductFlavor } from "@/entities/ProductFlavor";
 
 export async function GET(
   request: Request,
@@ -19,7 +22,22 @@ export async function GET(
       );
     }
 
-    return NextResponse.json(product);
+    const [fotos, tallas, sabores] = await Promise.all([
+      ds.getRepository(ProductPhoto).find({
+        where: { productId: id, enabled: true },
+        order: { orden: "ASC" },
+      }),
+      ds.getRepository(ProductSize).find({
+        where: { productId: id, enabled: true },
+        relations: { talla: true },
+      }),
+      ds.getRepository(ProductFlavor).find({
+        where: { productId: id, enabled: true },
+        relations: { sabor: true },
+      }),
+    ]);
+
+    return NextResponse.json({ ...product, fotos, tallas, sabores });
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(

@@ -7,7 +7,7 @@ export class ProductSize {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToOne(() => Product, (p) => p.tallas, { onDelete: "CASCADE" })
+  @ManyToOne(() => Product, { onDelete: "CASCADE" })
   @JoinColumn({ name: "productId" })
   product!: Product;
 
