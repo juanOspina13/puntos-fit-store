@@ -1,3 +1,25 @@
+export interface ProductPhoto {
+  id: number;
+  url: string;
+  orden: number;
+  enabled: boolean;
+}
+
+export interface ProductSizeVariant {
+  id: number;
+  talla: { id: number; nombre: string };
+  cantidad: number;
+  enabled: boolean;
+}
+
+export interface ProductFlavorVariant {
+  id: number;
+  sabor: { id: number; nombre: string };
+  servings: number;
+  cantidad: number;
+  enabled: boolean;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -18,6 +40,9 @@ export interface Product {
   isNew?: boolean;
   puntosFit: number;
   companyId?: string;
+  fotos?: ProductPhoto[];
+  tallas?: ProductSizeVariant[];
+  sabores?: ProductFlavorVariant[];
 }
 
 export interface Company {
@@ -35,6 +60,7 @@ export interface CartItem {
   quantity: number;
   selectedSize?: string;
   selectedColor?: string;
+  selectedFlavor?: string;
 }
 
 export interface Category {

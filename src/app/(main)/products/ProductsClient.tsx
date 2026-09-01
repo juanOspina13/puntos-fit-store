@@ -1,21 +1,27 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import { Filter, Grid, SlidersHorizontal, X, Zap } from "lucide-react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Filter, SlidersHorizontal, X, Zap } from "lucide-react";
 import ProductGrid from "@/components/product/ProductGrid";
 import PuntosBalanceBanner from "@/components/layout/PuntosBalanceBanner";
 import { Skeleton } from "@/components/ui/Skeleton";
-import { getProducts, getCategories, searchProducts, getProductsByCategory } from "@/data/products";
-import type { Product, Category } from "@/types";
+import { getProducts, searchProducts, getProductsByCategory } from "@/data/products";
+import type { Product } from "@/types";
+
+const SIDEBAR_CATEGORIES = [
+  { slug: "all", name: "Todos" },
+  { slug: "supplements", name: "Suplementos" },
+  { slug: "clothing", name: "Ropa y accesorios" },
+];
 
 function ProductsContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category");
   const searchQuery = searchParams.get("search");
 
+  const router = useRouter();
   const [allProducts, setAllProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam || "all");
   const [sortBy, setSortBy] = useState<string>("featured");
@@ -24,13 +30,10 @@ function ProductsContent() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setSelectedCategory(categoryParam || "all");
     async function loadData() {
-      const [prods, cats] = await Promise.all([
-        getProducts(categoryParam ?? undefined),
-        getCategories(),
-      ]);
+      const prods = await getProducts(categoryParam ?? undefined);
       setAllProducts(prods);
-      setCategories(cats);
       setIsLoading(false);
     }
     loadData();
@@ -179,12 +182,19 @@ function ProductsContent() {
                     <span className="text-label text-gray-600">Categorías</span>
                   </div>
                   <div className="space-y-px">
-                    {[{ id: "all", name: "Todos", slug: "all" }, ...categories].map((cat: any) => (
+                    {SIDEBAR_CATEGORIES.map((cat) => (
                       <button
-                        key={cat.id}
-                        onClick={() => { setSelectedCategory(cat.slug); if (isFilterOpen) setIsFilterOpen(false); }}
+                        key={cat.slug}
+                        onClick={() => {
+                          setIsFilterOpen(false);
+                          if (cat.slug === "all") {
+                            router.push("/products");
+                          } else {
+                            router.push(`/products?category=${cat.slug}`);
+                          }
+                        }}
                         className={`w-full text-left px-3 py-2.5 text-[12px] transition-all duration-200 ${
-                          selectedCategory === cat.slug
+                          (cat.slug === "all" ? !categoryParam : categoryParam === cat.slug)
                             ? "text-primary border-l-2 border-primary pl-4 bg-primary/5"
                             : "text-gray-500 hover:text-gray-300 border-l-2 border-transparent hover:border-white/10"
                         }`}

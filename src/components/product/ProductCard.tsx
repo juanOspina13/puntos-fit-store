@@ -33,15 +33,18 @@ export default function ProductCard({ product }: ProductCardProps) {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product, 1, product.sizes?.[0], product.colors?.[0]);
+    addToCart(product, 1, product.sizes?.[0], product.colors?.[0], undefined);
   };
+
+  const sortedFotos = [...(product.fotos ?? [])].sort((a, b) => a.orden - b.orden).filter((f) => f.enabled);
+  const displayImage = sortedFotos[0]?.url ?? product.image;
 
   return (
     <Link href={`/product/${product.id}`} className="group block">
       {/* Image */}
       <div className="relative aspect-[3/4] overflow-hidden bg-[#161f2e] rounded-sm mb-3">
         <Image
-          src={product.image}
+          src={displayImage}
           alt={product.name}
           fill
           className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.04]"

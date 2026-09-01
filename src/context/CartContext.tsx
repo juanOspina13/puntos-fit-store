@@ -17,6 +17,7 @@ interface CartContextType {
     quantity?: number,
     size?: string,
     color?: string,
+    flavor?: string,
   ) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
@@ -96,20 +97,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
     quantity = 1,
     size?: string,
     color?: string,
+    flavor?: string,
   ) => {
     setItems((currentItems) => {
       const existingItem = currentItems.find(
         (item) =>
           item.product.id === product.id &&
           item.selectedSize === size &&
-          item.selectedColor === color,
+          item.selectedColor === color &&
+          item.selectedFlavor === flavor,
       );
 
       if (existingItem) {
         return currentItems.map((item) =>
           item.product.id === product.id &&
           item.selectedSize === size &&
-          item.selectedColor === color
+          item.selectedColor === color &&
+          item.selectedFlavor === flavor
             ? { ...item, quantity: item.quantity + quantity }
             : item,
         );
@@ -117,7 +121,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       return [
         ...currentItems,
-        { product, quantity, selectedSize: size, selectedColor: color },
+        { product, quantity, selectedSize: size, selectedColor: color, selectedFlavor: flavor },
       ];
     });
     setIsCartOpen(true);
