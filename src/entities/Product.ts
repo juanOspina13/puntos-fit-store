@@ -1,7 +1,4 @@
-import { Entity, PrimaryColumn, Column, OneToMany } from "typeorm";
-import { ProductPhoto } from "./ProductPhoto";
-import { ProductSize } from "./ProductSize";
-import { ProductFlavor } from "./ProductFlavor";
+import { Entity, PrimaryColumn, Column } from "typeorm";
 
 @Entity("products")
 export class Product {
@@ -52,13 +49,4 @@ export class Product {
 
   @Column({ type: "boolean", default: true })
   enabled!: boolean;
-
-  @OneToMany(() => ProductPhoto, (p) => p.product, { eager: true })
-  fotos!: ProductPhoto[];
-
-  @OneToMany(() => ProductSize, (ps) => ps.product, { eager: true })
-  tallas!: ProductSize[];
-
-  @OneToMany(() => ProductFlavor, (pf) => pf.product, { eager: true })
-  sabores!: ProductFlavor[];
 }
