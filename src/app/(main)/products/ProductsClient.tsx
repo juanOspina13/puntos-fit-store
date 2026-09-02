@@ -46,9 +46,6 @@ function ProductsContent() {
       if (searchQuery) result = await searchProducts(searchQuery);
       if (categoryParam && categoryParam !== "all") {
         result = result.filter((p: Product) => p.category === categoryParam);
-        setSelectedCategory(categoryParam);
-      } else if (selectedCategory && selectedCategory !== "all") {
-        result = await getProductsByCategory(selectedCategory);
       }
       result = result.filter(
         (p: Product) => p.puntosFit >= priceRange[0] && p.puntosFit <= priceRange[1]
@@ -72,7 +69,7 @@ function ProductsContent() {
       setFilteredProducts(result);
     }
     applyFilters();
-  }, [allProducts, searchQuery, categoryParam, selectedCategory, sortBy, priceRange]);
+  }, [allProducts, searchQuery, categoryParam, sortBy, priceRange]);
 
   const getCategoryTitle = () => {
     if (searchQuery) return `"${searchQuery}"`;
