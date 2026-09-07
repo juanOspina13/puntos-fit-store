@@ -9,6 +9,7 @@ import {
 } from "react";
 import type { CartItem, Product } from "@/types";
 import { useAuth } from "@/context/AuthContext";
+import { featureFlags } from "@/config/featureFlags";
 
 interface CartContextType {
   items: CartItem[];
@@ -43,7 +44,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [tokensToUse, setTokensToUse] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState<
     "puntos" | "dinero" | "mixto"
-  >("puntos");
+  >(featureFlags.fitpointsPayment ? "puntos" : "dinero");
   const [isHydrated, setIsHydrated] = useState(false);
 
   // Puntos disponibles del usuario
@@ -69,7 +70,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Auto-aplicar puntos disponibles cuando el carrito cambia
   useEffect(() => {
-    if (!isHydrated) return;
+    if (!isHydrated || !featureFlags.fitpointsPayment) return;
 
     const currentTotalPrice = items.reduce(
       (sum, item) => sum + item.product.puntosFit * item.quantity,

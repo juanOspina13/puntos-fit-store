@@ -6,6 +6,7 @@ import { formatCurrency } from "@/lib/format";
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { featureFlags } from "@/config/featureFlags";
 
 export default function CartDrawer() {
   const {
@@ -125,8 +126,9 @@ export default function CartDrawer() {
                       </p>
                     )}
                     <p className="text-[11px] text-primary font-medium">
-                      {item.product.puntosFit} pts{" "}
-                      <span className="text-gray-600">·</span>{" "}
+                      {featureFlags.fitpointsPayment && (
+                        <>{item.product.puntosFit} pts{" "}<span className="text-gray-600">·</span>{" "}</>
+                      )}
                       {formatCurrency(item.product.price)}
                     </p>
 
@@ -170,7 +172,9 @@ export default function CartDrawer() {
             <div>
               <p className="text-label text-gray-600 mb-3">Método de pago</p>
               <div className="flex gap-1.5">
-                {(["puntos", "dinero", "mixto"] as const).map((method) => (
+                {(["puntos", "dinero", "mixto"] as const)
+                  .filter((method) => featureFlags.fitpointsPayment || method === "dinero")
+                  .map((method) => (
                   <button
                     key={method}
                     onClick={() => setPaymentMethod(method)}
@@ -185,7 +189,7 @@ export default function CartDrawer() {
                 ))}
               </div>
 
-              {paymentMethod === "mixto" && (
+              {featureFlags.fitpointsPayment && paymentMethod === "mixto" && (
                 <div className="mt-3">
                   <label className="text-[10px] tracking-eyebrow uppercase text-gray-600 block mb-1.5">
                     ¿Cuántos puntos usar?

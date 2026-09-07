@@ -7,7 +7,7 @@
 export const featureFlags = {
   /**
    * Habilita o deshabilita la funcionalidad de paquetes
-   * 
+   *
    * Cuando está deshabilitado:
    * - No se muestran links de paquetes en el header/footer
    * - No se muestran secciones de paquetes en la página principal
@@ -18,7 +18,7 @@ export const featureFlags = {
 
   /**
    * Habilita o deshabilita la funcionalidad de suscripciones
-   * 
+   *
    * Cuando está deshabilitado:
    * - No se muestran links de suscripciones en el header/footer
    * - No se muestran secciones de suscripciones en la página principal
@@ -26,6 +26,16 @@ export const featureFlags = {
    * - Las API routes de suscripciones retornan 404
    */
   subscriptions: false,
+
+  /**
+   * Habilita o deshabilita el pago con Puntos Fit (puntos y mixto)
+   *
+   * Cuando está deshabilitado:
+   * - Solo se muestra la opción de pago en dinero
+   * - El método de pago por defecto es "dinero"
+   * - No se aplican puntos automáticamente al carrito
+   */
+  fitpointsPayment: false,
 } as const;
 
 export type FeatureFlags = typeof featureFlags;

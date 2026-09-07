@@ -8,6 +8,7 @@ import { useCart } from "@/context/CartContext";
 import { formatCurrency } from "@/lib/format";
 import HeaderClient from "@/components/layout/HeaderClient";
 import PuntosBalanceBanner from "@/components/layout/PuntosBalanceBanner";
+import { featureFlags } from "@/config/featureFlags";
 
 export default function CheckoutPage() {
   const {
@@ -225,13 +226,13 @@ export default function CheckoutPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Big, prominent Puntos Fit balance — the user is about to pay,
-            so this is one of the most relevant places to show it. */}
-        <PuntosBalanceBanner
-          size="lg"
-          subtitle="puntos disponibles para tu pago"
-          className="mb-8"
-        />
+        {featureFlags.fitpointsPayment && (
+          <PuntosBalanceBanner
+            size="lg"
+            subtitle="puntos disponibles para tu pago"
+            className="mb-8"
+          />
+        )}
 
         {/* Steps */}
         <div className="flex items-center justify-center mb-12">
@@ -403,17 +404,19 @@ export default function CheckoutPage() {
                     Método de pago
                   </label>
                   <div className="flex flex-col gap-2">
-                    <label className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="puntos"
-                        checked={paymentMethod === "puntos"}
-                        onChange={() => { setPaymentMethod("puntos"); setRequiresShipping(false); }}
-                        className="accent-[#cee741]"
-                      />
-                      <span>100% Puntos Fit</span>
-                    </label>
+                    {featureFlags.fitpointsPayment && (
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="puntos"
+                          checked={paymentMethod === "puntos"}
+                          onChange={() => { setPaymentMethod("puntos"); setRequiresShipping(false); }}
+                          className="accent-[#cee741]"
+                        />
+                        <span>100% Puntos Fit</span>
+                      </label>
+                    )}
                     <label className="flex items-center gap-2">
                       <input
                         type="radio"
@@ -441,26 +444,28 @@ export default function CheckoutPage() {
                         </div>
                       </label>
                     )}
-                    <label className="flex items-center gap-2">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="mixto"
-                        checked={paymentMethod === "mixto"}
-                        onChange={() => {
-                          setPaymentMethod("mixto");
-                          setRequiresShipping(false);
-                          setSplitAmount({
-                            puntos: Math.round(total / 2),
-                            dinero: +(total / 2).toFixed(2),
-                          });
-                        }}
-                        className="accent-[#cee741]"
-                      />
-                      <span>Parte en Puntos y parte en Dinero</span>
-                    </label>
+                    {featureFlags.fitpointsPayment && (
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="mixto"
+                          checked={paymentMethod === "mixto"}
+                          onChange={() => {
+                            setPaymentMethod("mixto");
+                            setRequiresShipping(false);
+                            setSplitAmount({
+                              puntos: Math.round(total / 2),
+                              dinero: +(total / 2).toFixed(2),
+                            });
+                          }}
+                          className="accent-[#cee741]"
+                        />
+                        <span>Parte en Puntos y parte en Dinero</span>
+                      </label>
+                    )}
                   </div>
-                  {paymentMethod === "mixto" && (
+                  {featureFlags.fitpointsPayment && paymentMethod === "mixto" && (
                     <div className="mt-3 flex flex-col gap-2">
                       <label className="text-sm text-gray-300">
                         ¿Cuántos Puntos Fit quieres usar?
