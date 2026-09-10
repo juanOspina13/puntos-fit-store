@@ -35,7 +35,7 @@ export const featureFlags = {
    * - El método de pago por defecto es "dinero"
    * - No se aplican puntos automáticamente al carrito
    */
-  fitpointsPayment: false,
+  fitpointsPayment: true,
 } as const;
 
 export type FeatureFlags = typeof featureFlags;
